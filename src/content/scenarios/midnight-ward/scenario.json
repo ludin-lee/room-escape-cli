@@ -1,0 +1,175 @@
+{
+  "id": "midnight-ward",
+  "title": "자정의 병동",
+  "timeLimitSec": 1200,
+  "hintPenaltySec": 90,
+  "startRoom": "ward",
+  "intro": "병실 침대에서 눈을 떴다. 시계는 자정을 가리키고, 병동에는 아무도 없다. 형광등이 깜빡인다.\n20분 안에 비상계단으로 빠져나가야 한다.",
+
+  "rooms": {
+    "ward": {
+      "name": "병실",
+      "description": "1인 병실. 침대 옆에 사물함이 있고 발치에 차트가 걸려 있다. 문은 열려 있지만 복도는 캄캄하다.",
+      "objects": ["bed", "wristband", "locker", "flashlight", "chart"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway"], "to": "corridor" }
+      ]
+    },
+    "corridor": {
+      "name": "복도",
+      "description": "긴 병동 복도. 간호사 데스크가 있고, 약제실 문과 비상문이 보인다.",
+      "objects": ["dark", "desk", "cardkey", "pharm_door", "stair_door"],
+      "exits": [
+        { "names": ["병실", "ward"], "to": "ward" },
+        { "names": ["약제실", "pharmacy"], "to": "pharmacy", "lockedBy": "pharm_lock", "lockedMessage": "약제실 문은 카드키로만 열린다." },
+        { "names": ["비상계단", "stairs", "계단", "밖", "outside"], "to": "stairwell", "lockedBy": "stair_lock", "lockedMessage": "비상문은 쇠사슬로 잠겨 있다." }
+      ]
+    },
+    "pharmacy": {
+      "name": "약제실",
+      "description": "선반마다 약병이 가득하다. 벽에 잠긴 약장이 있고, 책상에 메모가 붙어 있다.",
+      "objects": ["cabinet", "memo", "stair_key"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway"], "to": "corridor" }
+      ]
+    },
+    "stairwell": {
+      "name": "비상계단",
+      "description": "차가운 콘크리트 계단. 아래층에서 바깥 공기가 올라온다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+
+  "objects": {
+    "bed": {
+      "names": ["침대", "bed", "베개", "pillow"],
+      "description": "구겨진 시트. 베개가 조금 들려 있다.",
+      "onExamine": {
+        "when": { "notFlag": "bed_checked" },
+        "message": "베개 밑에서 환자 팔찌가 나왔다.",
+        "effects": [{ "reveal": "wristband" }, { "setFlag": "bed_checked" }]
+      }
+    },
+    "wristband": {
+      "names": ["팔찌", "wristband", "환자팔찌"],
+      "hidden": true,
+      "takeable": true,
+      "description": "환자 팔찌. '환자번호 04-27' 이라고 찍혀 있다. 사물함 번호와 같은 자릿수다.",
+      "onExamine": { "effects": [{ "setFlag": "wristband_seen" }] }
+    },
+    "locker": {
+      "names": ["사물함", "locker", "락커"],
+      "description": "4자리 번호 자물쇠가 달린 사물함.",
+      "lock": "locker_lock"
+    },
+    "flashlight": {
+      "names": ["손전등", "flashlight", "후레쉬"],
+      "hidden": true,
+      "takeable": true,
+      "description": "건전지가 살아 있는 손전등. 어두운 곳에서 쓰면 될 것 같다.",
+      "onUse": {
+        "when": { "inRoom": "corridor" },
+        "failMessage": "여기는 충분히 밝다.",
+        "message": "손전등을 켜자 복도가 드러난다. 데스크 아래 바닥에 카드키가 떨어져 있다.",
+        "effects": [{ "setFlag": "corridor_lit" }, { "reveal": "cardkey" }, { "hide": "dark" }]
+      }
+    },
+    "chart": {
+      "names": ["차트", "chart", "기록"],
+      "description": "환자 차트. '처방: 하루 3회, 2정씩, 7일간.' 그리고 붉은 글씨로 '약장 비밀번호는 처방대로.'",
+      "onExamine": { "effects": [{ "setFlag": "chart_seen" }] }
+    },
+
+    "dark": {
+      "names": ["어둠", "darkness", "주변", "around"],
+      "description": "형광등이 꺼져 있어 아무것도 보이지 않는다. 빛이 필요하다."
+    },
+    "desk": {
+      "names": ["데스크", "desk", "책상"],
+      "description": "간호사 데스크. 서류가 어지럽게 흩어져 있다. 특별한 건 없다."
+    },
+    "cardkey": {
+      "names": ["카드키", "cardkey", "카드"],
+      "hidden": true,
+      "takeable": true,
+      "description": "직원용 출입 카드. '약제실' 이라고 적혀 있다."
+    },
+    "pharm_door": {
+      "names": ["약제실문", "pharmacydoor", "카드리더", "reader"],
+      "description": "약제실 문. 옆에 카드 리더기가 있다.",
+      "lock": "pharm_lock"
+    },
+    "stair_door": {
+      "names": ["비상문", "firedoor", "쇠사슬", "chain"],
+      "description": "비상계단으로 나가는 문. 손잡이에 쇠사슬과 자물쇠가 걸려 있다.",
+      "lock": "stair_lock"
+    },
+
+    "cabinet": {
+      "names": ["약장", "cabinet", "약품장"],
+      "description": "3자리 번호 자물쇠가 달린 약장.",
+      "lock": "cabinet_lock"
+    },
+    "memo": {
+      "names": ["메모", "memo", "쪽지", "note"],
+      "description": "\"비상문 열쇠는 약장 안에. 함부로 꺼내지 말 것.\"",
+      "onExamine": { "effects": [{ "setFlag": "memo_seen" }] }
+    },
+    "stair_key": {
+      "names": ["계단열쇠", "stairkey", "열쇠", "key"],
+      "hidden": true,
+      "takeable": true,
+      "description": "작은 자물쇠 열쇠. 비상문 쇠사슬에 맞을 것 같다."
+    }
+  },
+
+  "locks": {
+    "locker_lock": {
+      "type": "code",
+      "answer": "0427",
+      "failMessage": "번호가 맞지 않는다.",
+      "onSolve": {
+        "message": "사물함이 열렸다. 안에 손전등이 있다.",
+        "effects": [{ "reveal": "flashlight" }]
+      }
+    },
+    "pharm_lock": {
+      "type": "key",
+      "keyItem": "cardkey",
+      "onSolve": { "message": "삑. 카드 리더기에 초록불이 들어오며 문이 열렸다." }
+    },
+    "cabinet_lock": {
+      "type": "code",
+      "answer": "327",
+      "failMessage": "번호가 맞지 않는다.",
+      "onSolve": {
+        "message": "약장이 열렸다. 약병 사이에 작은 열쇠가 있다.",
+        "effects": [{ "reveal": "stair_key" }]
+      }
+    },
+    "stair_lock": {
+      "type": "key",
+      "keyItem": "stair_key",
+      "consume": true,
+      "onSolve": { "message": "쇠사슬이 바닥에 떨어진다. 비상문이 열렸다." }
+    }
+  },
+
+  "hints": [
+    { "when": { "notFlag": "bed_checked" }, "text": "침대를 조사해 보세요." },
+    { "when": { "notFlag": "wristband_seen" }, "text": "팔찌를 주워서 조사해 보세요." },
+    { "when": { "notSolved": "locker_lock" }, "text": "환자번호를 사물함에 입력해 보세요." },
+    { "when": { "notFlag": "chart_seen" }, "text": "병실의 차트를 읽어 두세요." },
+    { "when": { "notFlag": "corridor_lit" }, "text": "손전등을 챙겨 복도에서 사용해 보세요." },
+    { "when": { "notSolved": "pharm_lock" }, "text": "카드키를 주워 약제실문에 사용하세요." },
+    { "when": { "notSolved": "cabinet_lock" }, "text": "차트의 처방 숫자를 순서대로 약장에 입력하세요." },
+    { "when": { "notSolved": "stair_lock" }, "text": "약장 안의 열쇠를 비상문에 사용하세요." }
+  ],
+
+  "endings": {
+    "success": "비상계단을 뛰어 내려간다. 등 뒤에서 형광등이 꺼졌다. 당신은 병동을 빠져나왔다.",
+    "timeout": "복도 끝에서 발소리가 들린다. 시간이 다 되었다."
+  }
+}

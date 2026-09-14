@@ -1,0 +1,13 @@
+{
+  "name": "room-escape",
+  "version": "0.1.0",
+  "description": "CLI 텍스트 방탈출 게임",
+  "type": "module",
+  "bin": { "escape": "bin/escape.js" },
+  "scripts": {
+    "start": "node bin/escape.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=22" },
+  "license": "MIT"
+}

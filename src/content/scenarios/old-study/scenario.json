@@ -1,0 +1,205 @@
+{
+  "id": "old-study",
+  "title": "낡은 서재",
+  "timeLimitSec": 1800,
+  "hintPenaltySec": 120,
+  "startRoom": "study",
+  "intro": "눈을 떠보니 먼지 쌓인 서재다. 머리가 지끈거린다. 문은 잠겨 있고, 벽시계 소리만 들린다.\n30분 안에 이 저택을 빠져나가야 한다.",
+
+  "rooms": {
+    "study": {
+      "name": "서재",
+      "description": "벽면 가득 책장이 있고, 가운데 낡은 책상이 있다. 벽에는 어두운 풍경화가 걸려 있다.",
+      "objects": ["desk", "diary", "bookshelf", "painting", "safe", "brass_key", "study_door"],
+      "exits": [
+        { "names": ["복도", "hallway"], "to": "hallway", "lockedBy": "study_door_lock", "lockedMessage": "문은 굳게 잠겨 있다. 열쇠 구멍이 보인다." }
+      ]
+    },
+    "hallway": {
+      "name": "복도",
+      "description": "긴 복도다. 벽에 멈춘 괘종시계가 있고, 탁자 위에 오르골과 등불이 놓여 있다. 끝에는 정원으로 통하는 철문이 있고, 옆으로 지하실 계단이 내려간다.",
+      "objects": ["clock", "music_box", "old_note", "lantern", "gate"],
+      "exits": [
+        { "names": ["서재", "study"], "to": "study" },
+        { "names": ["지하실", "cellar", "계단", "stairs"], "to": "cellar" },
+        { "names": ["정원", "garden", "밖", "outside"], "to": "garden", "lockedBy": "gate_lock", "lockedMessage": "철문은 자물쇠로 잠겨 있다." }
+      ]
+    },
+    "cellar": {
+      "name": "지하실",
+      "description": "축축하고 캄캄하다. 한 치 앞도 보이지 않는다.",
+      "objects": ["darkness", "chest", "iron_key"],
+      "exits": [
+        { "names": ["복도", "hallway", "계단", "stairs", "위", "up"], "to": "hallway" }
+      ]
+    },
+    "garden": {
+      "name": "정원",
+      "description": "차가운 밤공기가 얼굴에 닿는다. 저택 밖이다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+
+  "objects": {
+    "desk": {
+      "names": ["책상", "desk"],
+      "description": "서랍이 하나 있다. 잠겨 있진 않다.",
+      "onExamine": {
+        "when": { "notFlag": "desk_opened" },
+        "message": "서랍을 열자 낡은 일기장이 나왔다.",
+        "effects": [{ "reveal": "diary" }, { "setFlag": "desk_opened" }]
+      }
+    },
+    "diary": {
+      "names": ["일기장", "diary", "일기"],
+      "hidden": true,
+      "takeable": true,
+      "description": "누렇게 바랜 일기장. 마지막 장에 이렇게 적혀 있다.\n\"그 애의 생일은 잊을 수 없다. 7월 31일. 금고는 그 날을 기억한다.\"",
+      "onExamine": { "effects": [{ "setFlag": "diary_seen" }] }
+    },
+    "bookshelf": {
+      "names": ["책장", "bookshelf", "책", "books"],
+      "description": "오래된 책들이 빼곡하다. 딱히 특별한 건 없다. 먼지만 잔뜩 묻었다."
+    },
+    "painting": {
+      "names": ["그림", "painting", "풍경화"],
+      "description": "어두운 숲을 그린 풍경화다. 액자가 조금 삐뚤어져 있다.",
+      "onExamine": {
+        "when": { "notFlag": "painting_moved" },
+        "message": "액자를 옆으로 밀자 벽에 박힌 작은 금고가 드러났다.",
+        "effects": [{ "reveal": "safe" }, { "setFlag": "painting_moved" }]
+      }
+    },
+    "safe": {
+      "names": ["금고", "safe"],
+      "hidden": true,
+      "description": "3자리 다이얼 금고다. 숫자를 맞추면 열릴 것 같다.",
+      "lock": "safe_lock"
+    },
+    "brass_key": {
+      "names": ["놋쇠열쇠", "brasskey", "놋쇠"],
+      "hidden": true,
+      "takeable": true,
+      "description": "작고 반짝이는 놋쇠 열쇠. 서재 문 열쇠 구멍에 딱 맞을 크기다."
+    },
+    "study_door": {
+      "names": ["문", "door"],
+      "description": "묵직한 나무 문. 열쇠 구멍이 있다.",
+      "lock": "study_door_lock"
+    },
+
+    "clock": {
+      "names": ["시계", "clock", "괘종시계"],
+      "description": "괘종시계는 오래 전에 멈췄다. 바늘은 3시 15분을 가리키고 있다.",
+      "onExamine": { "effects": [{ "setFlag": "clock_seen" }] }
+    },
+    "music_box": {
+      "names": ["오르골", "musicbox", "상자"],
+      "description": "작은 오르골. 옆면에 3자리 숫자 자물쇠가 달려 있고, 뚜껑 안쪽에 '시간을 맞춰라' 라고 새겨져 있다.",
+      "lock": "music_box_lock"
+    },
+    "old_note": {
+      "names": ["쪽지", "note", "메모"],
+      "hidden": true,
+      "takeable": true,
+      "description": "빛바랜 쪽지.\n\"가장 어두운 곳으로 빛을 가져가라. 상자는 시계가 멈춘 시각을 거꾸로 읽는다.\"",
+      "onExamine": { "effects": [{ "setFlag": "note_seen" }] }
+    },
+    "lantern": {
+      "names": ["등불", "lantern", "램프", "lamp"],
+      "takeable": true,
+      "description": "기름이 조금 남은 등불. 불이 켜져 있다.",
+      "onUse": {
+        "when": { "inRoom": "cellar" },
+        "failMessage": "여기서는 등불이 필요 없다.",
+        "message": "등불을 들어 올리자 지하실이 밝아진다. 구석에 낡은 궤짝이 보인다.",
+        "effects": [{ "setFlag": "cellar_lit" }, { "reveal": "chest" }, { "hide": "darkness" }]
+      }
+    },
+    "gate": {
+      "names": ["철문", "gate", "정원문"],
+      "description": "정원으로 나가는 철문. 큼직한 자물쇠가 걸려 있다.",
+      "lock": "gate_lock"
+    },
+
+    "darkness": {
+      "names": ["어둠", "darkness", "주변", "around"],
+      "description": "아무것도 보이지 않는다. 빛이 필요하다."
+    },
+    "chest": {
+      "names": ["궤짝", "chest", "상자궤"],
+      "hidden": true,
+      "description": "쇠테를 두른 낡은 궤짝. 3자리 숫자 자물쇠가 달려 있다.",
+      "lock": "chest_lock"
+    },
+    "iron_key": {
+      "names": ["철열쇠", "ironkey", "쇠열쇠"],
+      "hidden": true,
+      "takeable": true,
+      "description": "묵직한 철 열쇠. 정원 철문 자물쇠에 맞을 것 같다."
+    }
+  },
+
+  "locks": {
+    "safe_lock": {
+      "type": "code",
+      "answer": "731",
+      "failMessage": "다이얼이 헛돈다. 틀린 번호다.",
+      "onSolve": {
+        "message": "철컥. 금고가 열렸다. 안에 작은 놋쇠 열쇠가 들어 있다.",
+        "effects": [{ "reveal": "brass_key" }]
+      }
+    },
+    "study_door_lock": {
+      "type": "key",
+      "keyItem": "brass_key",
+      "consume": true,
+      "onSolve": { "message": "열쇠가 돌아간다. 문이 열렸다." }
+    },
+    "music_box_lock": {
+      "type": "code",
+      "answer": "315",
+      "failMessage": "자물쇠는 꿈쩍도 하지 않는다.",
+      "onSolve": {
+        "message": "딸깍. 오르골이 열리며 짧은 멜로디가 흐른다. 안에 접힌 쪽지가 있다.",
+        "effects": [{ "reveal": "old_note" }]
+      }
+    },
+    "chest_lock": {
+      "type": "code",
+      "answer": "513",
+      "failMessage": "자물쇠는 꿈쩍도 하지 않는다.",
+      "onSolve": {
+        "message": "끼익. 궤짝이 열렸다. 안에 철 열쇠가 있다.",
+        "effects": [{ "reveal": "iron_key" }]
+      }
+    },
+    "gate_lock": {
+      "type": "key",
+      "keyItem": "iron_key",
+      "consume": true,
+      "onSolve": { "message": "묵직한 자물쇠가 떨어진다. 철문이 삐걱 열렸다." }
+    }
+  },
+
+  "hints": [
+    { "when": { "notFlag": "desk_opened" }, "text": "책상을 자세히 조사해 보세요." },
+    { "when": { "notFlag": "diary_seen" }, "text": "일기장을 조사해서 마지막 장을 읽어 보세요." },
+    { "when": { "notFlag": "painting_moved" }, "text": "벽에 걸린 그림이 삐뚤어져 있습니다." },
+    { "when": { "notSolved": "safe_lock" }, "text": "생일을 숫자로 바꿔 금고에 입력해 보세요." },
+    { "when": { "notSolved": "study_door_lock" }, "text": "금고 안의 열쇠를 줍고 문에 사용해 보세요." },
+    { "when": { "notFlag": "clock_seen" }, "text": "복도의 시계를 조사해 보세요." },
+    { "when": { "notSolved": "music_box_lock" }, "text": "오르골에는 시계가 멈춘 시각을 입력합니다." },
+    { "when": { "notFlag": "note_seen" }, "text": "오르골 안의 쪽지를 읽어 보세요." },
+    { "when": { "notFlag": "cellar_lit" }, "text": "등불을 챙겨 지하실에서 사용해 보세요." },
+    { "when": { "notSolved": "chest_lock" }, "text": "궤짝에는 시계 시각을 거꾸로 입력합니다." },
+    { "when": { "notSolved": "gate_lock" }, "text": "궤짝 안의 철 열쇠를 정원 철문에 사용하세요." }
+  ],
+
+  "endings": {
+    "success": "당신은 저택을 탈출했다. 등 뒤에서 철문이 스르르 닫힌다.",
+    "timeout": "괘종시계가 다시 울리기 시작한다. 시간이 다 되었다. 문은 끝내 열리지 않았다."
+  }
+}
