@@ -1,0 +1,372 @@
+{
+  "id": "observatory",
+  "title": "폐쇄된 천문대",
+  "timeLimitSec": 2700,
+  "hintPenaltySec": 180,
+  "startRoom": "dome",
+  "intro": "산꼭대기의 천문대. 문을 닫은 지 7년이 지났다는 곳이다.\n눈보라를 피해 들어왔다가 잠이 들었고, 눈을 떠 보니 관측실 문이 잠겨 있다. 창밖의 산길은 이미 눈에 묻혔다.\n산 아래로 내려가는 길은 승강기뿐이다. 그러나 건물의 전기는 끊겨 있다.\n눈보라가 건물을 덮치기까지 45분. 그 안에 승강기를 타고 내려가야 한다.",
+
+  "rooms": {
+    "dome": {
+      "name": "관측실",
+      "description": "둥근 돔 천장 아래 커다란 굴절 망원경이 서 있다. 벽에는 성도와 칠판이 걸려 있고, 구석의 탁자 위에 놋쇠 행성 모형이 놓여 있다. 복도로 나가는 문에는 번호 자물쇠가 걸려 있다.",
+      "objects": ["telescope", "base", "wrench", "star_chart", "chalkboard", "orrery", "hatch", "dome_door"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway"], "to": "corridor", "lockedBy": "dome_lock", "lockedMessage": "문은 잠겨 있다. 4자리 번호 자물쇠가 걸려 있다." }
+      ]
+    },
+    "corridor": {
+      "name": "복도",
+      "description": "비상등만 희미하게 켜진 긴 복도. 벽에 게시판과 큼직한 초상화가 걸려 있다. 기록실, 소장실, 암실 문이 나란히 있고, 아래층 기계실로 내려가는 계단이 있다. 복도 끝에는 승강기가 있지만 옆의 호출 패널은 불이 꺼져 있다.",
+      "objects": ["bulletin", "portrait", "office_door", "darkroom_door", "lift_panel"],
+      "exits": [
+        { "names": ["관측실", "dome"], "to": "dome" },
+        { "names": ["기록실", "archive", "서고"], "to": "archive" },
+        { "names": ["소장실", "office"], "to": "office", "lockedBy": "office_lock", "lockedMessage": "소장실 문은 잠겨 있다. 열쇠 구멍이 있다." },
+        { "names": ["암실", "darkroom"], "to": "darkroom", "lockedBy": "darkroom_lock", "lockedMessage": "암실 문은 잠겨 있다. 옆에 숫자 키패드가 있다." },
+        { "names": ["기계실", "machine", "지하", "basement", "계단", "stairs"], "to": "machine" },
+        { "names": ["승강기", "lift", "elevator", "엘리베이터", "밖", "outside"], "to": "station", "lockedBy": "lift_lock", "lockedMessage": "승강기 문은 열리지 않는다. 전원이 들어와야 호출 패널이 작동할 것이다." }
+      ]
+    },
+    "archive": {
+      "name": "기록실",
+      "description": "천장까지 닿는 서가에 관측 기록이 빼곡하다. 책상 위에 두꺼운 관측일지가 펼쳐져 있고, 바닥에는 쇠로 된 부품 상자가 있다. 구석에 접이식 사다리가 기대어 있다.",
+      "objects": ["shelf", "ladder", "logbook", "box", "fuse", "hollow_book", "office_key", "globe"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway"], "to": "corridor" }
+      ]
+    },
+    "office": {
+      "name": "소장실",
+      "description": "낡은 가죽 의자와 커다란 책상. 벽에 달력과 액자가 걸려 있고, 책상 뒤에 묵직한 금고가 있다. 금고 문에 메모가 붙어 있다.",
+      "objects": ["desk", "service_card", "calendar", "frame", "safe_memo", "safe", "film"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway"], "to": "corridor" }
+      ]
+    },
+    "darkroom": {
+      "name": "암실",
+      "description": "붉은 등이 켜진 좁은 방. 약품 냄새가 난다. 인화기와 현상 트레이가 있고, 천장에 걸린 빨랫줄에 낡은 사진들이 집게로 매달려 있다.",
+      "objects": ["enlarger", "trays", "line", "photo"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway"], "to": "corridor" }
+      ]
+    },
+    "machine": {
+      "name": "기계실",
+      "description": "축축한 지하 기계실. 벽에 배전반이 붙어 있고, 구석에 디젤 발전기와 공구함이 있다. 천장을 따라 녹슨 배관이 지나간다.",
+      "objects": ["fusebox", "generator", "toolbox", "rusty_key", "pipe"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway", "위", "up", "계단", "stairs"], "to": "corridor" }
+      ]
+    },
+    "station": {
+      "name": "하부 정거장",
+      "description": "승강기 문이 열리자 산 아래 정거장의 찬 공기가 밀려든다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+
+  "objects": {
+    "telescope": {
+      "names": ["망원경", "telescope"],
+      "description": "커다란 굴절 망원경. 누군가 마지막으로 맞춰 둔 방향 그대로 멈춰 있다.",
+      "onExamine": {
+        "message": "접안렌즈에 눈을 대자 세 개의 별이 비스듬히 나란히 빛난다. 사냥꾼의 허리띠, 오리온자리다.",
+        "effects": [{ "setFlag": "telescope_seen" }]
+      }
+    },
+    "base": {
+      "names": ["받침대", "base", "밑동"],
+      "description": "망원경을 떠받치는 무쇠 받침대. 바닥과 닿는 틈이 조금 벌어져 있다.",
+      "onExamine": {
+        "when": { "notFlag": "base_checked" },
+        "message": "틈에 손을 넣어 더듬자 차가운 쇠붙이가 잡힌다. 육각렌치다.",
+        "effects": [{ "reveal": "wrench" }, { "setFlag": "base_checked" }]
+      }
+    },
+    "wrench": {
+      "names": ["육각렌치", "렌치", "wrench"],
+      "hidden": true,
+      "takeable": true,
+      "description": "묵직한 육각렌치. 볼트로 조인 덮개를 열 때 쓰는 공구다."
+    },
+    "star_chart": {
+      "names": ["성도", "starchart", "별지도"],
+      "description": "천문대에서 직접 번호를 매긴 성도.\n  큰곰자리 07 · 오리온자리 12 · 카시오페이아자리 25 · 백조자리 31 · 전갈자리 44\n여백에 연필로 작게 적혀 있다.\n\"문: 별자리 번호 두 자리, 그 뒤에 지금 렌즈에 보이는 별의 개수 두 자리.\"",
+      "onExamine": { "effects": [{ "setFlag": "chart_seen" }] }
+    },
+    "chalkboard": {
+      "names": ["칠판", "chalkboard"],
+      "description": "분필 글씨.\n\"오늘 밤 관측 대상: 카시오페이아 (W자, 별 5개)\" — 두 줄로 지워져 있고 옆에 덧붙였다.\n\"구름 때문에 취소. 대신 사냥꾼을 보기로 함.\""
+    },
+    "orrery": {
+      "names": ["행성모형", "orrery", "모형"],
+      "description": "태엽으로 도는 놋쇠 행성 모형. 행성마다 받침에 숫자가 새겨져 있다.\n  수성 3 · 금성 8 · 지구 0 · 화성 1 · 목성 5 · 토성 9\n태엽은 오래 전에 멈췄다.",
+      "onExamine": { "effects": [{ "setFlag": "orrery_seen" }] }
+    },
+    "hatch": {
+      "names": ["해치", "hatch", "천장"],
+      "description": "돔 천장의 관측용 해치. 힘껏 밀자 조금 열리는데, 바깥은 눈보라와 절벽뿐이다. 이쪽으로는 나갈 수 없다."
+    },
+    "dome_door": {
+      "names": ["문", "door", "관측실문"],
+      "description": "복도로 나가는 철문. 4자리 번호 자물쇠가 걸려 있다.",
+      "lock": "dome_lock"
+    },
+
+    "bulletin": {
+      "names": ["게시판", "board", "공지"],
+      "description": "누렇게 바랜 공지들.\n\"[암실 사용 규칙] 출입 번호는 매월 갱신한다. 번호는 그 달 보름달 날짜 네 자리(월월일일). 마지막 갱신: 2019년 11월.\"\n\"[승강기 점검 안내] 정전 시 호출 패널이 작동하지 않음. 배전반 예비 퓨즈는 기록실 부품 상자에 보관.\"",
+      "onExamine": { "effects": [{ "setFlag": "board_seen" }] }
+    },
+    "portrait": {
+      "names": ["초상화", "portrait", "명판"],
+      "description": "흰 수염의 노인이 망원경 옆에 서 있는 초상화. 아래 명판.\n\"제3대 소장 한도윤 (1962 – 2019). 별 아래서 태어나 별 아래서 잠들다.\"",
+      "onExamine": { "effects": [{ "setFlag": "portrait_seen" }] }
+    },
+    "office_door": {
+      "names": ["소장실문", "officedoor"],
+      "description": "'소장실' 이라고 쓰인 나무 문. 열쇠 구멍이 있다.",
+      "lock": "office_lock"
+    },
+    "darkroom_door": {
+      "names": ["암실문", "darkroomdoor", "키패드", "keypad"],
+      "description": "'암실 – 촬영 중 출입 금지' 팻말. 옆의 숫자 키패드는 자체 배터리로 켜져 있다. 4자리.",
+      "lock": "darkroom_lock"
+    },
+    "lift_panel": {
+      "names": ["제어판", "panel", "호출패널"],
+      "hidden": true,
+      "description": "불이 들어온 승강기 호출 패널. 4자리 번호를 넣어야 문이 열린다. 패널 옆에 못으로 긁은 글씨가 있다.\n\"순서가 전부다.\"",
+      "lock": "lift_lock"
+    },
+
+    "shelf": {
+      "names": ["서가", "shelf", "책장"],
+      "description": "천장까지 닿는 서가. 아래 칸은 먼지투성이 관측 기록뿐이다. 맨 위 칸에 뭔가 있는 것 같지만 손이 닿지 않는다."
+    },
+    "ladder": {
+      "names": ["사다리", "ladder"],
+      "takeable": true,
+      "description": "접이식 알루미늄 사다리. 높은 곳에 손을 뻗을 때 쓰면 된다.",
+      "onUse": {
+        "target": "shelf",
+        "message": "사다리를 펴고 올라가 맨 위 칸을 살핀다. 먼지 쌓인 책들 사이에 한 권만 먼지가 없다. 『항성 목록 제3권』.",
+        "effects": [{ "reveal": "hollow_book" }, { "setFlag": "shelf_top_seen" }]
+      }
+    },
+    "logbook": {
+      "names": ["관측일지", "일지", "logbook"],
+      "takeable": true,
+      "description": "펼쳐진 페이지.\n\"1999년 11월 18일. 사자자리 유성우. 관측 시작 21:40, 관측 종료 익일 03:25. 평생 잊지 못할 밤.\"\n여백에 다른 필체로: \"부품 상자 번호는 그날 총 관측 시간. 시간과 분을 그대로 이어서.\"",
+      "onExamine": { "effects": [{ "setFlag": "logbook_seen" }] }
+    },
+    "box": {
+      "names": ["상자", "box", "부품상자"],
+      "description": "쇠로 된 부품 상자. 뚜껑에 '예비 퓨즈' 라고 적혀 있고, 3자리 번호 자물쇠가 걸려 있다.",
+      "lock": "box_lock"
+    },
+    "fuse": {
+      "names": ["퓨즈", "fuse"],
+      "hidden": true,
+      "takeable": true,
+      "description": "손가락만 한 유리 퓨즈. 배전반의 빈 소켓에 끼우는 물건이다.",
+      "onUse": {
+        "target": "fusebox",
+        "when": { "hasItem": "wrench" },
+        "failMessage": "배전반 덮개가 육각 볼트로 단단히 조여져 있다. 맨손으로는 열 수 없다.",
+        "message": "렌치로 볼트를 풀고 덮개를 연다. 빈 소켓에 퓨즈를 끼우고 레버를 올리자 웅— 하는 소리와 함께 천장의 등이 켜진다. 위층 어딘가에서 '띵' 하는 전자음이 들렸다.",
+        "effects": [{ "setFlag": "power_on" }, { "reveal": "lift_panel" }, { "removeItem": "fuse" }]
+      }
+    },
+    "hollow_book": {
+      "names": ["항성목록", "catalog", "책", "book"],
+      "hidden": true,
+      "description": "『항성 목록 제3권』. 들어 보니 이상하게 가볍다.",
+      "onExamine": {
+        "when": { "notFlag": "book_opened" },
+        "message": "펼치자 속이 네모나게 파여 있고, 그 안에 작은 열쇠가 들어 있다. 꼬리표에 '소장실'.",
+        "effects": [{ "reveal": "office_key" }, { "setFlag": "book_opened" }]
+      }
+    },
+    "office_key": {
+      "names": ["소장실열쇠", "officekey"],
+      "hidden": true,
+      "takeable": true,
+      "description": "'소장실' 꼬리표가 달린 작은 열쇠."
+    },
+    "globe": {
+      "names": ["지구본", "globe"],
+      "description": "낡은 지구본. 돌려 보니 삐걱거리기만 한다. 누군가 한국 위에 작게 점을 찍어 두었다. 그뿐이다."
+    },
+
+    "desk": {
+      "names": ["책상", "desk", "서랍"],
+      "description": "가죽을 씌운 커다란 책상. 서랍이 세 개 있다.",
+      "onExamine": {
+        "when": { "notFlag": "desk_opened" },
+        "message": "서랍을 차례로 연다. 두 번째 서랍 바닥에 인사 기록 카드가 한 장 깔려 있다.",
+        "effects": [{ "reveal": "service_card" }, { "setFlag": "desk_opened" }]
+      }
+    },
+    "service_card": {
+      "names": ["근무카드", "카드", "card", "인사기록"],
+      "hidden": true,
+      "takeable": true,
+      "description": "인사 기록 카드.\n\"성명 한도윤. 부임 1994년 3월. 직위 소장. 비고: 관측실 상주.\"",
+      "onExamine": { "effects": [{ "setFlag": "card_seen" }] }
+    },
+    "calendar": {
+      "names": ["달력", "calendar"],
+      "description": "2019년 11월에서 멈춘 달력. 12일에 붉은 동그라미와 '보름' 이라는 글씨. 25일에는 '승강기 점검' 이라고 적혀 있다.",
+      "onExamine": { "effects": [{ "setFlag": "calendar_seen" }] }
+    },
+    "frame": {
+      "names": ["액자", "frame"],
+      "description": "소장이 어린 딸과 함께 찍은 사진. 뒷면에 잉크로 적혀 있다.\n\"네가 태어난 날 밤, 사자자리에서 별이 쏟아졌다.\""
+    },
+    "safe_memo": {
+      "names": ["메모", "memo", "쪽지", "note"],
+      "description": "금고 문에 테이프로 붙인 메모.\n\"금고: 내가 이곳에 부임했을 때의 나이, 그리고 별 아래서 잠들었을 때의 나이. 두 자리씩 이어서.\"",
+      "onExamine": { "effects": [{ "setFlag": "memo_seen" }] }
+    },
+    "safe": {
+      "names": ["금고", "safe"],
+      "description": "바닥에 볼트로 고정된 묵직한 금고. 4자리 다이얼.",
+      "lock": "safe_lock"
+    },
+    "film": {
+      "names": ["필름", "film"],
+      "hidden": true,
+      "takeable": true,
+      "description": "현상하지 않은 필름 한 통. 라벨에 '승강기 앞에서, 마지막 사진'. 암실에서 인화해야 볼 수 있다.",
+      "onUse": {
+        "target": "enlarger",
+        "when": { "flag": "power_on" },
+        "failMessage": "인화기 램프에 불이 들어오지 않는다. 건물 전원이 나가 있다.",
+        "message": "필름을 끼우고 램프를 켠다. 현상액에 담근 인화지 위로 천천히 상이 떠오른다. 한 장의 사진이 완성됐다.",
+        "effects": [{ "reveal": "photo" }, { "removeItem": "film" }, { "setFlag": "photo_developed" }]
+      }
+    },
+
+    "enlarger": {
+      "names": ["인화기", "enlarger"],
+      "description": "필름을 끼워 인화지에 상을 맺히게 하는 장치. 램프 스위치가 있다. 전원이 있어야 움직인다."
+    },
+    "trays": {
+      "names": ["현상액", "trays", "트레이", "약품"],
+      "description": "약품 냄새가 나는 트레이 세 개. 순서대로 현상액, 정지액, 정착액이라고 쓰여 있다. 아직 쓸 수 있을 것 같다."
+    },
+    "line": {
+      "names": ["빨랫줄", "line", "집게"],
+      "description": "집게에 걸린 낡은 사진들. 대부분 흐릿한 별 사진이다. 한 장에는 어린 여자아이가 망원경을 들여다보고 있다."
+    },
+    "photo": {
+      "names": ["사진", "photo"],
+      "hidden": true,
+      "takeable": true,
+      "description": "방금 인화한 사진. 노인이 승강기 앞에 서서 호출 패널을 가리키고 있다. 뒷면에 적힌 글씨.\n\"위에서 아래로 차례로 눌러라 — 화성, 목성, 금성, 수성.\"",
+      "onExamine": { "effects": [{ "setFlag": "photo_seen" }] }
+    },
+
+    "fusebox": {
+      "names": ["배전반", "fusebox", "두꺼비집"],
+      "description": "벽에 붙은 회색 배전반. 덮개가 육각 볼트로 조여져 있다. 틈으로 들여다보니 퓨즈 소켓 하나가 비어 있다."
+    },
+    "generator": {
+      "names": ["발전기", "generator"],
+      "description": "디젤 발전기. 연료 게이지는 바닥이다. 시동은 걸리지 않는다."
+    },
+    "toolbox": {
+      "names": ["공구함", "toolbox"],
+      "description": "녹슨 공구함. 쓸 만한 공구는 다 빠져나갔다.",
+      "onExamine": {
+        "when": { "notFlag": "toolbox_opened" },
+        "message": "바닥에 녹슨 열쇠 하나가 굴러다닌다.",
+        "effects": [{ "reveal": "rusty_key" }, { "setFlag": "toolbox_opened" }]
+      }
+    },
+    "rusty_key": {
+      "names": ["녹슨열쇠", "rustykey"],
+      "hidden": true,
+      "takeable": true,
+      "description": "녹이 슬어 이가 뭉개진 열쇠. 어디에 맞는 것인지 알 수 없다."
+    },
+    "pipe": {
+      "names": ["배관", "pipe", "파이프"],
+      "description": "천장을 따라 지나가는 녹슨 배관. '압력 0.75' 라고 쓰인 태그가 매달려 있다. 물은 흐르지 않는다."
+    }
+  },
+
+  "locks": {
+    "dome_lock": {
+      "type": "code",
+      "answer": "1203",
+      "failMessage": "자물쇠는 꿈쩍도 하지 않는다.",
+      "onSolve": { "message": "철컥. 자물쇠가 풀리고 문이 열렸다." }
+    },
+    "box_lock": {
+      "type": "code",
+      "answer": "545",
+      "failMessage": "다이얼이 헛돈다. 틀린 번호다.",
+      "onSolve": {
+        "message": "뚜껑이 열렸다. 스펀지 사이에 유리 퓨즈가 하나 끼워져 있다.",
+        "effects": [{ "reveal": "fuse" }]
+      }
+    },
+    "office_lock": {
+      "type": "key",
+      "keyItem": "office_key",
+      "consume": true,
+      "onSolve": { "message": "열쇠가 돌아간다. 소장실 문이 열렸다." }
+    },
+    "darkroom_lock": {
+      "type": "code",
+      "answer": "1112",
+      "failMessage": "키패드가 붉게 깜빡인다. 틀린 번호다.",
+      "onSolve": { "message": "삑. 초록불이 들어오고 암실 문의 잠금이 풀렸다." }
+    },
+    "safe_lock": {
+      "type": "code",
+      "answer": "3257",
+      "failMessage": "다이얼이 걸리지 않는다. 틀린 번호다.",
+      "onSolve": {
+        "message": "묵직한 소리와 함께 금고가 열렸다. 안에는 필름 한 통뿐이다.",
+        "effects": [{ "reveal": "film" }]
+      }
+    },
+    "lift_lock": {
+      "type": "code",
+      "answer": "1583",
+      "failMessage": "패널이 붉게 깜빡이더니 꺼진다. 틀린 순서다.",
+      "onSolve": { "message": "패널에 초록불이 들어온다. 승강기가 올라오는 소리가 들리고, 문이 열렸다." }
+    }
+  },
+
+  "hints": [
+    { "when": { "notFlag": "telescope_seen" }, "text": "망원경을 들여다보세요. 누군가 마지막으로 맞춰 둔 방향이 있습니다." },
+    { "when": { "notFlag": "chart_seen" }, "text": "벽의 성도를 조사해 별자리 번호와 여백의 글씨를 확인하세요." },
+    { "when": { "notSolved": "dome_lock" }, "text": "렌즈에 보이는 별자리의 번호 두 자리 뒤에, 렌즈에 보이는 별의 개수를 두 자리로 붙이세요." },
+    { "when": { "notFlag": "base_checked" }, "text": "관측실을 떠나기 전에 망원경 받침대 밑도 살펴보세요." },
+    { "when": { "notFlag": "logbook_seen" }, "text": "기록실의 관측일지를 읽어 보세요." },
+    { "when": { "notSolved": "box_lock" }, "text": "관측 시작과 종료 시각의 차이를 계산하세요. 시간과 분을 그대로 이어 붙입니다." },
+    { "when": { "notFlag": "shelf_top_seen" }, "text": "사다리를 줍고 서가에 사용하면 맨 위 칸에 손이 닿습니다." },
+    { "when": { "notSolved": "office_lock" }, "text": "항성목록을 조사하면 나오는 열쇠를 복도의 소장실문에 사용하세요." },
+    { "when": { "notFlag": "power_on" }, "text": "렌치를 가진 채로 퓨즈를 기계실 배전반에 사용하세요." },
+    { "when": { "notFlag": "card_seen" }, "text": "소장실 책상 서랍의 근무카드를 읽어 보세요." },
+    { "when": { "notSolved": "safe_lock" }, "text": "초상화의 생몰년과 근무카드의 부임 연도로 두 시점의 나이를 계산하세요. 부임 나이, 사망 나이 순입니다." },
+    { "when": { "notFlag": "calendar_seen" }, "text": "소장실 달력에 보름이 표시되어 있습니다." },
+    { "when": { "notSolved": "darkroom_lock" }, "text": "게시판의 암실 규칙대로, 달력의 보름 날짜를 월월일일로 입력하세요." },
+    { "when": { "notFlag": "photo_developed" }, "text": "금고 속 필름을 암실 인화기에 사용하세요. 전원이 들어와 있어야 합니다." },
+    { "when": { "notFlag": "photo_seen" }, "text": "인화된 사진을 주워서 뒷면을 읽어 보세요." },
+    { "when": { "notSolved": "lift_lock" }, "text": "사진 뒷면의 행성 순서를 관측실 행성모형에 새겨진 숫자로 바꿔 호출 패널에 입력하세요." }
+  ],
+
+  "endings": {
+    "success": "승강기가 덜컹거리며 내려가기 시작한다. 좁은 창 너머로 천문대의 돔이 눈보라 속에 점점 작아진다. 당신은 산을 내려왔다.",
+    "timeout": "웅— 하던 소리가 뚝 멎고, 사방이 다시 어둠에 잠긴다. 창을 두드리던 눈보라가 문을 두드리기 시작한다. 시간이 다 되었다."
+  }
+}

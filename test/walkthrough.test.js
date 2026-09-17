@@ -19,6 +19,17 @@ const WALKTHROUGHS = {
     "이동 약제실", "입력 327 약장", "줍기 계단열쇠",
     "이동 복도", "사용 계단열쇠 비상문", "이동 비상계단",
   ],
+  "observatory": [
+    "조사 망원경", "조사 성도", "입력 1203 문", "조사 받침대", "줍기 육각렌치", "조사 행성모형",
+    "이동 복도", "조사 초상화", "조사 게시판",
+    "이동 기록실", "조사 관측일지", "입력 545 상자", "줍기 퓨즈",
+    "줍기 사다리", "사용 사다리 서가", "조사 항성목록", "줍기 소장실열쇠",
+    "이동 복도", "이동 기계실", "사용 퓨즈 배전반",
+    "이동 복도", "사용 소장실열쇠 소장실문", "이동 소장실",
+    "조사 책상", "조사 근무카드", "조사 달력", "입력 3257 금고", "줍기 필름",
+    "이동 복도", "입력 1112 암실문", "이동 암실", "사용 필름 인화기", "줍기 사진", "조사 사진",
+    "이동 복도", "입력 1583 제어판", "이동 승강기",
+  ],
 };
 
 test("모든 시나리오에 walkthrough 가 있다", async () => {
@@ -105,4 +116,23 @@ test("key 자물쇠: 소모 및 잘못된 아이템", async () => {
   assert.ok(!game.state.inventory.includes("brass_key"));
   assert.deepEqual(game.state.solvedLocks, ["safe_lock", "study_door_lock"]);
   assert.equal(game.run("이동 hallway")[0].type, "system");
+});
+
+test("observatory: 전원 없이는 승강기 패널이 안 보이고 필름 인화도 안 된다", async () => {
+  const scenario = await loadScenario("observatory");
+  const game = new Game(scenario, { now: fakeClock() });
+  for (const c of ["입력 1203 문", "이동 복도"]) game.run(c);
+  assert.equal(game.run("입력 1583 제어판")[0].type, "error"); // 패널은 아직 hidden
+  assert.equal(game.run("이동 승강기")[0].type, "error");
+
+  // 렌치 없이 퓨즈만으로는 배전반을 열 수 없다
+  for (const c of ["이동 기록실", "입력 545 상자", "줍기 퓨즈", "이동 복도", "이동 기계실"]) game.run(c);
+  const noWrench = game.run("사용 퓨즈 배전반");
+  assert.equal(noWrench[0].type, "error");
+  assert.ok(game.state.inventory.includes("fuse"));
+  assert.ok(!game.state.flags.includes("power_on"));
+
+  // 녹슨 열쇠는 어디에도 맞지 않는다
+  for (const c of ["조사 공구함", "줍기 녹슨열쇠", "이동 복도"]) game.run(c);
+  assert.equal(game.run("사용 녹슨열쇠 소장실문")[0].type, "error");
 });

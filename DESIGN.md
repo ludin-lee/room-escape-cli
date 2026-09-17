@@ -55,7 +55,9 @@ room-escape/
 │   │   └── scenarios/
 │   │       ├── old-study/    # "낡은 서재" (30분, 방 4개, 퍼즐 7개)
 │   │       │   └── scenario.json
-│   │       └── midnight-ward/ # "자정의 병동" (20분, 방 4개, 퍼즐 5개)
+│   │       ├── midnight-ward/ # "자정의 병동" (20분, 방 4개, 퍼즐 5개)
+│   │       │   └── scenario.json
+│   │       └── observatory/  # "폐쇄된 천문대" (45분, 방 7개, 퍼즐 9개)
 │   │           └── scenario.json
 │   └── save/
 │       └── store.js          # ~/.room-escape/saves/<slot>.json 읽기/쓰기 (UI 전용)
