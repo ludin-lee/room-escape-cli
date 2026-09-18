@@ -1,0 +1,506 @@
+{
+  "id": "zombie-street",
+  "title": "죽은 자들의 거리",
+  "timeLimitSec": 2700,
+  "hintPenaltySec": 180,
+  "retryPenaltySec": 180,
+  "startRoom": "store",
+  "intro": "감염 사흘째. 도시는 조용하다. 산 사람의 소리가 없다는 뜻이다.\n당신은 편의점 안에 숨어 있다. 앞 셔터 너머로 수십 개의 발이 끌리는 소리가 들린다.\n라디오에서 같은 방송이 반복된다. \"구조 헬기는 45분 뒤 이 구역을 마지막으로 통과합니다. 옥상에서 신호를 보내는 건물에만 접근합니다.\"\n맨몸으로는 한 블록도 못 간다. 있는 것들을 합쳐서 살아남아라.",
+
+  "rooms": {
+    "store": {
+      "name": "편의점",
+      "description": "불 꺼진 편의점. 진열대는 반쯤 털렸고 바닥에 깨진 유리가 흩어져 있다. 앞 셔터는 내려져 있고 그 너머에서 손톱으로 긁는 소리가 난다. 계산대 뒤에 창고문, 구석에 판자로 못질한 뒷문이 있다.",
+      "objects": ["counter", "remote", "battery", "lighter", "memo", "shelves", "nails", "flashlight", "bat", "bottle", "rag", "fridge", "radio", "shutter", "storage_door", "backdoor"],
+      "exits": [
+        { "names": ["창고", "storage"], "to": "storage", "lockedBy": "storage_lock", "lockedMessage": "창고문은 잠겨 있다. 4자리 번호 자물쇠." },
+        { "names": ["뒷골목", "골목", "alley", "뒤"], "to": "alley", "lockedBy": "backdoor_lock", "lockedMessage": "뒷문은 판자로 못질되어 있다. 맨손으로는 뜯을 수 없다." }
+      ]
+    },
+    "storage": {
+      "name": "창고",
+      "description": [
+        { "when": { "flag": "flashlight_on" }, "text": "손전등 불빛에 창고가 드러난다. 쓰러진 선반 아래 좀비 하나가 깔려 팔만 휘젓고 있다. 닿지 않는다. 벽에 공구가 걸려 있고, 바닥에 호스가 똬리를 틀고 있다." },
+        { "text": "칠흑 같은 어둠." }
+      ],
+      "objects": ["shelf", "pinned_zombie", "crowbar", "hose", "radio_handset"],
+      "exits": [
+        { "names": ["편의점", "store", "out", "밖"], "to": "store" }
+      ],
+      "onEnter": [
+        {
+          "when": { "notFlag": "flashlight_on" },
+          "message": "불빛 없이 어둠 속으로 들어선다. 발밑에서 뭔가 잡아당긴다.",
+          "effects": [{ "gameOver": "어둠 속에서 이빨이 발목에 박힌다. 창고 안에서 긁는 소리가 났었다. 불부터 켰어야 했다." }]
+        },
+        {
+          "when": { "notFlag": "storage_seen" },
+          "message": "불빛이 닿자 선반 아래 깔린 좀비가 이쪽으로 팔을 뻗는다. 선반이 무거워 빠져나오지 못한다. 다행이다.",
+          "effects": [{ "setFlag": "storage_seen" }]
+        }
+      ]
+    },
+    "alley": {
+      "name": "뒷골목",
+      "description": [
+        { "when": { "solved": "zombie_lock" }, "text": "좁은 뒷골목. 쓰러진 좀비가 약국 문 앞에 널브러져 있다. 골목 한쪽에 버려진 자동차, 벽에 붙은 쓰레기통. 골목 끝은 주유소로 이어진다." },
+        { "text": "좁은 뒷골목. 약국 문 앞에 좀비 하나가 서서 이쪽을 향해 고개를 꺾는다. 골목 한쪽에 버려진 자동차, 벽에 붙은 쓰레기통. 골목 끝은 주유소로 이어진다." }
+      ],
+      "objects": ["zombie", "car", "dumpster", "hanger", "graffiti"],
+      "exits": [
+        { "names": ["편의점", "store"], "to": "store" },
+        { "names": ["약국", "pharmacy"], "to": "pharmacy", "lockedBy": "zombie_lock", "lockedMessage": "좀비가 약국 문 앞을 막고 있다. 저걸 치우지 않으면 들어갈 수 없다." },
+        { "names": ["주유소", "gas", "station"], "to": "gas" }
+      ]
+    },
+    "pharmacy": {
+      "name": "약국",
+      "description": "약국 안. 약장은 뒤집혔고 알약이 바닥에 흩어져 있다. 카운터 뒤에 잠긴 철제 캐비닛. 구석에 한 남자가 다리를 붙잡고 앉아 있다.",
+      "objects": ["survivor", "cabinet", "antiseptic", "bandage", "prescription", "rooftop_key"],
+      "exits": [
+        { "names": ["뒷골목", "골목", "alley"], "to": "alley" }
+      ]
+    },
+    "gas": {
+      "name": "주유소 사무실",
+      "description": [
+        { "when": { "solved": "horde_lock" }, "text": "주유소 사무실. 유리창 너머 주유기 앞은 불길과 연기, 그리고 더는 움직이지 않는 것들뿐이다. 옥상으로 오르는 철계단 문이 사무실 안쪽에 있다." },
+        { "text": "주유소 사무실. 유리창 너머 주유기 사이에 좀비 떼가 몰려 있다. 스무 마리는 된다. 옥상으로 오르는 철계단 문은 사무실 안쪽에 있지만, 문 앞까지 놈들이 들어차 있다. 벽에 가격표와 구급함." }
+      ],
+      "objects": ["horde", "price_sign", "first_aid_box", "flare", "stairs_door"],
+      "exits": [
+        { "names": ["뒷골목", "골목", "alley"], "to": "alley" },
+        { "names": ["옥상", "rooftop", "계단"], "to": "rooftop", "lockedBy": "stairs_lock", "lockedMessage": "옥상 계단 문은 잠겨 있다." }
+      ]
+    },
+    "rooftop": {
+      "name": "옥상",
+      "description": [
+        { "when": { "flag": "heli_called" }, "text": "주유소 옥상. 멀리서 로터 소리가 다가온다. 헬기가 이 건물을 찾고 있다. 위치를 알려야 한다." },
+        { "text": "주유소 옥상. 도시 전체가 내려다보인다. 거리마다 느리게 움직이는 점들. 하늘 어딘가에서 희미한 로터 소리가 들린다." }
+      ],
+      "objects": ["water_tank", "railing"],
+      "exits": [
+        { "names": ["사무실", "주유소", "down", "아래"], "to": "gas" }
+      ]
+    },
+    "rescue": {
+      "name": "구조 헬기",
+      "description": "붉은 연기 속으로 헬기가 내려앉는다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+
+  "objects": {
+    "counter": {
+      "names": ["계산대", "counter", "카운터"],
+      "description": "계산대. 금전함은 이미 뜯겨 비어 있다.",
+      "onExamine": {
+        "when": { "notFlag": "counter_checked" },
+        "message": "계산대 아래 선반에 TV 리모컨, 담배 코너에 라이터 하나, 그리고 모니터에 붙은 메모가 보인다.",
+        "effects": [{ "reveal": "remote" }, { "reveal": "lighter" }, { "reveal": "memo" }, { "setFlag": "counter_checked" }]
+      }
+    },
+    "remote": {
+      "names": ["리모컨", "remote"],
+      "hidden": true,
+      "description": "TV 리모컨. 뒷면 건전지 뚜껑이 헐겁다.",
+      "onExamine": {
+        "when": { "notFlag": "remote_opened" },
+        "message": "뚜껑을 열자 AA 건전지 두 개가 들어 있다.",
+        "effects": [{ "reveal": "battery" }, { "setFlag": "remote_opened" }]
+      }
+    },
+    "battery": {
+      "names": ["건전지", "battery", "배터리"],
+      "hidden": true,
+      "takeable": true,
+      "description": "AA 건전지 두 개. 아직 쓸 만하다."
+    },
+    "lighter": {
+      "names": ["라이터", "lighter"],
+      "hidden": true,
+      "takeable": true,
+      "description": "일회용 라이터. 가스가 넉넉하다."
+    },
+    "memo": {
+      "names": ["메모", "memo", "포스트잇"],
+      "hidden": true,
+      "description": "모니터에 붙은 포스트잇. \"창고 비번 = 우유 유통기한 (월월일일). 매번 까먹지 마.\"",
+      "onExamine": { "effects": [{ "setFlag": "memo_seen" }] }
+    },
+    "shelves": {
+      "names": ["진열대", "shelves", "선반"],
+      "description": "반쯤 털린 진열대. 과자와 라면은 없고 쓸모없는 것들만 남았다.",
+      "onExamine": {
+        "when": { "notFlag": "shelves_checked" },
+        "message": "생활용품 코너에 못 한 봉지, 그 옆에 손전등이 굴러다닌다.",
+        "effects": [{ "reveal": "nails" }, { "reveal": "flashlight" }, { "setFlag": "shelves_checked" }]
+      }
+    },
+    "nails": {
+      "names": ["못", "nails"],
+      "hidden": true,
+      "takeable": true,
+      "description": "긴 못 한 봉지. 뭔가에 박으면 흉기가 될 것이다."
+    },
+    "flashlight": {
+      "names": ["손전등", "flashlight"],
+      "hidden": true,
+      "takeable": true,
+      "description": [
+        { "when": { "flag": "flashlight_on" }, "text": "켜진 손전등. 불빛이 세다." },
+        { "when": { "flag": "flashlight_powered" }, "text": "건전지를 넣은 손전등. 아직 켜지 않았다." },
+        { "text": "플라스틱 손전등. 건전지 칸이 비어 있다." }
+      ],
+      "onUse": {
+        "when": { "flag": "flashlight_powered" },
+        "failMessage": "딸깍. 불이 들어오지 않는다. 건전지가 없다.",
+        "message": "딸깍. 손전등이 켜진다.",
+        "effects": [{ "setFlag": "flashlight_on" }]
+      }
+    },
+    "bat": {
+      "names": ["야구방망이", "방망이", "bat"],
+      "takeable": true,
+      "description": "계산대 아래 세워 둔 알루미늄 야구방망이. 그냥 휘둘러서는 저것들을 한 번에 멈추지 못한다. 뭔가 박아야 한다.",
+      "onUse": {
+        "target": "zombie",
+        "message": "방망이를 휘두른다. 둔탁한 소리. 좀비가 비틀거리더니 다시 일어선다. 한 번 더 휘두르기 전에 손목을 잡힌다.",
+        "effects": [{ "gameOver": "물렸다. 맨 방망이로는 부족했다. 못을 박았어야 했다." }]
+      }
+    },
+    "bottle": {
+      "names": ["빈병", "병", "bottle"],
+      "takeable": true,
+      "description": "빈 소주병. 뭔가를 담을 수 있다."
+    },
+    "rag": {
+      "names": ["헝겊", "걸레", "rag"],
+      "takeable": true,
+      "description": "바닥에 버려진 걸레. 마른 헝겊 조각. 불이 잘 붙을 것 같다."
+    },
+    "fridge": {
+      "names": ["냉장고", "fridge"],
+      "description": "전기가 끊긴 음료 냉장고. 안에 우유 한 팩이 남아 있다. 유통기한 07.24. 벌써 상했다.",
+      "onExamine": { "effects": [{ "setFlag": "fridge_seen" }] }
+    },
+    "radio": {
+      "names": ["라디오", "radio"],
+      "description": "건전지로 도는 라디오. 같은 방송이 반복된다.\n\"…구조 헬기는 옥상에서 신호를 보내는 건물에만 접근합니다. 군 구조 채널은 7번. 무전 교신 후 조명탄으로 위치를 표시하십시오. 반복합니다…\"",
+      "onExamine": { "effects": [{ "setFlag": "radio_heard" }] }
+    },
+    "shutter": {
+      "names": ["셔터", "shutter", "앞문"],
+      "description": "내려진 철제 셔터. 바깥에서 수십 개의 손이 긁고 두드린다. 셔터가 조금씩 휜다. 절대 열면 안 된다.",
+      "onInteract": {
+        "message": "셔터 손잡이를 당긴다. 셔터가 반쯤 올라가자마자 팔들이 쏟아져 들어온다.",
+        "effects": [{ "gameOver": "왜 열었는가. 긁는 소리가 들렸는데." }]
+      }
+    },
+    "storage_door": {
+      "names": ["창고문", "storagedoor"],
+      "description": "'직원 외 출입금지' 창고문. 4자리 번호 자물쇠. 문 안쪽에서 무언가 긁는 소리가 난다. 불빛 없이 들어가는 건 미친 짓이다.",
+      "lock": "storage_lock"
+    },
+    "backdoor": {
+      "names": ["뒷문", "backdoor"],
+      "description": [
+        { "when": { "solved": "backdoor_lock" }, "text": "판자를 뜯어낸 뒷문. 골목으로 통한다." },
+        { "text": "판자 세 장을 못질해 막아 둔 뒷문. 못이 깊이 박혀 맨손으로는 뜯을 수 없다. 지렛대 같은 게 필요하다." }
+      ],
+      "lock": "backdoor_lock"
+    },
+
+    "shelf": {
+      "names": ["선반", "shelf"],
+      "description": "쓰러진 철제 선반. 그 아래 좀비가 깔려 있다."
+    },
+    "pinned_zombie": {
+      "names": ["깔린좀비", "좀비", "zombie"],
+      "description": "선반에 허리가 깔린 좀비. 이쪽으로 팔을 휘젓지만 닿지 않는다. 가까이 가지만 않으면 된다."
+    },
+    "crowbar": {
+      "names": ["쇠지렛대", "지렛대", "빠루", "crowbar"],
+      "takeable": true,
+      "description": "묵직한 쇠지렛대. 못질한 판자든 잠긴 캐비닛이든 뜯어낼 수 있다.",
+      "onUse": {
+        "cabinet": {
+          "when": { "notFlag": "cabinet_opened" },
+          "failMessage": "캐비닛은 이미 열려 있다.",
+          "message": "지렛대를 문틈에 끼우고 비튼다. 끼익. 문이 휘며 열린다. 안에 소독약과 압박 붕대.",
+          "effects": [{ "reveal": "antiseptic" }, { "reveal": "bandage" }, { "setFlag": "cabinet_opened" }]
+        }
+      }
+    },
+    "hose": {
+      "names": ["호스", "hose"],
+      "takeable": true,
+      "description": "1미터쯤 되는 고무호스. 연료통에 넣고 입으로 빨면 기름을 뺄 수 있다. 담을 병이 있어야 한다.",
+      "onUse": {
+        "target": "car",
+        "when": { "hasItem": "bottle" },
+        "failMessage": "호스를 연료통에 넣었지만 기름을 담을 것이 없다.",
+        "message": "호스를 연료통에 밀어 넣고 입으로 빨아 올린다. 휘발유 냄새에 머리가 핑 돈다. 빈병에 휘발유를 가득 채웠다.",
+        "effects": [{ "removeItem": "bottle" }, { "addItem": "gas_bottle" }, { "removeItem": "hose" }]
+      }
+    },
+    "radio_handset": {
+      "names": ["무전기", "handset", "walkie"],
+      "takeable": true,
+      "description": [
+        { "when": { "flag": "radio_fixed" }, "text": "옷걸이 철사를 안테나 자리에 꽂은 무전기. 7번 채널에 맞춰져 있다. 옥상처럼 트인 곳에서 불러야 한다." },
+        { "text": "휴대용 무전기. 채널은 7번에 맞춰져 있는데 안테나가 부러져 없다. 철사 같은 걸 꽂으면 될지도 모른다." }
+      ],
+      "onUse": {
+        "when": { "all": [{ "flag": "radio_fixed" }, { "inRoom": "rooftop" }, { "notFlag": "heli_called" }] },
+        "failMessage": "무전기가 지직거리기만 한다. 안테나가 없거나, 여기서는 신호가 닿지 않는다.",
+        "message": "\"여기는 주유소 옥상, 생존자 둘. 응답 바람.\" 지직… \"들린다. 접근 중. 조명탄으로 위치 표시하라.\"",
+        "effects": [{ "setFlag": "heli_called" }]
+      }
+    },
+
+    "zombie": {
+      "names": ["좀비", "zombie", "놈"],
+      "description": [
+        { "when": { "solved": "zombie_lock" }, "text": "머리가 깨진 채 쓰러진 좀비. 더는 움직이지 않는다." },
+        { "text": "약국 문 앞의 좀비. 턱이 반쯤 떨어져 나갔고, 이쪽을 보자 느리게 다가오기 시작한다. 머리를 한 번에 끝내야 한다." }
+      ],
+      "lock": "zombie_lock"
+    },
+    "car": {
+      "names": ["자동차", "차", "car"],
+      "description": "버려진 승용차. 문은 열려 있고 열쇠는 없다. 연료 주입구 뚜껑이 열려 있다. 연료계는 반쯤 차 있다."
+    },
+    "dumpster": {
+      "names": ["쓰레기통", "dumpster"],
+      "description": "벽에 붙은 대형 쓰레기통. 냄새가 지독하다.",
+      "onExamine": {
+        "when": { "notFlag": "dumpster_checked" },
+        "message": "뚜껑을 열고 뒤지자 철사 옷걸이 하나가 나온다.",
+        "effects": [{ "reveal": "hanger" }, { "setFlag": "dumpster_checked" }]
+      }
+    },
+    "hanger": {
+      "names": ["옷걸이", "hanger", "철사"],
+      "hidden": true,
+      "takeable": true,
+      "description": "철사 옷걸이. 펴면 안테나로 쓸 수 있을 것 같다."
+    },
+    "graffiti": {
+      "names": ["낙서", "graffiti", "벽"],
+      "description": "스프레이로 갈겨쓴 글씨. \"주유소 옥상 → 헬기\" 그 아래 작게: \"약국에 사람 있음. 다쳤음.\""
+    },
+
+    "survivor": {
+      "names": ["생존자", "남자", "survivor"],
+      "description": [
+        { "when": { "flag": "survivor_healed" }, "text": "붕대를 감은 남자. 얼굴에 핏기가 돌아왔다. \"옥상 문 열쇠, 가져가. 난 조금 뒤에 따라갈게.\"" },
+        { "text": "다리를 붙잡고 앉은 남자. 종아리가 깊게 찢어져 피가 멎지 않는다. \"물린 거 아냐… 유리에… 젠장, 소독약이랑 붕대만 있으면… 캐비닛 안에… 열쇠는 약사가…\" 주유소 유니폼을 입고 있다." }
+      ]
+    },
+    "cabinet": {
+      "names": ["캐비닛", "cabinet", "철제캐비닛"],
+      "description": [
+        { "when": { "flag": "cabinet_opened" }, "text": "지렛대로 뜯어낸 캐비닛. 문이 휘어 있다." },
+        { "text": "잠긴 철제 캐비닛. 열쇠는 없다. 문틈이 살짝 벌어져 있어 뭔가로 비틀면 열릴 것 같다." }
+      ]
+    },
+    "antiseptic": {
+      "names": ["소독약", "antiseptic"],
+      "hidden": true,
+      "takeable": true,
+      "description": "소독약 한 병."
+    },
+    "bandage": {
+      "names": ["붕대", "bandage"],
+      "hidden": true,
+      "takeable": true,
+      "description": "압박 붕대 한 롤."
+    },
+    "prescription": {
+      "names": ["처방전", "prescription"],
+      "description": "카운터 위의 처방전 뭉치. 전부 항생제와 진정제다. 이제 아무 의미도 없다."
+    },
+    "rooftop_key": {
+      "names": ["옥상열쇠", "rooftopkey"],
+      "hidden": true,
+      "takeable": true,
+      "description": "'옥상' 꼬리표가 달린 열쇠. 주유소 계단 문의 것이다."
+    },
+
+    "horde": {
+      "names": ["좀비떼", "떼", "horde"],
+      "description": [
+        { "when": { "solved": "horde_lock" }, "text": "불타 쓰러진 좀비들. 계단 문까지 길이 열렸다." },
+        { "text": "유리창 너머 주유기 사이의 좀비 떼. 방망이로는 어림도 없다. 주유기 옆이라 불이라도 붙으면 한꺼번에 갈 것이다. 놈들이 계단 문 앞까지 들어차 있다." }
+      ],
+      "lock": "horde_lock"
+    },
+    "price_sign": {
+      "names": ["가격표", "가격", "pricesign"],
+      "description": "벽의 유가 표시판. 휘발유 1,687원 · 경유 1,542원. 표시판 구석에 매직으로: \"구급함은 휘발유 값 뒤 세 자리.\"",
+      "onExamine": { "effects": [{ "setFlag": "price_seen" }] }
+    },
+    "first_aid_box": {
+      "names": ["구급함", "firstaid", "box"],
+      "description": "벽에 걸린 구급함. 3자리 번호 자물쇠. '비상 조명탄 보관' 스티커.",
+      "lock": "box_lock"
+    },
+    "flare": {
+      "names": ["조명탄", "신호탄", "flare"],
+      "hidden": true,
+      "takeable": true,
+      "description": "붉은 연막 조명탄. 뚜껑을 돌려 당기면 켜진다. 헬기가 보고 있을 때 써야 한다.",
+      "onUse": {
+        "when": { "all": [{ "inRoom": "rooftop" }, { "flag": "heli_called" }] },
+        "failMessage": "지금 켜면 낭비다. 헬기가 이쪽을 보고 있을 때, 옥상에서 켜야 한다.",
+        "message": "뚜껑을 돌려 당긴다. 붉은 연기가 하늘로 치솟는다. 로터 소리가 커진다.",
+        "effects": [{ "moveTo": "rescue" }]
+      }
+    },
+    "stairs_door": {
+      "names": ["옥상문", "계단문", "stairsdoor"],
+      "description": "옥상 철계단으로 오르는 문. 열쇠 구멍이 있다.",
+      "lock": "stairs_lock"
+    },
+
+    "water_tank": {
+      "names": ["급수탑", "물탱크", "tank"],
+      "description": "녹슨 급수탑. 올라가 봤자 더 멀리 보일 뿐이다."
+    },
+    "railing": {
+      "names": ["난간", "railing"],
+      "description": "난간 아래 거리. 좀비들이 붉은 연기 냄새라도 맡은 듯 주유소 쪽으로 몰려온다. 서둘러야 한다."
+    },
+
+    "spiked_bat": {
+      "names": ["못박힌방망이", "못방망이", "spikedbat"],
+      "takeable": true,
+      "description": "못을 촘촘히 박은 야구방망이. 한 번에 끝낼 수 있다."
+    },
+    "gas_bottle": {
+      "names": ["휘발유병", "휘발유", "gasbottle"],
+      "takeable": true,
+      "description": "휘발유를 채운 소주병. 심지가 있으면 화염병이 된다."
+    },
+    "molotov": {
+      "names": ["화염병", "molotov"],
+      "takeable": true,
+      "description": "헝겊 심지를 꽂은 휘발유병. 불을 붙여 던져야 한다. 라이터가 필요하다."
+    },
+    "medkit": {
+      "names": ["응급키트", "응급처치키트", "medkit"],
+      "takeable": true,
+      "description": "소독약과 붕대를 한데 묶은 응급처치 세트.",
+      "onUse": {
+        "target": "survivor",
+        "when": { "notFlag": "survivor_healed" },
+        "failMessage": "이미 치료했다.",
+        "message": "상처를 소독하고 붕대로 단단히 감는다. 남자가 이를 악물다가 길게 숨을 내쉰다.\n\"고맙다. 난 주유소 직원이야. 옥상 문 열쇠, 여기.\" 주머니에서 열쇠를 꺼내 바닥에 놓는다. \"무전기 있으면 옥상에서 7번 채널로 불러. 그다음 조명탄. 구급함에 하나 있어. 번호는… 사장이 가격표에 적어 놨을 거야.\"",
+        "effects": [{ "reveal": "rooftop_key" }, { "removeItem": "medkit" }, { "setFlag": "survivor_healed" }]
+      }
+    }
+  },
+
+  "recipes": [
+    {
+      "inputs": ["flashlight", "battery"],
+      "consume": ["battery"],
+      "message": "건전지를 손전등에 끼운다. 이제 켜기만 하면 된다.",
+      "effects": [{ "setFlag": "flashlight_powered" }]
+    },
+    {
+      "inputs": ["bat", "nails"],
+      "output": "spiked_bat",
+      "message": "방망이 끝에 못을 촘촘히 박는다. 손에 쥐니 든든하다."
+    },
+    {
+      "inputs": ["radio_handset", "hanger"],
+      "consume": ["hanger"],
+      "message": "옷걸이를 펴서 안테나 자리에 꽂는다. 지직, 잡음이 살아난다.",
+      "effects": [{ "setFlag": "radio_fixed" }]
+    },
+    {
+      "inputs": ["gas_bottle", "rag"],
+      "output": "molotov",
+      "message": "헝겊을 꼬아 병 주둥이에 심지로 꽂는다. 화염병이다."
+    },
+    {
+      "inputs": ["antiseptic", "bandage"],
+      "output": "medkit",
+      "message": "소독약과 붕대를 챙겨 응급처치 세트를 만든다."
+    }
+  ],
+
+  "locks": {
+    "storage_lock": {
+      "type": "code",
+      "answer": "0724",
+      "failMessage": "자물쇠가 헛돈다.",
+      "onSolve": { "message": "철컥. 창고문이 열린다. 안은 칠흑 같은 어둠이고, 긁는 소리가 더 또렷해진다." }
+    },
+    "backdoor_lock": {
+      "type": "key",
+      "keyItem": "crowbar",
+      "onSolve": { "message": "지렛대를 판자 틈에 끼우고 힘껏 젖힌다. 못이 비명을 지르며 빠지고 판자가 떨어진다. 뒷문이 열렸다." }
+    },
+    "zombie_lock": {
+      "type": "key",
+      "keyItem": "spiked_bat",
+      "onSolve": { "message": "못박힌 방망이를 머리에 내리꽂는다. 한 번. 좀비가 무릎부터 무너진다. 약국 문 앞이 비었다." }
+    },
+    "horde_lock": {
+      "type": "key",
+      "keyItem": "molotov",
+      "consume": true,
+      "requires": { "hasItem": "lighter" },
+      "requiresMessage": "화염병 심지에 불을 붙일 것이 없다.",
+      "onSolve": { "message": "라이터로 심지에 불을 붙이고 창밖으로 던진다. 병이 주유기 옆에서 깨지며 불길이 놈들을 삼킨다. 불타는 것들이 계단 문 앞에서 물러난다." }
+    },
+    "box_lock": {
+      "type": "code",
+      "answer": "687",
+      "failMessage": "자물쇠가 열리지 않는다.",
+      "onSolve": {
+        "message": "구급함이 열린다. 붕대 몇 개와 붉은 조명탄 하나.",
+        "effects": [{ "reveal": "flare" }]
+      }
+    },
+    "stairs_lock": {
+      "type": "key",
+      "keyItem": "rooftop_key",
+      "requires": { "solved": "horde_lock" },
+      "requiresMessage": "문 앞까지 좀비 떼가 들어차 있다. 열쇠가 있어도 저기까지 갈 수 없다.",
+      "onSolve": { "message": "열쇠가 돌아가고 계단 문이 열린다. 철계단 위로 하늘이 보인다." }
+    }
+  },
+
+  "hints": [
+    { "when": { "notFlag": "counter_checked" }, "text": "계산대를 조사하세요." },
+    { "when": { "notFlag": "remote_opened" }, "text": "리모컨 뒷면을 조사하면 건전지가 있습니다." },
+    { "when": { "notFlag": "shelves_checked" }, "text": "진열대를 조사하세요. 못과 손전등이 있습니다." },
+    { "when": { "notFlag": "flashlight_powered" }, "text": "'조합 손전등 건전지' 로 손전등에 건전지를 넣으세요." },
+    { "when": { "notFlag": "flashlight_on" }, "text": "'사용 손전등' 으로 켜 두세요. 창고에 불빛 없이 들어가면 죽습니다." },
+    { "when": { "notSolved": "storage_lock" }, "text": "계산대 메모대로, 냉장고 우유의 유통기한을 월월일일 네 자리로 창고문에 입력하세요." },
+    { "when": { "notFlag": "storage_seen" }, "text": "손전등을 켠 채로 창고에 들어가 쇠지렛대, 호스, 무전기를 챙기세요." },
+    { "when": { "notSolved": "backdoor_lock" }, "text": "쇠지렛대를 뒷문에 사용하면 판자를 뜯을 수 있습니다." },
+    { "when": { "notSolved": "zombie_lock" }, "text": "'조합 야구방망이 못' 으로 못박힌방망이를 만든 뒤 좀비에게 사용하세요. 맨 방망이로 치면 물립니다." },
+    { "when": { "notFlag": "dumpster_checked" }, "text": "뒷골목 쓰레기통을 뒤져 보세요." },
+    { "when": { "notFlag": "radio_fixed" }, "text": "'조합 무전기 옷걸이' 로 안테나를 만드세요." },
+    { "when": { "notFlag": "cabinet_opened" }, "text": "약국 캐비닛에 쇠지렛대를 사용하세요." },
+    { "when": { "notFlag": "survivor_healed" }, "text": "'조합 소독약 붕대' 로 응급키트를 만들어 생존자에게 사용하세요. 옥상열쇠를 줍니다." },
+    { "when": { "notSolved": "box_lock" }, "text": "주유소 가격표의 휘발유 값 뒤 세 자리를 구급함에 입력하세요." },
+    { "when": { "notSolved": "horde_lock" }, "text": "빈병을 든 채 호스를 자동차에 사용해 휘발유병을 만들고, '조합 휘발유병 헝겊' 으로 화염병을 만든 뒤 라이터를 가지고 좀비떼에 사용하세요." },
+    { "when": { "notSolved": "stairs_lock" }, "text": "옥상열쇠를 옥상문에 사용하세요." },
+    { "when": { "notFlag": "heli_called" }, "text": "옥상에서 '사용 무전기' 로 헬기를 부르세요." },
+    { "text": "헬기가 오고 있을 때 옥상에서 '사용 조명탄'." }
+  ],
+
+  "endings": {
+    "success": "헬기가 옥상에 내려앉고 군인이 손을 내민다. 뒤를 돌아보니 붕대를 감은 남자가 절뚝이며 계단을 올라오고 있다. 둘 다 탔다. 헬기가 떠오르자 거리의 점들이 작아진다. 살았다.",
+    "timeout": "로터 소리가 멀어진다. 헬기는 신호 없는 건물을 지나쳤다. 이 구역의 마지막 비행이었다. 아래에서 계단을 오르는 발소리가 들린다. 여럿이다."
+  }
+}

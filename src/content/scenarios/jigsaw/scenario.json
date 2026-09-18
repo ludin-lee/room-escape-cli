@@ -1,0 +1,611 @@
+{
+  "id": "jigsaw",
+  "title": "직쏘의 게임",
+  "timeLimitSec": 3600,
+  "hintPenaltySec": 240,
+  "startRoom": "bathroom",
+  "intro": "차가운 타일 바닥. 눈을 뜨자 발목에 묵직한 족쇄가 채워져 있다.\n녹슨 욕조, 금 간 거울, 벽에는 붉은 페인트로 갈겨쓴 글씨. 문 위에는 무언가 총구 같은 것이 이쪽을 향해 고정되어 있다.\n세면대 위에 낡은 카세트 녹음기가 놓여 있다. 재생 버튼에 붉은 화살표가 붙어 있다.\n어디선가 째깍거리는 소리가 들린다. 60분. 이 건물에서 나가지 못하면 게임은 끝난다.\n실수는 용납되지 않는다.",
+
+  "rooms": {
+    "bathroom": {
+      "name": "욕실",
+      "description": [
+        { "when": { "solved": "shackle_lock" }, "text": "곰팡이 핀 타일과 녹슨 배관. 풀린 족쇄가 바닥에 널브러져 있다. 문 위에 고정된 산탄총이 여전히 이쪽을 노려보고 있다." },
+        { "text": "곰팡이 핀 타일과 녹슨 배관. 발목의 족쇄는 배관에 사슬로 묶여 있어 문까지 닿지 않는다. 문 위에 산탄총이 브래킷으로 고정되어 있고, 방아쇠에서 나온 철사가 자물쇠 장치로 이어진다." }
+      ],
+      "objects": ["recorder", "shackle", "mirror", "wire", "bathtub", "shackle_key", "clock", "writing", "toilet", "envelope", "sink", "bath_door"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway", "out"], "to": "corridor", "lockedBy": "bath_lock", "lockedMessage": "문은 잠겨 있다. 4자리 다이얼 자물쇠가 문 위의 방아쇠 장치와 철사로 연결되어 있다." }
+      ]
+    },
+    "corridor": {
+      "name": "복도",
+      "description": "폐쇄된 도축장의 긴 복도. 천장 레일에 고기 갈고리들이 줄지어 매달려 있고, 벽에 작업 게시판이 붙어 있다. 복도 한가운데 세발자전거 위에 흰 얼굴의 인형이 앉아 있다.\n문은 다섯. 욕실, 냉동창고, 키패드가 달린 사무실, 작업장, 그리고 복도 끝의 두꺼운 철문.",
+      "objects": ["puppet", "board", "hooks", "freezer_door", "office_door", "exit_door"],
+      "exits": [
+        { "names": ["욕실", "bathroom"], "to": "bathroom" },
+        { "names": ["냉동창고", "냉동실", "freezer"], "to": "freezer" },
+        { "names": ["사무실", "office"], "to": "office", "lockedBy": "office_lock", "lockedMessage": "사무실 문은 잠겨 있다. 옆의 키패드가 초록빛으로 깜빡인다. 4자리." },
+        { "names": ["작업장", "workshop"], "to": "workshop" },
+        { "names": ["밖", "출구", "exit", "outside"], "to": "outside", "lockedBy": "exit_lock", "lockedMessage": "철문은 꿈쩍도 하지 않는다. 열쇠 구멍이 있고, 문 위쪽에 유압 실린더가 문을 누르고 있다." }
+      ]
+    },
+    "workshop": {
+      "name": "작업장",
+      "description": "복도 문으로 들어오면 남쪽 벽을 마주 보게 된다. 핏자국이 검게 마른 작업대, 벽에 걸린 칠판, 바닥의 공구함. 남쪽 벽에는 똑같이 생긴 철문 셋이 나란히 있다. 왼쪽, 가운데, 오른쪽. 표식은 없다.",
+      "objects": ["chalkboard", "toolbox", "torch", "workbench", "wedge", "back_doors", "scratch"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway"], "to": "corridor" },
+        { "names": ["왼쪽문", "왼쪽", "left"], "to": "boiler" },
+        { "names": ["가운데문", "가운데", "중앙", "middle", "center"], "to": "chute" },
+        { "names": ["오른쪽문", "오른쪽", "right"], "to": "chute" }
+      ]
+    },
+    "freezer": {
+      "name": "냉동창고",
+      "description": "입김이 하얗게 얼어붙는다. 벽에 서리가 두껍게 끼었고, 번호표가 붙은 철제 상자들이 선반에 줄지어 있다. 07, 12, 19, 23, 31. 뚜껑은 전부 얼어붙어 있다. 문 안쪽은 손잡이 없는 매끈한 강철판이다.",
+      "objects": ["thermometer", "box07", "box12", "box19", "box23", "box31", "ice", "drawer_key", "frost"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway", "out"], "to": "corridor" }
+      ],
+      "onEnter": [
+        {
+          "when": { "notFlag": "freezer_wedged" },
+          "message": "등 뒤에서 철문이 저절로 닫힌다. 쾅.\n돌아서서 문을 더듬는다. 안쪽은 매끈한 강철판이다. 손잡이도, 틈도 없다. 인형의 말이 뒤늦게 떠오른다. 받쳐 두라고 했었지.",
+          "effects": [{ "gameOver": "냉기가 발끝부터 차오른다. 손가락이 굳고, 이내 생각도 굳는다. 냉동창고의 문은 안에서 열리지 않는다. 그게 규칙이었다." }]
+        },
+        {
+          "message": "쐐기로 받쳐 둔 문틈으로 복도의 빛이 새어 들어온다. 냉기가 뼛속까지 파고들어 손가락이 굳는다. 여기서는 모든 일이 느려진다.",
+          "effects": [{ "addPenalty": 60 }]
+        }
+      ]
+    },
+    "office": {
+      "name": "사무실",
+      "description": "먼지 쌓인 공장장 사무실. 서랍 달린 책상, 꺼진 컴퓨터, 벽의 달력과 액자. 캐비닛 위에 인사 기록 서류철이 놓여 있다. 구석의 금고 옆에 가스통이 세워져 있고, 호스가 금고 다이얼 뒤로 이어진다.",
+      "objects": ["desk", "lighter", "files", "calendar", "computer", "frame", "safe", "blueprint", "manual", "office_tape", "exit_key"],
+      "exits": [
+        { "names": ["복도", "corridor", "hallway"], "to": "corridor" }
+      ]
+    },
+    "boiler": {
+      "name": "보일러실",
+      "description": [
+        { "when": { "flag": "boiler_on" }, "text": "보일러가 낮게 울리며 살아 있다. 배관이 따뜻해지고 압력계 바늘이 천천히 오른다. 벽의 압력 조절기에 불이 들어왔다." },
+        { "text": "녹슨 보일러가 방 한가운데 웅크리고 있다. 배관에 밸브 셋이 달려 있다. 배출, 급수, 증기. 벽에 명판과 압력계가 붙어 있다. 배관 이음새마다 오래된 증기 자국이 남아 있다." }
+      ],
+      "objects": ["boiler_unit", "nameplate", "valve_drain", "valve_water", "valve_steam", "gauge", "regulator"],
+      "exits": [
+        { "names": ["작업장", "workshop", "뒤", "back"], "to": "workshop" }
+      ],
+      "onEnter": {
+        "when": { "notFlag": "boiler_entered" },
+        "message": "문이 열리자 뜨거운 바람 대신 눅눅한 쇠 냄새가 난다. 살 길이었다.",
+        "effects": [{ "setFlag": "boiler_entered" }]
+      }
+    },
+    "chute": {
+      "name": "소각 슈트",
+      "description": "문 너머에는 바닥이 없다. 기름 먹은 철판 경사면이 어둠 속으로 미끄러져 내려간다. 아래에서 뜨거운 바람이 올라온다.",
+      "objects": [],
+      "exits": [],
+      "onEnter": {
+        "message": "발이 미끄러진다. 붙잡을 것이 없다. 등 뒤에서 문이 잠기는 소리가 마지막으로 들린다.",
+        "effects": [{ "gameOver": "도면을 보지 않고 고른 문은 선택이 아니라 도박이었다. 이번에는 졌다." }]
+      }
+    },
+    "outside": {
+      "name": "밖",
+      "description": "철문이 밀려 열리고 새벽의 찬 공기가 얼굴을 때린다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+
+  "objects": {
+    "recorder": {
+      "names": ["녹음기", "테이프", "recorder", "tape", "카세트"],
+      "description": "낡은 카세트 녹음기. 재생 버튼에 붉은 화살표 스티커가 붙어 있다.",
+      "onExamine": {
+        "when": { "notFlag": "tape1_heard" },
+        "message": "재생 버튼을 누른다. 낮게 긁히는 목소리.\n\n\"안녕, 도현. 게임을 하자.\n너는 지난 3년 동안 매일 아침 8시 52분에 시계를 보고, 오후 5시 58분에 또 시계를 봤다. 그 사이의 시간은 흘려보냈지. 남의 시간도, 네 시간도.\n오늘은 시계를 제대로 보게 될 거다. 이 건물을 나갈 시간은 60분.\n규칙은 하나. 실수는 용납되지 않는다. 문 위를 봐라. 세 번 틀리면 게임은 거기서 끝난다.\n족쇄의 열쇠는 네가 처음 눈을 뜬 곳에 이미 있다. 살고 싶다면 손을 더럽혀라.\n삶이냐, 죽음이냐. 선택해.\"\n\n테이프가 멈춘다.",
+        "effects": [{ "setFlag": "tape1_heard" }]
+      }
+    },
+    "shackle": {
+      "names": ["족쇄", "shackle", "사슬", "chain"],
+      "description": [
+        { "when": { "solved": "shackle_lock" }, "text": "풀린 족쇄. 사슬이 배관에 늘어져 있다." },
+        { "text": "발목의 무쇠 족쇄. 사슬은 배관에 용접되어 있고, 열쇠 구멍은 작고 낯선 모양이다. 사슬 길이는 욕조와 거울, 변기까지는 닿지만 문까지는 한 걸음 모자란다." }
+      ],
+      "lock": "shackle_lock"
+    },
+    "mirror": {
+      "names": ["거울", "mirror"],
+      "description": "금이 간 거울. 반대편 벽의 시계가 거울 속에 비친다. 거울 틀은 벽에서 조금 들떠 있다.",
+      "onExamine": {
+        "when": { "notFlag": "mirror_checked" },
+        "message": "틀 뒤로 손가락을 넣어 더듬자 구부러진 철사 하나가 걸려 나온다. 옷걸이를 편 것 같다.",
+        "effects": [{ "reveal": "wire" }, { "setFlag": "mirror_checked" }]
+      }
+    },
+    "wire": {
+      "names": ["철사", "wire"],
+      "hidden": true,
+      "takeable": true,
+      "description": "옷걸이를 펴서 만든 긴 철사. 끝을 구부리면 갈고리처럼 쓸 수 있다.",
+      "onUse": {
+        "target": "bathtub",
+        "when": { "notFlag": "tub_fished" },
+        "failMessage": "이미 건져 냈다.",
+        "message": "철사 끝을 갈고리처럼 구부려 탁한 물속으로 넣는다. 배수구 격자 틈에 걸린 무언가가 딸려 올라온다. 작은 열쇠다. 지독한 냄새가 난다. (족쇄열쇠)",
+        "effects": [{ "reveal": "shackle_key" }, { "setFlag": "tub_fished" }]
+      }
+    },
+    "bathtub": {
+      "names": ["욕조", "bathtub", "tub"],
+      "description": [
+        { "when": { "flag": "tub_fished" }, "text": "탁한 물이 반쯤 찬 욕조. 이제 배수구에는 아무것도 없다." },
+        { "text": "검붉게 탁한 물이 반쯤 차 있다. 바닥의 배수구 격자 틈에서 뭔가 반짝인다. 손을 넣어 보지만 격자 틈이 좁아 손가락이 들어가지 않는다. 가늘고 긴 것이 필요하다." }
+      ]
+    },
+    "shackle_key": {
+      "names": ["족쇄열쇠", "shacklekey", "작은열쇠"],
+      "hidden": true,
+      "takeable": true,
+      "description": "물때가 낀 작은 열쇠. 족쇄의 낯선 열쇠 구멍과 모양이 맞아 보인다."
+    },
+    "clock": {
+      "names": ["벽시계", "시계", "clock"],
+      "description": "문 옆 벽에 걸린 둥근 벽시계. 바늘은 1시 10분에서 멈춰 있다. 유리에 금이 갔고 건전지 뚜껑은 열린 채 비어 있다.",
+      "onExamine": { "effects": [{ "setFlag": "clock_seen" }] }
+    },
+    "writing": {
+      "names": ["벽글씨", "글씨", "낙서", "writing", "벽"],
+      "description": "붉은 페인트로 갈겨쓴 글씨.\n\"거울은 거짓말을 하지 않는다. 벽은 한다.\"\n그 아래 작게: \"세 번. 그 이상은 없다.\"",
+      "onExamine": { "effects": [{ "setFlag": "writing_seen" }] }
+    },
+    "toilet": {
+      "names": ["변기", "toilet", "물탱크"],
+      "description": "물이 빠진 변기. 물탱크 뚜껑이 조금 비뚤어져 있다.",
+      "onExamine": {
+        "when": { "notFlag": "toilet_checked" },
+        "message": "물탱크 뚜껑을 밀어내자 안에 비닐로 싼 봉투가 테이프로 붙어 있다.",
+        "effects": [{ "reveal": "envelope" }, { "setFlag": "toilet_checked" }]
+      }
+    },
+    "envelope": {
+      "names": ["봉투", "envelope"],
+      "hidden": true,
+      "takeable": true,
+      "description": "비닐에 싼 봉투. 안에는 당신의 사원증을 복사한 종이. 얼굴 사진 옆의 사번 자리가 검은 매직으로 칠해져 있다.\n뒷면에 적힌 글씨: \"네 번호를 기억하나? 기억 못 한다면 기록을 찾아라. 기록은 사무실에 있다.\"",
+      "onExamine": { "effects": [{ "setFlag": "envelope_seen" }] }
+    },
+    "sink": {
+      "names": ["세면대", "sink"],
+      "description": "금이 간 세면대. 수도꼭지를 돌려도 물은 나오지 않는다. 배수관 아래에 머리카락 뭉치가 걸려 있을 뿐이다."
+    },
+    "bath_door": {
+      "names": ["문", "door", "욕실문"],
+      "description": "철문. 4자리 다이얼 자물쇠가 달려 있고, 다이얼 장치에서 나온 철사가 문 위 산탄총의 방아쇠까지 이어진다. 오답이 세 번 쌓이면 당겨지도록 만들어졌다.",
+      "lock": "bath_lock"
+    },
+
+    "puppet": {
+      "names": ["인형", "빌리", "puppet", "세발자전거"],
+      "description": "세발자전거 위의 인형. 흰 얼굴에 붉은 소용돌이 뺨, 빨간 나비넥타이. 가슴에 카세트 녹음기가 끈으로 묶여 있다.",
+      "onExamine": {
+        "when": { "notFlag": "tape2_heard" },
+        "message": "인형의 턱이 딸깍거리며 테이프가 돈다.\n\n\"복도까지 왔군. 잘했어. 여기서부터 문은 다섯이다.\n냉동창고의 문은 안쪽에 손잡이가 없다. 들어가기 전에 무엇으로 받쳐 둘지 생각해라. 그 안의 냉기는 네 시간을 갉아먹는다. 네 몫은 폐기된 놈의 상자에 있다.\n사무실 문은 숫자를 원한다. 이 공장의 기록이 답을 안다. 틀릴 때마다 대가를 치른다.\n작업장 너머엔 세 개의 문이 있다. 하나만 살 길이다. 도면을 보지 않고 문을 고르는 건 도박이야. 도박은 네가 잘하던 일이었지.\n해는 동쪽에서 뜬다. 하지만 넌 늘 등을 돌리고 있었어.\"",
+        "effects": [{ "setFlag": "tape2_heard" }]
+      }
+    },
+    "board": {
+      "names": ["게시판", "board", "공지"],
+      "description": "누렇게 바랜 작업 공지.\n\"[출입 번호 갱신 – 주간] 사무실 키패드: 최중량 갈고리 번호 두 자리 + 최경량 갈고리 번호 두 자리. 폐기(붉은 X) 표시된 것은 집계에서 제외.\"\n\"[냉동창고 안전 수칙] 문은 자동으로 닫힘. 반드시 받침목을 괴고 들어갈 것. 사고 3건.\"\n\"[보일러] 기동 절차는 공장장실 매뉴얼 참조. 절차 위반 시 역류 위험.\"",
+      "onExamine": { "effects": [{ "setFlag": "board_seen" }] }
+    },
+    "hooks": {
+      "names": ["갈고리", "고기갈고리", "hooks", "hook", "레일"],
+      "description": "천장 레일에 매달린 고기 갈고리들. 각각 번호표와 무게표가 달려 있다.\n  07번 – 212kg\n  12번 – 98kg\n  19번 – 305kg\n  23번 – 41kg  (붉은 X 표시)\n  31번 – 176kg\n23번 갈고리는 비어 있고 표에 붉은 X 가 그어져 있다.",
+      "onExamine": { "effects": [{ "setFlag": "hooks_seen" }] }
+    },
+    "freezer_door": {
+      "names": ["냉동창고문", "냉동실문", "freezerdoor"],
+      "description": [
+        { "when": { "flag": "freezer_wedged" }, "text": "나무 쐐기를 문 밑에 단단히 괴어 두었다. 문은 손바닥 너비만큼 열린 채 멈춰 있다." },
+        { "text": "두꺼운 냉동창고 철문. 바깥쪽에만 손잡이가 있고 안쪽은 매끈하다. 경첩에 스프링이 달려 있어 손을 떼면 저절로 닫힌다. 문 밑에 무언가를 괴어 두지 않으면 안에서는 열 수 없을 것이다." }
+      ]
+    },
+    "office_door": {
+      "names": ["사무실문", "키패드", "keypad", "officedoor"],
+      "description": "'공장장실' 팻말이 붙은 문. 옆의 키패드가 초록빛으로 깜빡인다. 4자리. 키패드 아래 손글씨: \"오답은 전기로 답한다.\"",
+      "lock": "office_lock"
+    },
+    "exit_door": {
+      "names": ["철문", "출구문", "exitdoor", "gate"],
+      "description": [
+        { "when": { "solved": "pressure_lock" }, "text": "복도 끝의 두꺼운 철문. 위쪽 유압 실린더가 뒤로 물러나 있다. 이제 열쇠만 있으면 된다." },
+        { "text": "복도 끝의 두꺼운 철문. 열쇠 구멍이 있지만, 문 위쪽의 유압 실린더가 문을 무겁게 누르고 있다. 실린더 배관은 벽을 타고 작업장 쪽으로 사라진다." }
+      ],
+      "lock": "exit_lock"
+    },
+
+    "chalkboard": {
+      "names": ["칠판", "chalkboard"],
+      "description": "분필로 쓴 오늘 처리분.\n  소    ||||\n  돼지  |||| |||| ||\n  닭    |||| |||| |||| |||| ||||\n한쪽 구석에 흐릿하게: \"공구함은 발굽 달린 놈들만.\"",
+      "onExamine": { "effects": [{ "setFlag": "chalk_seen" }] }
+    },
+    "toolbox": {
+      "names": ["공구함", "toolbox"],
+      "description": "붉은 철제 공구함. 3자리 번호 자물쇠. 뚜껑에 스티커: \"소, 돼지. 순서대로.\"",
+      "lock": "toolbox_lock"
+    },
+    "torch": {
+      "names": ["토치", "토치램프", "torch", "버너"],
+      "hidden": true,
+      "takeable": true,
+      "description": "가스 토치. 흔들어 보니 가스가 반쯤 남았다. 불꽃이 세다.",
+      "onUse": {
+        "target": "ice",
+        "when": { "notFlag": "ice_melted" },
+        "failMessage": "얼음은 이미 녹였다.",
+        "message": "토치에 불을 붙이고 얼음덩이에 댄다. 치익. 얼음이 김을 내며 녹아내리고, 안에서 작은 열쇠가 바닥으로 떨어진다. 꼬리표에 '서랍'. (서랍열쇠)",
+        "effects": [{ "reveal": "drawer_key" }, { "setFlag": "ice_melted" }]
+      }
+    },
+    "workbench": {
+      "names": ["작업대", "workbench", "테이블"],
+      "description": "검게 마른 얼룩이 밴 작업대. 톱과 갈고리가 정렬되어 있다. 쓸 만한 것은 없다. 작업대 밑에 나무 쐐기가 굴러다닌다."
+    },
+    "wedge": {
+      "names": ["쐐기", "나무쐐기", "wedge", "받침목"],
+      "takeable": true,
+      "description": "문 밑에 괴어 두는 나무 쐐기. 닳아서 반들반들하다.",
+      "onUse": {
+        "target": "freezer_door",
+        "message": "냉동창고 문을 열고 문 밑에 쐐기를 발로 차 넣는다. 스프링이 밀어도 문은 손바닥 너비만큼 열린 채 버틴다.",
+        "effects": [{ "setFlag": "freezer_wedged" }, { "removeItem": "wedge" }]
+      }
+    },
+    "back_doors": {
+      "names": ["철문들", "뒷문", "doors", "남쪽벽"],
+      "description": "남쪽 벽의 철문 셋. 왼쪽, 가운데, 오른쪽. 똑같이 생겼고 표식은 없다. 문틈에 손을 대 보니 어느 쪽에서인가 뜨거운 바람이 새어 나오지만, 어느 문인지 분간할 수 없다."
+    },
+    "scratch": {
+      "names": ["긁힌자국", "자국", "손톱자국", "scratch"],
+      "description": "오른쪽 문 옆 벽에 손톱으로 새긴 글씨. \"오른쪽... 뜨겁다\" 글씨는 거기서 끊긴다."
+    },
+
+    "thermometer": {
+      "names": ["온도계", "thermometer"],
+      "description": "벽의 온도계. 영하 18도. 숨을 쉴 때마다 코 안이 얼어붙는다."
+    },
+    "box07": {
+      "names": ["07번상자", "7번상자", "상자07", "상자7", "box07", "box7"],
+      "description": "07번 철제 상자. 뚜껑이 얼어붙어 있다. 열려면 힘껏 뜯어야 한다.",
+      "onInteract": {
+        "message": "얼어붙은 뚜껑을 힘껏 뜯어낸다. 안에는 얼어붙은 고깃덩이뿐이다. 손가락 감각이 사라진다.",
+        "effects": [{ "addPenalty": 60 }]
+      }
+    },
+    "box12": {
+      "names": ["12번상자", "상자12", "box12"],
+      "description": "12번 철제 상자. 뚜껑이 얼어붙어 있다.",
+      "onInteract": {
+        "message": "얼어붙은 뚜껑을 힘껏 뜯어낸다. 얼음과 고깃덩이. 아무것도 없다. 손이 굳어 시간이 흘러간다.",
+        "effects": [{ "addPenalty": 60 }]
+      }
+    },
+    "box19": {
+      "names": ["19번상자", "상자19", "box19"],
+      "description": "19번 철제 상자. 뚜껑이 얼어붙어 있다.",
+      "onInteract": {
+        "message": "얼어붙은 뚜껑을 힘껏 뜯어낸다. 안은 텅 비어 있다. 헛수고였다.",
+        "effects": [{ "addPenalty": 60 }]
+      }
+    },
+    "box23": {
+      "names": ["23번상자", "상자23", "box23"],
+      "description": [
+        { "when": { "flag": "box23_open" }, "text": "뚜껑이 뜯긴 23번 상자. 안에 얼음덩이가 들어 있다." },
+        { "text": "23번 철제 상자. 붉은 X 가 그어진 폐기표가 붙어 있다. 뚜껑이 얼어붙어 있다." }
+      ],
+      "onInteract": [
+        {
+          "when": { "notFlag": "box23_open" },
+          "message": "얼어붙은 뚜껑을 뜯어낸다. 안에는 고기 대신 주먹만 한 얼음덩이 하나. 얼음 속에 작은 열쇠가 얼어 있다.",
+          "effects": [{ "reveal": "ice" }, { "setFlag": "box23_open" }]
+        },
+        { "message": "이미 열었다." }
+      ]
+    },
+    "box31": {
+      "names": ["31번상자", "상자31", "box31"],
+      "description": "31번 철제 상자. 뚜껑이 얼어붙어 있다.",
+      "onInteract": {
+        "message": "얼어붙은 뚜껑을 힘껏 뜯어낸다. 얼어붙은 고깃덩이뿐이다. 손가락이 하얗게 질린다.",
+        "effects": [{ "addPenalty": 60 }]
+      }
+    },
+    "ice": {
+      "names": ["얼음덩이", "얼음", "ice"],
+      "hidden": true,
+      "description": [
+        { "when": { "flag": "ice_melted" }, "text": "녹아서 물웅덩이가 된 얼음." },
+        { "text": "주먹만 한 얼음덩이. 안에 작은 열쇠가 또렷이 보인다. 손으로는 어림도 없다. 센 불이 필요하다." }
+      ]
+    },
+    "drawer_key": {
+      "names": ["서랍열쇠", "drawerkey"],
+      "hidden": true,
+      "takeable": true,
+      "description": "'서랍' 꼬리표가 달린 작은 열쇠. 아직 차갑다."
+    },
+    "frost": {
+      "names": ["서리", "frost", "벽"],
+      "description": "두껍게 낀 서리. 누군가 손가락으로 무언가를 썼다가 문질러 지운 자국이 있다. 숫자였던 것 같지만 읽을 수 없다."
+    },
+
+    "desk": {
+      "names": ["책상", "desk", "서랍", "drawer"],
+      "description": [
+        { "when": { "solved": "drawer_lock" }, "text": "서랍이 열린 책상. 안에서 도면과 매뉴얼, 녹음기를 꺼냈다." },
+        { "text": "공장장의 책상. 서랍 하나가 잠겨 있다. 작은 열쇠 구멍. 책상 위에는 먼지와 재떨이." }
+      ],
+      "lock": "drawer_lock",
+      "onExamine": {
+        "when": { "notFlag": "desk_checked" },
+        "message": "재떨이 옆에 일회용 라이터가 놓여 있다.",
+        "effects": [{ "reveal": "lighter" }, { "setFlag": "desk_checked" }]
+      }
+    },
+    "lighter": {
+      "names": ["라이터", "lighter"],
+      "hidden": true,
+      "takeable": true,
+      "description": "일회용 라이터. 가스가 거의 바닥이라 불꽃이 손톱만 하다.",
+      "onUse": {
+        "target": "ice",
+        "message": "손톱만 한 불꽃을 얼음에 댄다. 표면이 살짝 젖는가 싶더니 불이 꺼진다. 이걸로는 어림도 없다. 더 센 불이 필요하다."
+      }
+    },
+    "files": {
+      "names": ["서류철", "인사기록", "서류", "files"],
+      "description": "인사 기록 카드 묶음. 네 장이 남아 있다.\n  박민수 – 입사 2009년 3월. 그해 14번째 채용. 사번 0914\n  최유진 – 입사 2012년 8월. 그해 3번째 채용. 사번 1203\n  강태오 – 입사 2012년 11월. 그해 9번째 채용. 사번 1209\n  이도현 – 입사 2011년 5월. 그해 7번째 채용. 사번 ████ (검게 지워짐)\n마지막 카드 여백에 붉은 펜으로: \"기억나?\"",
+      "onExamine": { "effects": [{ "setFlag": "files_seen" }] }
+    },
+    "calendar": {
+      "names": ["달력", "calendar"],
+      "description": "2014년 11월에서 멈춘 달력. 21일에 붉은 글씨로 '마지막 조업'. 그 아래 연필로 작게: \"이 날짜를 넣고 싶겠지.\""
+    },
+    "computer": {
+      "names": ["컴퓨터", "computer", "모니터"],
+      "description": "먼지 쌓인 구형 컴퓨터. 전원 버튼을 눌러도 아무 반응이 없다. 모니터에 포스트잇: \"비번은 사번\" 하지만 켜지지 않는 컴퓨터에는 의미가 없다."
+    },
+    "frame": {
+      "names": ["액자", "frame", "사진"],
+      "description": "직원 단체 사진. 뒷줄 끝에 당신이 서 있다. 시계를 보고 있다."
+    },
+    "safe": {
+      "names": ["금고", "safe"],
+      "description": [
+        { "when": { "solved": "safe_lock" }, "text": "열린 금고. 가스통 밸브는 잠겨 있다." },
+        { "text": "4자리 다이얼 금고. 옆에 세워진 가스통에서 호스가 다이얼 뒤 장치로 이어진다. 라벨: \"오답 3회 – 밸브 개방\". 다이얼 아래 작게: \"네 사번.\"" }
+      ],
+      "lock": "safe_lock"
+    },
+    "blueprint": {
+      "names": ["도면", "평면도", "blueprint", "설계도"],
+      "hidden": true,
+      "takeable": true,
+      "description": "공장 평면도. 상단에 'N' 표시. 도면 상단이 북쪽이다.\n복도는 북쪽, 작업장은 복도의 남쪽. 작업장 남벽 출입구 3개소:\n  동측 – 기계실(보일러)\n  중앙 – 소각 슈트\n  서측 – 소각 슈트\n여백에 붉은 펜: \"문에는 표식이 없다. 네가 어느 쪽을 보고 서 있는지 생각해.\"",
+      "onExamine": { "effects": [{ "setFlag": "blueprint_seen" }] }
+    },
+    "manual": {
+      "names": ["매뉴얼", "설명서", "manual"],
+      "hidden": true,
+      "takeable": true,
+      "description": "기름때 묻은 보일러 매뉴얼.\n\"기동 절차 – 반드시 순서대로.\n  ① 배출 밸브를 열어 고인 물을 뺀다.\n  ② 급수 밸브를 연다.\n  ③ 증기 밸브를 연다.\n절차를 어기면 증기가 역류한다.\n출구 유압 잠금 해제: 압력 조절기를 정격 압력의 절반으로 설정. 소수점 없이 두 자리.\"",
+      "onExamine": { "effects": [{ "setFlag": "manual_seen" }] }
+    },
+    "office_tape": {
+      "names": ["녹음기", "테이프", "recorder", "tape"],
+      "hidden": true,
+      "description": "서랍 안에 있던 소형 녹음기. 재생 버튼에 붉은 화살표.",
+      "onExamine": {
+        "when": { "notFlag": "tape3_heard" },
+        "message": "\"여기까지 온 걸 보니 손을 더럽혔군.\n금고 안에 네가 나갈 열쇠가 있다. 하지만 금고는 네 기억력을 시험한다. 넌 네 사번조차 기억하지 못했지. 옆의 가스통이 세 번째 오답을 기다린다.\n열쇠만으로 문은 열리지 않는다. 문은 압력으로 눌려 있다. 보일러를 살려라. 순서를 어기면 증기가 답을 대신 말해 줄 거다.\"",
+        "effects": [{ "setFlag": "tape3_heard" }]
+      }
+    },
+    "exit_key": {
+      "names": ["출구열쇠", "놋쇠열쇠", "정문열쇠", "exitkey", "큰열쇠"],
+      "hidden": true,
+      "takeable": true,
+      "description": "묵직한 놋쇠 열쇠. 꼬리표에 '정문'. 복도 끝 철문의 열쇠 구멍에 맞을 것이다."
+    },
+
+    "boiler_unit": {
+      "names": ["보일러", "boiler", "노"],
+      "description": [
+        { "when": { "flag": "boiler_on" }, "text": "낮게 울리며 돌아가는 보일러. 배관이 뜨겁다." },
+        { "text": "녹슨 구형 보일러. 배관에 밸브 셋이 붙어 있다. 배출, 급수, 증기. 이음새마다 오래된 증기 자국. 순서를 잘못 열면 어떻게 되는지 보여 주는 자국이다." }
+      ]
+    },
+    "nameplate": {
+      "names": ["명판", "plate", "nameplate"],
+      "description": "보일러 몸통의 놋쇠 명판.\n\"형식 KB-7  /  정격 압력 6.4 bar  /  최대 8.0 bar\n제조 1987. 정비 기록 없음.\"",
+      "onExamine": { "effects": [{ "setFlag": "plate_seen" }] }
+    },
+    "valve_drain": {
+      "names": ["배출밸브", "배출", "drain"],
+      "description": "'배출' 이라고 쓰인 손잡이 밸브. 아래 배관이 바닥의 배수구로 이어진다.",
+      "onInteract": [
+        {
+          "when": { "notFlag": "v_drain" },
+          "message": "배출 밸브를 돌린다. 쉬익. 배관에 고여 있던 검은 물이 배수구로 빠져나간다.",
+          "effects": [{ "setFlag": "v_drain" }]
+        },
+        { "message": "배출 밸브는 이미 열려 있다." }
+      ]
+    },
+    "valve_water": {
+      "names": ["급수밸브", "급수", "water"],
+      "description": "'급수' 라고 쓰인 손잡이 밸브. 배관이 천장의 물탱크로 이어진다.",
+      "onInteract": [
+        { "when": { "flag": "v_water" }, "message": "급수 밸브는 이미 열려 있다." },
+        {
+          "when": { "flag": "v_drain" },
+          "message": "급수 밸브를 돌린다. 물이 콸콸 흘러들어 보일러 몸통이 차오르는 소리가 난다.",
+          "effects": [{ "setFlag": "v_water" }]
+        },
+        {
+          "message": "급수 밸브를 돌린다. 배출되지 않고 고여 있던 물 위로 새 물이 밀려들며 배관이 부풀어 오른다. 이음새가 비명을 지른다.",
+          "effects": [{ "gameOver": "이음새가 터지고 끓는 증기가 얼굴을 덮친다. 순서가 있었다. 매뉴얼은 그걸 말하고 있었다." }]
+        }
+      ]
+    },
+    "valve_steam": {
+      "names": ["증기밸브", "증기", "steam"],
+      "description": "'증기' 라고 쓰인 커다란 휠 밸브. 배관이 벽을 타고 복도 쪽으로 사라진다.",
+      "onInteract": [
+        { "when": { "flag": "boiler_on" }, "message": "증기 밸브는 이미 열려 있다. 보일러가 돌아가고 있다." },
+        {
+          "when": { "flag": "v_water" },
+          "message": "증기 휠을 돌린다. 보일러가 낮게 울리며 살아나고, 배관이 따뜻해진다. 벽의 압력 조절기에 불이 들어온다.",
+          "effects": [{ "setFlag": "boiler_on" }, { "reveal": "regulator" }]
+        },
+        {
+          "message": "물도 없는 빈 보일러에 증기 휠을 돌린다. 노 안에서 뭔가 잘못된 소리가 난다.",
+          "effects": [{ "gameOver": "압력이 역류하고 노 뚜껑이 튕겨 나온다. 급수부터 했어야 했다." }]
+        }
+      ]
+    },
+    "gauge": {
+      "names": ["압력계", "gauge"],
+      "description": [
+        { "when": { "solved": "pressure_lock" }, "text": "바늘이 3.2 에서 안정됐다. 복도 쪽 배관으로 압력이 걸리는 소리가 난다." },
+        { "when": { "flag": "boiler_on" }, "text": "바늘이 천천히 오른다. 조절기로 설정값을 맞춰야 한다." },
+        { "text": "바늘이 0 에 누워 있다." }
+      ]
+    },
+    "regulator": {
+      "names": ["조절기", "압력조절기", "regulator", "다이얼"],
+      "hidden": true,
+      "description": "두 자리 숫자를 맞추는 압력 조절 다이얼. 라벨: \"설정 오류 시 안전밸브 개방 – 압력 복구까지 5분.\"",
+      "lock": "pressure_lock"
+    }
+  },
+
+  "locks": {
+    "shackle_lock": {
+      "type": "key",
+      "keyItem": "shackle_key",
+      "consume": true,
+      "onSolve": { "message": "열쇠가 뻑뻑하게 돌아가고 족쇄가 발목에서 떨어진다. 살갗이 쓸려 있다." }
+    },
+    "bath_lock": {
+      "type": "code",
+      "answer": "1050",
+      "requires": { "solved": "shackle_lock" },
+      "requiresMessage": "족쇄 사슬이 짧아 문까지 손이 닿지 않는다.",
+      "failMessage": "다이얼이 걸리지 않는다. 문 위에서 딸깍, 방아쇠 장치가 한 칸 움직이는 소리.",
+      "maxAttempts": 3,
+      "onMaxAttempts": {
+        "effects": [{ "gameOver": "세 번째 오답. 문 위의 방아쇠가 당겨진다. 거울은 거짓말을 하지 않았다." }]
+      },
+      "onSolve": { "message": "철컥. 자물쇠가 풀리고 방아쇠 장치의 철사가 느슨해진다. 문이 열렸다." }
+    },
+    "office_lock": {
+      "type": "code",
+      "answer": "1912",
+      "failMessage": "키패드가 붉게 번쩍이고, 손끝으로 전기가 튄다.",
+      "onFail": {
+        "message": "한동안 손이 저려 아무것도 할 수 없다.",
+        "effects": [{ "addPenalty": 180 }]
+      },
+      "onSolve": { "message": "삑. 키패드가 초록으로 바뀌고 사무실 문의 잠금이 풀렸다." }
+    },
+    "toolbox_lock": {
+      "type": "code",
+      "answer": "410",
+      "failMessage": "자물쇠가 헛돈다.",
+      "onFail": { "effects": [{ "addPenalty": 60 }] },
+      "onSolve": {
+        "message": "자물쇠가 풀렸다. 공구함 안에 가스 토치가 들어 있다.",
+        "effects": [{ "reveal": "torch" }]
+      }
+    },
+    "drawer_lock": {
+      "type": "key",
+      "keyItem": "drawer_key",
+      "consume": true,
+      "onSolve": {
+        "message": "서랍이 열린다. 접힌 도면, 기름때 묻은 매뉴얼, 그리고 소형 녹음기가 들어 있다.",
+        "effects": [{ "reveal": "blueprint" }, { "reveal": "manual" }, { "reveal": "office_tape" }]
+      }
+    },
+    "safe_lock": {
+      "type": "code",
+      "answer": "1107",
+      "failMessage": "다이얼이 걸리지 않는다. 옆의 가스통 밸브가 딸깍 한 칸 돌아간다.",
+      "maxAttempts": 3,
+      "onMaxAttempts": {
+        "effects": [{ "gameOver": "쉬이익. 가스통 밸브가 완전히 열린다. 달콤한 냄새가 방을 채우고 눈앞이 흐려진다. 넌 네 번호조차 기억하지 못했다." }]
+      },
+      "onSolve": {
+        "message": "묵직한 소리와 함께 금고가 열린다. 안에는 놋쇠 열쇠 하나. 꼬리표에 '정문'. (출구열쇠)",
+        "effects": [{ "reveal": "exit_key" }]
+      }
+    },
+    "pressure_lock": {
+      "type": "code",
+      "answer": "32",
+      "requires": { "flag": "boiler_on" },
+      "requiresMessage": "조절기에 불이 들어오지 않았다. 보일러가 돌아야 한다.",
+      "failMessage": "안전밸브가 열리며 증기가 빠져나간다. 압력이 다시 차오를 때까지 기다려야 한다.",
+      "onFail": { "effects": [{ "addPenalty": 300 }] },
+      "onSolve": { "message": "바늘이 3.2 에서 멈춘다. 벽 너머 복도 쪽에서 유압 실린더가 물러나는 둔탁한 소리가 들린다." }
+    },
+    "exit_lock": {
+      "type": "key",
+      "keyItem": "exit_key",
+      "requires": { "solved": "pressure_lock" },
+      "requiresMessage": "열쇠는 돌아가지만 문은 유압에 눌려 꿈쩍도 하지 않는다. 어딘가에서 압력을 걸어야 한다.",
+      "onSolve": { "message": "열쇠가 돌아가고, 빗장이 빠지는 소리가 복도에 울린다." }
+    }
+  },
+
+  "hints": [
+    { "when": { "notFlag": "tape1_heard" }, "text": "녹음기를 조사해서 규칙부터 들으세요." },
+    { "when": { "notFlag": "mirror_checked" }, "text": "거울 틀이 벽에서 들떠 있습니다. 조사해 보세요." },
+    { "when": { "notFlag": "tub_fished" }, "text": "철사를 주워 욕조에 사용하면 배수구의 것을 건질 수 있습니다." },
+    { "when": { "notSolved": "shackle_lock" }, "text": "족쇄열쇠를 주워 족쇄에 사용하세요." },
+    { "when": { "notFlag": "clock_seen" }, "text": "벽시계와 벽글씨를 조사하세요." },
+    { "when": { "notFlag": "writing_seen" }, "text": "벽글씨를 읽어 보세요. 무엇이 거짓말을 하는지 말해 줍니다." },
+    { "when": { "notSolved": "bath_lock" }, "text": "벽시계는 거짓말을 합니다. 거울에 비친 시계가 가리키는 시각을 네 자리로 입력하세요. 기회는 세 번뿐입니다." },
+    { "when": { "notFlag": "envelope_seen" }, "text": "욕실 변기 물탱크 안의 봉투를 주워서 읽어 두세요. 나중에 필요합니다." },
+    { "when": { "notFlag": "tape2_heard" }, "text": "복도의 인형을 조사하면 이 층의 규칙을 들을 수 있습니다." },
+    { "when": { "notSolved": "toolbox_lock" }, "text": "작업장 칠판의 셈 표시를 세고, 공구함 스티커가 말하는 두 종류만 순서대로 이어 세 자리를 입력하세요." },
+    { "when": { "notFlag": "freezer_wedged" }, "text": "냉동창고에 들어가기 전에, 작업장의 나무쐐기를 복도의 냉동창고문에 사용하세요. 안 그러면 나올 수 없습니다." },
+    { "when": { "notFlag": "box23_open" }, "text": "게시판의 폐기 규칙과 갈고리 표를 보면 폐기된 번호를 알 수 있습니다. 냉동창고에서 그 번호의 상자를 '열기' 하세요. 다른 상자는 시간만 잃습니다." },
+    { "when": { "notFlag": "ice_melted" }, "text": "공구함의 토치를 얼음덩이에 사용하세요. 라이터로는 안 됩니다." },
+    { "when": { "notSolved": "office_lock" }, "text": "게시판 규칙대로: 폐기(X)된 것을 뺀 나머지 갈고리 중 최중량 번호 두 자리, 그 뒤에 최경량 번호 두 자리." },
+    { "when": { "notSolved": "drawer_lock" }, "text": "얼음에서 나온 서랍열쇠를 사무실 책상에 사용하세요." },
+    { "when": { "notFlag": "files_seen" }, "text": "사무실 서류철의 인사 기록을 읽으세요." },
+    { "when": { "notSolved": "safe_lock" }, "text": "다른 직원들의 사번과 입사 정보를 비교하면 규칙이 보입니다. 입사 연도 뒤 두 자리 + 그해 채용 순번 두 자리. 달력의 날짜가 아닙니다. 기회는 세 번뿐입니다." },
+    { "when": { "notFlag": "blueprint_seen" }, "text": "서랍에서 나온 도면을 조사하세요. 작업장 뒷문 중 어느 것이 살 길인지 적혀 있습니다." },
+    { "when": { "notFlag": "manual_seen" }, "text": "서랍의 매뉴얼을 읽으세요. 밸브 순서와 압력 설정이 적혀 있습니다." },
+    { "when": { "notFlag": "boiler_entered" }, "text": "도면 상단이 북쪽입니다. 작업장에서 남쪽 벽을 마주 보고 서면 동쪽은 당신의 왼손 쪽입니다." },
+    { "when": { "notFlag": "boiler_on" }, "text": "매뉴얼 순서대로 밸브를 '돌리기' 하세요: 배출 → 급수 → 증기. 순서를 어기면 죽습니다." },
+    { "when": { "notSolved": "pressure_lock" }, "text": "명판의 정격 압력(6.4)의 절반을 소수점 없이 두 자리로 조절기에 입력하세요." },
+    { "when": { "notSolved": "exit_lock" }, "text": "압력이 걸렸으면 금고의 출구열쇠를 복도 끝 철문에 사용하고 밖으로 나가세요." }
+  ],
+
+  "endings": {
+    "success": "철문 틈으로 새벽빛이 쏟아진다. 등 뒤 복도의 스피커에서 마지막 녹음이 재생된다.\n\"축하한다, 도현. 넌 살아남았다. 오늘부터 네 시간은 네 것이다. 낭비하지 마라.\"\n당신은 시계를 보지 않고 걸어 나갔다.",
+    "timeout": "복도의 스피커가 켜진다.\n\"시간이 다 됐다, 도현.\"\n건물의 모든 빗장이 동시에 내려앉는 소리. 이번 게임에서 너는 시계를 보지 않았다. 그게 문제였다."
+  }
+}
