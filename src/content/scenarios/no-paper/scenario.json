@@ -1,0 +1,300 @@
+{
+  "id": "no-paper",
+  "title": "휴지 없는 화장실",
+  "timeLimitSec": 1200,
+  "hintPenaltySec": 60,
+  "retryPenaltySec": 60,
+  "startRoom": "stall",
+  "intro": "점심으로 먹은 마라탕이 문제였다.\n회사 화장실 맨 끝 칸. 모든 일이 끝나고 손을 뻗은 순간, 휴지걸이가 텅 비어 있다는 것을 깨달았다.\n점심시간이 끝나기까지 20분. 그 안에 이 칸을 인간의 존엄을 지킨 채 나가야 한다.\n옆 칸에서 부장님의 헛기침 소리가 들린다.",
+
+  "rooms": {
+    "stall": {
+      "name": "화장실 칸",
+      "description": [
+        { "when": { "flag": "clean" }, "text": "맨 끝 칸. 모든 것이 해결된 뒤의 평화. 이제 손만 씻으면 된다." },
+        { "text": "회사 화장실 맨 끝 칸. 변기, 텅 빈 휴지걸이, 낙서투성이 칸막이. 문 잠금쇠는 예전부터 뒤틀려 있었다. 바지는 발목에 있다." }
+      ],
+      "objects": ["holder", "roll_core", "toilet", "stall_door", "pocket", "coin", "phone", "receipt", "graffiti", "partition", "vent", "wet_paper"],
+      "exits": [
+        { "names": ["세면대", "밖", "out", "sink"], "to": "sink", "lockedBy": "door_lock", "lockedMessage": "문 잠금쇠가 뒤틀려 손으로는 안 돌아간다. 홈에 뭔가 납작한 걸 끼워 돌려야 한다." }
+      ]
+    },
+    "sink": {
+      "name": "세면대",
+      "description": "세면대 셋과 거울. 벽에 핸드드라이어와 종이타월 디스펜서, 구석에 청소도구함이 있다. 창문은 얼굴 하나 들어갈 크기다. 복도로 나가는 문이 보인다.",
+      "objects": ["closet", "dispenser", "dryer", "mirror", "soap", "window", "bin", "manager_key", "gloves", "paper_towel"],
+      "exits": [
+        { "names": ["칸", "화장실칸", "stall", "안"], "to": "stall" },
+        { "names": ["복도", "hallway", "exit"], "to": "hallway" }
+      ]
+    },
+    "hallway": {
+      "name": "복도",
+      "description": "화장실 문을 열고 복도로 나선다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true,
+      "onEnter": [
+        {
+          "when": { "notFlag": "clean" },
+          "message": "바지를 한 손으로 붙든 채 복도로 나선다. 마침 점심을 먹고 돌아오던 팀 전원과 눈이 마주친다. 김대리가 천천히 휴대폰을 든다.",
+          "effects": [{ "gameOver": "사회적 사망. 이 회사에서 당신의 이름은 오늘부터 '그 사람'이다." }]
+        },
+        {
+          "when": { "notFlag": "washed" },
+          "message": "복도에서 김대리가 묻는다. \"손은 씻었어?\" 당신은 대답하지 못한다. 김대리는 당신이 들고 있던 커피를 다시는 받지 않을 것이다.",
+          "effects": [{ "gameOver": "다음 날 아침, 회사 전체가 안다. 탕비실에 '손 씻기' 포스터가 붙었다. 당신 사진이 붙어 있다." }]
+        }
+      ]
+    }
+  },
+
+  "objects": {
+    "holder": {
+      "names": ["휴지걸이", "holder"],
+      "description": "텅 빈 휴지걸이. 마지막 한 칸까지 알뜰하게 뜯겨 나갔다. 앞사람을 원망한다.",
+      "onExamine": {
+        "when": { "notFlag": "holder_checked" },
+        "message": "휴지심만 덩그러니 남아 있다. 심 안쪽에 볼펜으로 '미안 ㅠ' 이라고 적혀 있다.",
+        "effects": [{ "reveal": "roll_core" }, { "setFlag": "holder_checked" }]
+      }
+    },
+    "roll_core": {
+      "names": ["휴지심", "심", "core"],
+      "hidden": true,
+      "takeable": true,
+      "description": "빈 휴지심. 두꺼운 종이지만 그 용도로는 쓸 수 없다. 절대로.",
+      "onUse": { "message": "잠깐 진지하게 고민했다. 아니다. 사람이 그러면 안 된다." }
+    },
+    "toilet": {
+      "names": ["변기", "toilet", "레버"],
+      "description": [
+        { "when": { "flag": "paper_in_toilet" }, "text": "변기 안에 두루마리 휴지가 둥둥 떠 있다. 절대 물을 내리면 안 된다." },
+        { "text": "평범한 양변기. 레버는 멀쩡하다. 지금은 아무것도 내리면 안 된다." }
+      ],
+      "onInteract": [
+        {
+          "when": { "flag": "paper_in_toilet" },
+          "message": "습관적으로 레버를 눌렀다. 콸콸. 유일한 희망이 소용돌이를 그리며 사라진다.",
+          "effects": [{ "gameOver": "휴지가 떠내려갔다. 당신의 존엄도 함께. 옆 칸에서 부장님이 '괜찮나?' 하고 묻는다." }]
+        },
+        { "message": "콸콸. 시원한 소리. 아무 의미도 없다." }
+      ]
+    },
+    "stall_door": {
+      "names": ["칸막이문", "문", "door", "잠금쇠"],
+      "description": [
+        { "when": { "solved": "door_lock" }, "text": "겨우 열어 둔 칸막이문. 나갈 때는 바지부터 챙기자." },
+        { "text": "칸막이문. 잠금쇠가 뒤틀려 손가락으로는 안 돌아간다. 잠금쇠에 일자 홈이 있다. 납작하고 단단한 게 필요하다." }
+      ],
+      "lock": "door_lock"
+    },
+    "pocket": {
+      "names": ["주머니", "바지", "pocket"],
+      "description": "발목에 걸린 바지의 주머니. 손이 닿는다.",
+      "onExamine": {
+        "when": { "notFlag": "pocket_checked" },
+        "message": "주머니를 뒤진다. 500원 동전 하나, 배터리 3%짜리 휴대폰, 그리고 편의점 영수증.",
+        "effects": [{ "reveal": "coin" }, { "reveal": "phone" }, { "reveal": "receipt" }, { "setFlag": "pocket_checked" }]
+      }
+    },
+    "coin": {
+      "names": ["동전", "500원", "coin"],
+      "hidden": true,
+      "takeable": true,
+      "description": "500원 동전. 납작하고 단단하다."
+    },
+    "phone": {
+      "names": ["휴대폰", "폰", "phone", "핸드폰"],
+      "hidden": true,
+      "takeable": true,
+      "description": [
+        { "when": { "flag": "texted" }, "text": "배터리 0%. 검은 화면에 당신 얼굴만 비친다." },
+        { "text": "배터리 3%. 팀 단톡방이 열려 있다. 메시지 하나는 보낼 수 있을 것 같다. (누르기 휴대폰)" }
+      ],
+      "onInteract": [
+        {
+          "when": { "notFlag": "texted" },
+          "message": "떨리는 손으로 단톡방에 쓴다. \"화장실 끝 칸. 휴지 없음. 살려줘.\"\n1초 만에 읽음 12.\n김대리: ㅋㅋㅋㅋㅋㅋㅋㅋ\n박과장: 사진 좀\n김대리: 알겠어 간다 ㅋㅋ\n\n30초 뒤, 화장실 문이 열리고 발소리. \"받아!\" 칸막이 위로 두루마리 휴지가 포물선을 그리며 날아온다.\n손을 뻗는다. 스친다. 퐁당.\n휴지는 변기 안에 떠 있다. 김대리는 웃으며 나갔다. 휴대폰이 꺼진다.",
+          "effects": [{ "reveal": "wet_paper" }, { "setFlag": "texted" }, { "setFlag": "paper_in_toilet" }]
+        },
+        { "message": "전원 버튼을 눌러 본다. 배터리 0%. 사과 로고도 안 뜬다." }
+      ]
+    },
+    "receipt": {
+      "names": ["영수증", "receipt"],
+      "hidden": true,
+      "takeable": true,
+      "description": "편의점 영수증. '두루마리 휴지 30롤 12,900원'. 어제 사서 차 트렁크에 넣어 뒀다. 지금 이 순간 세상에서 가장 쓸모없는 종이다.",
+      "onUse": { "message": "영수증을 펼쳐 본다. 손바닥만 하다. 감열지다. 아니다. 이건 아니다." }
+    },
+    "graffiti": {
+      "names": ["낙서", "벽낙서", "graffiti", "벽"],
+      "description": "칸막이 낙서 모음.\n\"부장님 생신 3월 15일 — 아무도 안 옴\"\n\"청소함 비번은 부장님 생일임. 관리 아저씨가 그럼 (월일)\"\n\"휴지 없으면 옆 칸에 부탁하세요 ← 옆 칸도 없음\"",
+      "onExamine": { "effects": [{ "setFlag": "graffiti_seen" }] }
+    },
+    "partition": {
+      "names": ["칸막이", "partition", "옆칸"],
+      "description": "칸막이 아래 틈으로 옆 칸의 구두가 보인다. 부장님 구두다. 옆 칸에서도 휴지걸이가 헛도는 소리가 난다. 부장님도 같은 처지다. 도움은 기대할 수 없다."
+    },
+    "vent": {
+      "names": ["환풍구", "vent"],
+      "description": "천장의 환풍구. 영화라면 저기로 탈출했겠지만 손바닥만 하다."
+    },
+    "wet_paper": {
+      "names": ["젖은휴지", "젖은두루마리", "wetpaper"],
+      "hidden": true,
+      "takeable": true,
+      "description": "변기에서 건진 두루마리 휴지. 흠뻑 젖어 축 늘어졌다. 이대로는 쓸 수 없다. 말려야 한다.",
+      "onTake": {
+        "message": "눈을 감고 변기에 손을 넣어 건져 올린다. 인생에서 가장 긴 2초였다.",
+        "effects": [{ "clearFlag": "paper_in_toilet" }]
+      },
+      "onUse": {
+        "dryer": {
+          "when": { "hasItem": "gloves" },
+          "failMessage": "변기물에 젖은 휴지를 맨손으로 드라이어에 3분? 고무장갑 없이는 못 하겠다.",
+          "message": "고무장갑을 끼고 젖은 휴지를 드라이어에 댄다. 웅— 3초. 꺼짐. 웅— 3초. 꺼짐. 손을 흔들어 다시 켠다. 스물세 번째에 휴지가 바싹 말랐다.",
+          "effects": [{ "removeItem": "wet_paper" }, { "addItem": "dry_paper" }, { "addPenalty": 120 }]
+        }
+      }
+    },
+
+    "closet": {
+      "names": ["청소도구함", "청소함", "closet"],
+      "description": "구석의 철제 청소도구함. 4자리 번호 자물쇠. 문에 '관리실' 스티커.",
+      "lock": "closet_lock"
+    },
+    "dispenser": {
+      "names": ["디스펜서", "종이타월디스펜서", "dispenser"],
+      "description": [
+        { "when": { "solved": "dispenser_lock" }, "text": "열린 디스펜서. 종이타월이 한 묶음 들어 있었다." },
+        { "text": "종이타월 디스펜서. 손을 대도 아무것도 안 나온다. 옆면에 관리용 열쇠 구멍. 안에 뭔가 들어 있는 게 보인다. 총무팀은 채워 놓고 잠가 뒀다." }
+      ],
+      "lock": "dispenser_lock"
+    },
+    "dryer": {
+      "names": ["핸드드라이어", "드라이어", "dryer"],
+      "description": "벽의 핸드드라이어. 3초 켜졌다가 꺼지는 절전형이다. 뭔가 말리려면 손을 계속 흔들어야 한다.",
+      "onInteract": { "message": "손을 댄다. 웅—. 3초 뒤 꺼진다. 미지근하다." }
+    },
+    "mirror": {
+      "names": ["거울", "mirror"],
+      "description": "거울 속의 당신. 바지를 붙든 채 종종걸음. 이 모습을 아무도 못 봤기를."
+    },
+    "soap": {
+      "names": ["비누", "손세정제", "soap"],
+      "description": "물비누. 반쯤 남았다.",
+      "onInteract": [
+        {
+          "when": { "flag": "clean" },
+          "message": "비누를 짜서 30초 동안 손을 씻는다. 생일 축하 노래를 속으로 두 번 부른다. 손목까지. 손톱 밑까지.",
+          "effects": [{ "setFlag": "washed" }]
+        },
+        { "message": "손을 씻는다. 그런데 아직 근본 문제가 해결되지 않았다. 순서가 틀렸다." }
+      ]
+    },
+    "window": {
+      "names": ["창문", "window"],
+      "description": "얼굴 하나 들어갈 크기의 환기창. 3층이다. 바지도 못 올린 채 뛰어내릴 순 없다."
+    },
+    "bin": {
+      "names": ["휴지통", "쓰레기통", "bin"],
+      "description": "휴지통. 안을 들여다본다. 잠깐 생각한다. 고개를 젓는다."
+    },
+    "manager_key": {
+      "names": ["관리열쇠", "열쇠", "key"],
+      "hidden": true,
+      "takeable": true,
+      "description": "'총무' 꼬리표가 달린 작은 열쇠. 디스펜서 옆면 구멍에 맞을 것 같다."
+    },
+    "gloves": {
+      "names": ["고무장갑", "장갑", "gloves"],
+      "hidden": true,
+      "takeable": true,
+      "description": "분홍색 고무장갑. 청소 아저씨의 것. 만능이다."
+    },
+    "paper_towel": {
+      "names": ["종이타월", "타월", "papertowel"],
+      "hidden": true,
+      "takeable": true,
+      "description": "갈색 재생 종이타월 한 묶음. 사포 같다. 단독으로 쓰기엔 용기가 필요하다. 그리고 변기에 넣으면 막힌다고 적혀 있다.",
+      "onUse": {
+        "toilet": {
+          "message": "종이타월을 변기에 넣고 레버를 누른다. 안 내려간다. 물이 차오른다. 넘친다. 옆 칸으로 흘러간다. 부장님이 소리친다.",
+          "effects": [{ "gameOver": "변기가 막혔다. 부장님 구두가 젖었다. 인사고과는 끝났다." }]
+        }
+      }
+    },
+    "dry_paper": {
+      "names": ["마른휴지", "drypaper"],
+      "takeable": true,
+      "description": "드라이어로 말린 두루마리 휴지. 바싹 말라 쭈글쭈글하고, 만지면 바스라진다. 두 겹밖에 안 남았다. 뭔가로 보강해야 한다.",
+      "onUse": { "message": "마른 휴지를 뜯는다. 바스락. 부서진다. 두 겹으로는 안 된다. 보강이 필요하다." }
+    },
+    "perfect_paper": {
+      "names": ["완벽한휴지", "휴지", "perfectpaper"],
+      "takeable": true,
+      "description": "겉은 부드러운 두루마리 휴지, 속은 튼튼한 종이타월. 인류 역사상 가장 완벽한 휴지.",
+      "onUse": {
+        "when": { "inRoom": "stall" },
+        "failMessage": "여기서? 칸으로 돌아가자.",
+        "message": "(이하 생략)\n\n…끝났다. 인간의 존엄을 되찾았다. 바지를 올린다. 세상이 다시 아름답다.",
+        "effects": [{ "removeItem": "perfect_paper" }, { "setFlag": "clean" }]
+      }
+    }
+  },
+
+  "recipes": [
+    {
+      "inputs": ["dry_paper", "paper_towel"],
+      "output": "perfect_paper",
+      "message": "마른 휴지로 종이타월을 감싼다. 겉은 부드럽고 속은 튼튼하다. 눈물이 날 것 같다."
+    }
+  ],
+
+  "locks": {
+    "door_lock": {
+      "type": "key",
+      "keyItem": "coin",
+      "onSolve": { "message": "동전을 잠금쇠 홈에 끼우고 돌린다. 끼익. 문이 열린다. 바지를 한 손으로 붙들고 나갈 준비가 됐다." }
+    },
+    "closet_lock": {
+      "type": "code",
+      "answer": "0315",
+      "failMessage": "자물쇠가 안 열린다. 낙서를 잘 읽자.",
+      "onSolve": {
+        "message": "철컥. 청소도구함이 열린다. 대걸레, 분홍 고무장갑, 그리고 '총무' 꼬리표가 달린 작은 열쇠.",
+        "effects": [{ "reveal": "manager_key" }, { "reveal": "gloves" }]
+      }
+    },
+    "dispenser_lock": {
+      "type": "key",
+      "keyItem": "manager_key",
+      "consume": true,
+      "onSolve": {
+        "message": "열쇠를 돌리자 디스펜서 옆면이 열린다. 갈색 종이타월 한 묶음이 들어 있다.",
+        "effects": [{ "reveal": "paper_towel" }]
+      }
+    }
+  },
+
+  "hints": [
+    { "when": { "notFlag": "pocket_checked" }, "text": "바지 주머니를 조사하세요. 발목에 있어도 손은 닿습니다." },
+    { "when": { "notFlag": "texted" }, "text": "휴대폰을 주워서 '누르기 휴대폰' 으로 단톡방에 도움을 청하세요." },
+    { "when": { "flag": "paper_in_toilet" }, "text": "변기에 빠진 휴지를 주우세요. 물은 절대 내리지 마세요." },
+    { "when": { "notSolved": "door_lock" }, "text": "동전을 칸막이문에 사용하면 잠금쇠가 돌아갑니다." },
+    { "when": { "notFlag": "graffiti_seen" }, "text": "칸막이 낙서를 읽어 보세요. 청소함 비번이 적혀 있습니다." },
+    { "when": { "notSolved": "closet_lock" }, "text": "부장님 생일을 월일 네 자리로 청소도구함에 입력하세요." },
+    { "when": { "notSolved": "dispenser_lock" }, "text": "청소함의 관리열쇠를 디스펜서에 사용하세요." },
+    { "when": { "hasItem": "wet_paper" }, "text": "고무장갑을 가진 채로 젖은휴지를 핸드드라이어에 사용하세요." },
+    { "when": { "notFlag": "clean" }, "text": "'조합 마른휴지 종이타월' 로 완벽한휴지를 만들고, 칸으로 돌아가 사용하세요." },
+    { "when": { "notFlag": "washed" }, "text": "나가기 전에 세면대에서 '누르기 비누' 로 손을 씻으세요. 김대리가 복도에서 기다립니다." },
+    { "text": "이제 복도로 나가세요. 당당하게." }
+  ],
+
+  "endings": {
+    "success": "화장실 문을 열고 복도로 나선다. 김대리가 복도에 서 있다.\n\"괜찮았어?\"\n\"응. 고마워.\"\n\"근데 그거 변기에 빠진 거 아니야?\"\n당신은 대답하지 않고 자리로 돌아간다. 트렁크의 휴지 30롤을 오늘 반드시 회사에 가져다 놓을 것이다.",
+    "timeout": "점심시간이 끝났다. 화장실 문이 열리고 발소리가 늘어난다. 누군가 당신 칸 문을 두드린다. \"안에 계세요?\" 당신은 영원히 대답하지 않기로 한다."
+  }
+}
