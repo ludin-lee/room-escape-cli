@@ -5,6 +5,8 @@ export const ALIASES = {
   use: ["use", "사용"],
   enter: ["enter", "입력", "코드"],
   go: ["go", "이동", "가기"],
+  interact: ["interact", "돌리기", "당기기", "누르기", "열기", "조작", "turn", "pull", "push", "open"],
+  combine: ["combine", "조합", "합치기", "결합", "만들기", "craft"],
   inventory: ["inventory", "가방", "인벤", "i"],
   hint: ["hint", "힌트", "h"],
   help: ["help", "도움말", "?"],
@@ -20,7 +22,7 @@ for (const [verb, list] of Object.entries(ALIASES)) {
 }
 
 const CONNECTORS = new Set(["on", "to", "with", "at", "in", "에", "으로", "로", "에다", "에다가"]);
-const PARTICLES = ["에서", "으로", "을", "를", "이", "가", "에", "로"];
+const PARTICLES = ["에서", "으로", "이랑", "을", "를", "이", "가", "에", "로", "와", "과", "랑"];
 
 /**
  * @returns {{ verb: string|null, target: string|null, secondary: string|null, args: string[] }}

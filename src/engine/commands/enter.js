@@ -1,3 +1,6 @@
+import { apply } from "../effects.js";
+import { evaluate } from "../conditions.js";
+
 function normalize(code) {
   return String(code).toLowerCase().replace(/[\s\-_.]/g, "");
 }
@@ -25,9 +28,26 @@ export default function enter(ctx) {
   const lock = ctx.scenario.locks[lockId];
   if (lock.type !== "code") return [ctx.error(`${target.names[0]}은(는) 코드로 열 수 없다.`)];
   if (ctx.state.solvedLocks.includes(lockId)) return [{ type: "text", body: "이미 열려 있다." }];
-
-  if (normalize(code) !== normalize(lock.answer)) {
-    return [ctx.error(lock.failMessage ?? "아무 일도 일어나지 않는다.")];
+  if (lock.requires && !evaluate(lock.requires, ctx.state)) {
+    return [ctx.error(lock.requiresMessage ?? "지금은 손댈 수 없다.")];
   }
-  return ctx.solveLock(lockId);
+
+  if (normalize(code) === normalize(lock.answer)) return ctx.solveLock(lockId);
+
+  // 오답: failMessage → onFail 효과 → 횟수 제한(maxAttempts) 처리
+  const messages = [ctx.error(lock.failMessage ?? "아무 일도 일어나지 않는다.")];
+  const attempts = (ctx.state.attempts[lockId] ?? 0) + 1;
+  ctx.state.attempts[lockId] = attempts;
+  if (lock.onFail?.message) messages.push({ type: "text", body: lock.onFail.message });
+  messages.push(...apply(lock.onFail?.effects, ctx.state));
+
+  if (lock.maxAttempts) {
+    if (attempts >= lock.maxAttempts) {
+      if (lock.onMaxAttempts?.message) messages.push({ type: "text", body: lock.onMaxAttempts.message });
+      messages.push(...apply(lock.onMaxAttempts?.effects, ctx.state));
+    } else {
+      messages.push({ type: "system", body: `(남은 기회 ${lock.maxAttempts - attempts}번)` });
+    }
+  }
+  return messages;
 }

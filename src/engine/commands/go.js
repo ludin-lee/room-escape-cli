@@ -1,4 +1,5 @@
 import { josa } from "../josa.js";
+import { pickHook, runHook } from "../hooks.js";
 
 export default function go(ctx) {
   const room = ctx.currentRoom();
@@ -14,5 +15,10 @@ export default function go(ctx) {
     return [ctx.error(exit.lockedMessage ?? "잠겨 있다.")];
   }
   ctx.state.room = exit.to;
-  return [{ type: "system", body: `${josa(ctx.currentRoom().name, "으로/로")} 이동했다.` }, ...ctx.describeRoom()];
+  const messages = [{ type: "system", body: `${josa(ctx.currentRoom().name, "으로/로")} 이동했다.` }, ...ctx.describeRoom()];
+
+  // 방 입장 훅 (함정, 연출). 배열이면 when 을 만족하는 첫 항목만.
+  const hook = pickHook(ctx.currentRoom().onEnter, ctx.state);
+  if (hook) messages.push(...runHook(hook, ctx.state));
+  return messages;
 }

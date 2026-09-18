@@ -3,6 +3,7 @@ import { parse, matchName } from "./parser.js";
 import { remainingMs, formatMs } from "./timer.js";
 import { apply } from "./effects.js";
 import { COMMANDS } from "./commands/index.js";
+import { describe } from "./hooks.js";
 
 const UI_VERBS = new Set(["save", "load", "quit"]);
 
@@ -10,7 +11,12 @@ const UI_VERBS = new Set(["save", "load", "quit"]);
  * 순수 게임 엔진. 입력 문자열 → 메시지 배열.
  * 메시지: { type: "text"|"room"|"item"|"error"|"system"|"hint"|"ending", body }
  */
+const DEFAULT_RETRY_PENALTY_SEC = 180;
+
 export class Game {
+  /** 직전 턴 시작 시점의 상태. 함정으로 죽었을 때 retry() 가 여기로 되돌린다. */
+  #checkpoint = null;
+
   /**
    * @param {object} scenario
    * @param {{ now?: () => number, state?: object }} [opts]
@@ -53,6 +59,7 @@ export class Game {
     if (this.remainingMs() <= 0) {
       return this.#lose();
     }
+    this.#checkpoint = { snapshot: serialize(state, this.now()), at: this.now() };
 
     const parsed = parse(input);
     if (!parsed.verb) {
@@ -66,6 +73,9 @@ export class Game {
     const ctx = this.#context(parsed);
     const messages = COMMANDS[parsed.verb](ctx);
 
+    // 함정(gameOver 효과)으로 이미 끝났으면 그대로 반환
+    if (state.status !== "playing") return messages;
+
     if (this.currentRoom().isExit) {
       state.status = "won";
       messages.push({ type: "ending", body: this.scenario.endings.success });
@@ -75,8 +85,36 @@ export class Game {
     return messages;
   }
 
+  /** 함정으로 죽은 직후에만 재도전할 수 있다 (시간 초과는 불가). */
+  canRetry() {
+    return this.state.status === "lost" && this.state.lostBy === "trap" && this.#checkpoint != null;
+  }
+
+  /**
+   * 재도전: 죽은 턴 직전 상태로 되돌린다. 죽고 나서 고민한 시간도 흐른 것으로 치고,
+   * scenario.retryPenaltySec (기본 180초) 만큼 남은 시간을 더 깎는다. 자물쇠 오답 횟수는 초기화한다.
+   */
+  retry() {
+    if (!this.canRetry()) return [this.error("지금은 재도전할 수 없다.")];
+    const { snapshot, at } = this.#checkpoint;
+    const now = this.now();
+    const state = deserialize(snapshot, now);
+    state.elapsedMs += now - at;
+    const penaltySec = this.scenario.retryPenaltySec ?? DEFAULT_RETRY_PENALTY_SEC;
+    state.penaltyMs += penaltySec * 1000;
+    state.attempts = {};
+    state.retries = (state.retries ?? 0) + 1;
+    this.state = state;
+    this.#checkpoint = null;
+
+    const messages = [{ type: "system", body: `죽기 직전으로 돌아왔다. 다시 해 보자. (재도전 ${state.retries}회, 남은 시간 ${Math.round(penaltySec / 60)}분 차감)` }];
+    if (this.remainingMs() <= 0) return [...messages, ...this.#lose()];
+    return [...messages, ...this.describeRoom()];
+  }
+
   #lose() {
     this.state.status = "lost";
+    this.state.lostBy = "timeout";
     return [{ type: "ending", body: this.scenario.endings.timeout }];
   }
 
@@ -115,7 +153,7 @@ export class Game {
 
   describeRoom() {
     const room = this.currentRoom();
-    const messages = [{ type: "room", body: room.name }, { type: "text", body: room.description }];
+    const messages = [{ type: "room", body: room.name }, { type: "text", body: describe(room.description, this.state) }];
     const objs = this.visibleObjects().map((o) => o.names[0]);
     if (objs.length) messages.push({ type: "text", body: `보이는 것: ${objs.join(", ")}` });
     const exits = room.exits.map((e) => e.names[0]);
@@ -152,6 +190,7 @@ export class Game {
       findObject: (t, o) => this.findObject(t, o),
       findExit: (t) => this.findExit(t),
       describeRoom: () => this.describeRoom(),
+      describe: (d) => describe(d, this.state),
       error: (b) => this.error(b),
       solveLock: (id, o) => this.solveLock(id, o),
     };

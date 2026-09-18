@@ -1,4 +1,5 @@
 import { apply } from "../effects.js";
+import { pickHook } from "../hooks.js";
 import { josa } from "../josa.js";
 
 export default function take(ctx) {
@@ -13,9 +14,10 @@ export default function take(ctx) {
 
   ctx.state.inventory.push(obj.id);
   const messages = [{ type: "item", body: `${josa(obj.names[0], "을/를")} 가방에 넣었다.` }];
-  if (obj.onTake) {
-    messages.push(...apply(obj.onTake.effects, ctx.state));
-    if (obj.onTake.message) messages.push({ type: "text", body: obj.onTake.message });
+  const hook = pickHook(obj.onTake, ctx.state);
+  if (hook) {
+    messages.push(...apply(hook.effects, ctx.state));
+    if (hook.message) messages.push({ type: "text", body: hook.message });
   }
   return messages;
 }

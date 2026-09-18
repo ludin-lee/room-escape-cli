@@ -12,12 +12,12 @@ export function title() {
   return styleText(["cyan"], art) + styleText(["gray"], "        텍스트 방탈출 · '도움말' 로 명령어 확인\n");
 }
 
-export function win(elapsedText, hintsUsed) {
+export function win(elapsedText, hintsUsed, retries = 0) {
   return styleText(["bold", "green"], `
   ╔══════════════════════════╗
   ║       탈 출   성 공       ║
   ╚══════════════════════════╝
-`) + styleText(["gray"], `  걸린 시간 ${elapsedText} · 힌트 ${hintsUsed}회\n`);
+`) + styleText(["gray"], `  걸린 시간 ${elapsedText} · 힌트 ${hintsUsed}회${retries ? ` · 재도전 ${retries}회` : ""}\n`);
 }
 
 export function lose() {
@@ -26,4 +26,12 @@ export function lose() {
   ║       시 간   초 과       ║
   ╚══════════════════════════╝
 `);
+}
+
+export function gameOver() {
+  return styleText(["bold", "red"], `
+  ╔══════════════════════════╗
+  ║       게 임   오 버       ║
+  ╚══════════════════════════╝
+`) + styleText(["gray"], "  실수는 용납되지 않았다.\n");
 }
