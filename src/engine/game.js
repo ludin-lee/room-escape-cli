@@ -163,6 +163,19 @@ export class Game {
 
   error(body) { return { type: "error", body }; }
 
+  /** "여기에 없습니다" 에러. 토큰을 포함하는 이름이 있으면 후보로 덧붙인다 ("휴지" → 젖은휴지, 휴지걸이). */
+  notFound(token, { includeRoom = true, includeInventory = true } = {}) {
+    const candidates = [
+      ...(includeRoom ? this.visibleObjects() : []),
+      ...(includeInventory ? this.inventoryObjects() : []),
+    ];
+    const t = token.toLowerCase();
+    const hits = [...new Set(candidates.filter((o) => o.names.some((n) => n.toLowerCase().includes(t))).map((o) => o.names[0]))];
+    const where = includeRoom ? "여기에 없습니다." : "가방에 없습니다.";
+    const hint = hits.length ? ` 혹시: ${hits.join(", ")}?` : "";
+    return this.error(`'${token}' 은(는) ${where}${hint}`);
+  }
+
   /** 자물쇠 해결 처리 (enter / use 공용) */
   solveLock(lockId, { consumeItem = null } = {}) {
     const lock = this.scenario.locks[lockId];
@@ -192,6 +205,7 @@ export class Game {
       describeRoom: () => this.describeRoom(),
       describe: (d) => describe(d, this.state),
       error: (b) => this.error(b),
+      notFound: (t, o) => this.notFound(t, o),
       solveLock: (id, o) => this.solveLock(id, o),
     };
   }

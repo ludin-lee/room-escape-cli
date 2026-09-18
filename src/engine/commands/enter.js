@@ -12,7 +12,7 @@ export default function enter(ctx) {
   let target;
   if (ctx.secondary) {
     target = ctx.findObject(ctx.secondary, { includeInventory: false });
-    if (!target) return [ctx.error(`'${ctx.secondary}' 은(는) 여기에 없습니다.`)];
+    if (!target) return [ctx.notFound(ctx.secondary, { includeInventory: false })];
     if (!target.lock) return [ctx.error(`${target.names[0]}에는 입력할 곳이 없다.`)];
   } else {
     const locked = ctx.visibleObjects().filter((o) => o.lock && ctx.scenario.locks[o.lock]?.type === "code");

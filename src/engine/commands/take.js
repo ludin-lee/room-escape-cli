@@ -8,7 +8,7 @@ export default function take(ctx) {
   if (!obj) {
     const inBag = ctx.findObject(ctx.target, { includeRoom: false });
     if (inBag) return [ctx.error(`${josa(inBag.names[0], "은/는")} 이미 가방에 있습니다.`)];
-    return [ctx.error(`'${ctx.target}' 은(는) 여기에 없습니다.`)];
+    return [ctx.notFound(ctx.target, { includeInventory: false })];
   }
   if (!obj.takeable) return [ctx.error(`${josa(obj.names[0], "은/는")} 가져갈 수 없습니다.`)];
 

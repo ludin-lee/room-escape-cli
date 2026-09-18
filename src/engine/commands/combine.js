@@ -12,9 +12,9 @@ import { josa } from "../josa.js";
 export default function combine(ctx) {
   if (!ctx.target || !ctx.secondary) return [ctx.error("무엇과 무엇을 조합할까요? 예: 조합 방망이 못")];
   const a = ctx.findObject(ctx.target, { includeRoom: false });
-  if (!a) return [ctx.error(`가방에 '${ctx.target}' 이(가) 없습니다.`)];
+  if (!a) return [ctx.notFound(ctx.target, { includeRoom: false })];
   const b = ctx.findObject(ctx.secondary, { includeRoom: false });
-  if (!b) return [ctx.error(`가방에 '${ctx.secondary}' 이(가) 없습니다.`)];
+  if (!b) return [ctx.notFound(ctx.secondary, { includeRoom: false })];
   if (a.id === b.id) return [ctx.error("같은 물건끼리는 조합할 수 없다.")];
 
   const recipe = (ctx.scenario.recipes ?? []).find((r) => {

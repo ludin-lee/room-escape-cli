@@ -4,7 +4,7 @@ import { pickHook } from "../hooks.js";
 export default function examine(ctx) {
   if (!ctx.target) return [ctx.error("무엇을 조사할까요? 예: 조사 책상")];
   const obj = ctx.findObject(ctx.target);
-  if (!obj) return [ctx.error(`'${ctx.target}' 은(는) 여기에 없습니다.`)];
+  if (!obj) return [ctx.notFound(ctx.target)];
 
   const messages = [{ type: "text", body: ctx.describe(obj.description) }];
   const lockId = obj.lock;

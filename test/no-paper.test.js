@@ -64,3 +64,14 @@ test("no-paper: 장갑 없이는 못 말리고, 완벽한휴지는 칸에서만,
   h.run("사용 종이타월 변기");
   assert.equal(h.status, "lost");
 });
+
+test("없는 대상 에러에 비슷한 이름을 제안한다", async () => {
+  const g = await fresh();
+  run(g, ["조사 주머니", "줍기 휴대폰", "누르기 휴대폰"]);
+  const m = g.run("줍기 휴지")[0];
+  assert.equal(m.type, "error");
+  assert.match(m.body, /혹시: 휴지걸이, 젖은휴지\?/);
+  assert.doesNotMatch(g.run("줍기 자전거")[0].body, /혹시/);
+  assert.match(g.run("사용 폰")[0].body ?? "", /./); // 폰은 별칭이라 정상 매칭
+  assert.match(g.run("사용 대폰 변기")[0].body, /가방에 없습니다\. 혹시: 휴대폰\?/);
+});

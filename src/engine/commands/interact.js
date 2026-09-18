@@ -9,7 +9,7 @@ import { josa } from "../josa.js";
 export default function interact(ctx) {
   if (!ctx.target) return [ctx.error("무엇을 조작할까요? 예: 돌리기 밸브")];
   const obj = ctx.findObject(ctx.target);
-  if (!obj) return [ctx.error(`'${ctx.target}' 은(는) 여기에 없습니다.`)];
+  if (!obj) return [ctx.notFound(ctx.target)];
 
   const hook = pickHook(obj.onInteract, ctx.state);
   if (!hook) {

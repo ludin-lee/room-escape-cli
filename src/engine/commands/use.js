@@ -5,7 +5,7 @@ import { josa } from "../josa.js";
 export default function use(ctx) {
   if (!ctx.target) return [ctx.error("무엇을 사용할까요? 예: 사용 열쇠 문")];
   const item = ctx.findObject(ctx.target, { includeRoom: false });
-  if (!item) return [ctx.error(`가방에 '${ctx.target}' 이(가) 없습니다.`)];
+  if (!item) return [ctx.notFound(ctx.target, { includeRoom: false })];
 
   // 대상 없이 사용: onUse 훅만 실행
   if (!ctx.secondary) {
@@ -14,7 +14,7 @@ export default function use(ctx) {
   }
 
   const target = ctx.findObject(ctx.secondary, { includeInventory: false });
-  if (!target) return [ctx.error(`'${ctx.secondary}' 은(는) 여기에 없습니다.`)];
+  if (!target) return [ctx.notFound(ctx.secondary, { includeInventory: false })];
 
   // 1) key 타입 자물쇠에 맞는 아이템
   const lock = target.lock ? ctx.scenario.locks[target.lock] : null;
