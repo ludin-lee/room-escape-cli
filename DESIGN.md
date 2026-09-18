@@ -59,7 +59,13 @@ room-escape/
 │   │       │   └── scenario.json
 │   │       ├── midnight-ward/ # "자정의 병동" (20분, 방 4개, 퍼즐 5개)
 │   │       │   └── scenario.json
-│   │       └── observatory/  # "폐쇄된 천문대" (45분, 방 7개, 퍼즐 9개)
+│   │       ├── observatory/  # "폐쇄된 천문대" (45분, 방 7개, 퍼즐 9개)
+│   │       │   └── scenario.json
+│   │       ├── jigsaw/       # "직쏘의 게임" (60분, 방 8개, 퍼즐 14개, 즉사 함정 5종)
+│   │       │   └── scenario.json
+│   │       ├── zombie-street/ # "죽은 자들의 거리" (45분, 방 7개, 조합 레시피 5개, 함정 3종)
+│   │       │   └── scenario.json
+│   │       └── no-paper/     # "휴지 없는 화장실" (20분, 방 3개, 코믹. 출구 방 onEnter 로 조건부 엔딩)
 │   │           └── scenario.json
 │   └── save/
 │       └── store.js          # ~/.room-escape/saves/<slot>.json 읽기/쓰기 (UI 전용)
