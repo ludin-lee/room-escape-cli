@@ -23,7 +23,7 @@ export function win(elapsedText, hintsUsed, retries = 0) {
 export function lose() {
   return styleText(["bold", "red"], `
   ╔══════════════════════════╗
-  ║       시 간   초 과       ║
+  ║       시 간   초 과        ║
   ╚══════════════════════════╝
 `);
 }
@@ -31,7 +31,7 @@ export function lose() {
 export function gameOver() {
   return styleText(["bold", "red"], `
   ╔══════════════════════════╗
-  ║       게 임   오 버       ║
+  ║       게 임   오 버        ║
   ╚══════════════════════════╝
 `) + styleText(["gray"], "  실수는 용납되지 않았다.\n");
 }

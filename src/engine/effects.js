@@ -4,7 +4,8 @@ function remove(arr, v) { const i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1)
 /**
  * 효과 목록을 상태에 적용하고, 생성된 메시지 배열을 반환한다.
  * 지원: addItem, removeItem, setFlag, clearFlag, reveal, hide, moveTo, message,
- *       addPenalty (초. 남은 시간을 줄이는 함정), gameOver (메시지. 즉시 패배)
+ *       addPenalty (초. 남은 시간을 줄이는 함정), gameOver (메시지. 즉시 패배),
+ *       scare (아스키 아트. 타자 효과 없이 한 번에 출력하는 점프 스케어)
  */
 export function apply(effects, state) {
   const messages = [];
@@ -12,13 +13,14 @@ export function apply(effects, state) {
     for (const [key, v] of Object.entries(effect)) {
       switch (key) {
         case "addItem": add(state.inventory, v); break;
-        case "removeItem": remove(state.inventory, v); break;
+        case "removeItem": remove(state.inventory, v); add(state.hidden, v); break; // 원래 있던 방에 다시 나타나지 않게
         case "setFlag": add(state.flags, v); break;
         case "clearFlag": remove(state.flags, v); break;
         case "reveal": add(state.revealed, v); remove(state.hidden, v); break;
         case "hide": remove(state.revealed, v); add(state.hidden, v); break;
         case "moveTo": state.room = v; break;
         case "message": messages.push({ type: "text", body: v }); break;
+        case "scare": messages.push({ type: "scare", body: v }); break;
         case "addPenalty":
           state.penaltyMs += v * 1000;
           messages.push({ type: "system", body: `(남은 시간이 ${formatPenalty(v)} 줄었습니다)` });

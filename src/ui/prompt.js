@@ -67,6 +67,7 @@ export async function runLoop(game, scenario, { input = stdin, output = stdout, 
   // 함정으로 죽으면 게임 오버 화면을 띄우고 재도전 여부를 묻는다. 수락하면 죽기 직전 턴으로 돌아간다.
   const askRetry = () => {
     say(screens.gameOver());
+    if (rl.closed) return; // 파이프 입력이 끝난 뒤에는 물을 수 없다 (남은 줄이 있으면 루프가 이어서 읽는다)
     const penalty = Math.round((scenario.retryPenaltySec ?? 180) / 60);
     rl.setPrompt(styleText(["yellow"], `다시 도전할까요? 죽기 직전으로 돌아갑니다. (남은 시간 -${penalty}분) (Y/n) `));
     rl.prompt();

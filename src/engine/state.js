@@ -35,6 +35,7 @@ export function createState(scenario, now) {
     attempts: {},
     retries: 0,
     hintsUsed: 0,
+    hintsSeen: [],
     elapsedMs: 0,
     penaltyMs: 0,
     startedAt: now,
@@ -54,7 +55,7 @@ export function serialize(state, now) {
 export function deserialize(snapshot, now) {
   const base = {
     inventory: [], flags: [], revealed: [], hidden: [], solvedLocks: [], attempts: {}, retries: 0,
-    hintsUsed: 0, elapsedMs: 0, penaltyMs: 0, status: "playing",
+    hintsUsed: 0, hintsSeen: [], elapsedMs: 0, penaltyMs: 0, status: "playing",
   };
   return { ...base, ...structuredClone(snapshot), startedAt: now };
 }

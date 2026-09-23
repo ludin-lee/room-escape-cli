@@ -7,6 +7,7 @@ export default function examine(ctx) {
   if (!obj) return [ctx.notFound(ctx.target)];
 
   const messages = [{ type: "text", body: ctx.describe(obj.description) }];
+  if (obj.hintCode) messages.push({ type: "system", body: `(힌트 코드 ${obj.hintCode} — '힌트 ${obj.hintCode}')` });
   const lockId = obj.lock;
   if (lockId && ctx.state.solvedLocks.includes(lockId)) {
     messages.push({ type: "text", body: "자물쇠는 이미 풀려 있다." });

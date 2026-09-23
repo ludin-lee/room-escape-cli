@@ -158,6 +158,7 @@ export class Game {
     if (objs.length) messages.push({ type: "text", body: `보이는 것: ${objs.join(", ")}` });
     const exits = room.exits.map((e) => e.names[0]);
     if (exits.length) messages.push({ type: "text", body: `출구: ${exits.join(", ")}` });
+    if (room.hintCode) messages.push({ type: "system", body: `(힌트 코드 ${room.hintCode} — '힌트 ${room.hintCode}')` });
     return messages;
   }
 
@@ -180,11 +181,7 @@ export class Game {
   solveLock(lockId, { consumeItem = null } = {}) {
     const lock = this.scenario.locks[lockId];
     this.state.solvedLocks.push(lockId);
-    if (consumeItem) {
-      const i = this.state.inventory.indexOf(consumeItem);
-      if (i >= 0) this.state.inventory.splice(i, 1);
-    }
-    const messages = [];
+    const messages = consumeItem ? apply([{ removeItem: consumeItem }], this.state) : [];
     if (lock.onSolve?.message) messages.push({ type: "text", body: lock.onSolve.message });
     messages.push(...apply(lock.onSolve?.effects, this.state));
     return messages;

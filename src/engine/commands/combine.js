@@ -30,12 +30,7 @@ export default function combine(ctx) {
 
   const consume = recipe.consume ?? true;
   const toRemove = consume === true ? recipe.inputs : Array.isArray(consume) ? consume : [];
-  for (const id of toRemove) {
-    const i = ctx.state.inventory.indexOf(id);
-    if (i >= 0) ctx.state.inventory.splice(i, 1);
-  }
-
-  const messages = [];
+  const messages = apply(toRemove.map((id) => ({ removeItem: id })), ctx.state);
   if (recipe.message) messages.push({ type: "text", body: recipe.message });
   if (recipe.output) {
     if (!ctx.state.inventory.includes(recipe.output)) ctx.state.inventory.push(recipe.output);
