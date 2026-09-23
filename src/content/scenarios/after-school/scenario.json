@@ -1,0 +1,143 @@
+{
+  "id": "after-school",
+  "title": "방과 후 교실",
+  "timeLimitSec": 900,
+  "hintPenaltySec": 60,
+  "startRoom": "classroom",
+  "intro": "책상에 엎드려 깜빡 잠들었다. 눈을 뜨니 교실은 텅 비었고 창밖은 어둑하다.\n교실 문은 잠겨 있고, 경비 아저씨는 정문을 잠그고 퇴근하는 중이다.\n15분 안에 운동장으로 나가야 한다.",
+
+  "rooms": {
+    "classroom": {
+      "name": "교실",
+      "description": "3학년 2반 교실. 칠판에 오늘 날짜가 적혀 있고, 교탁과 책상들이 줄지어 있다. 뒤쪽 벽에 사물함이 있다.",
+      "objects": ["blackboard", "podium", "note", "locker", "class_key", "window", "class_door"],
+      "exits": [
+        { "names": ["복도", "hallway", "corridor"], "to": "hallway", "lockedBy": "class_lock", "lockedMessage": "교실 문은 밖에서 잠겨 있다. 열쇠가 필요하다." }
+      ]
+    },
+    "hallway": {
+      "name": "복도",
+      "description": "불 꺼진 긴 복도. 벽에 게시판과 교훈 명판이 붙어 있다. 복도 끝 정문에는 숫자 키패드가 달려 있다.",
+      "objects": ["bulletin", "plaque", "extinguisher", "gate"],
+      "exits": [
+        { "names": ["교실", "classroom"], "to": "classroom" },
+        { "names": ["운동장", "yard", "정문", "밖", "outside"], "to": "yard", "lockedBy": "gate_lock", "lockedMessage": "정문은 잠겨 있다. 키패드에 번호를 넣어야 한다." }
+      ]
+    },
+    "yard": {
+      "name": "운동장",
+      "description": "선선한 저녁 바람. 운동장 너머로 집으로 가는 길이 보인다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+
+  "objects": {
+    "blackboard": {
+      "names": ["칠판", "blackboard", "board"],
+      "description": "분필 글씨.\n\"3월 14일 (금)  당번: 서준, 지우\n숙제: 수학 익힘책 42쪽\"",
+      "onExamine": { "effects": [{ "setFlag": "board_seen" }] }
+    },
+    "podium": {
+      "names": ["교탁", "podium"],
+      "description": "선생님 교탁. 아래 칸에 출석부와 분필이 있다.",
+      "onExamine": {
+        "when": { "notFlag": "podium_checked" },
+        "message": "출석부 사이에 접힌 쪽지가 끼어 있다.",
+        "effects": [{ "reveal": "note" }, { "setFlag": "podium_checked" }]
+      }
+    },
+    "note": {
+      "names": ["쪽지", "note", "메모"],
+      "hidden": true,
+      "takeable": true,
+      "description": "삐뚤빼뚤한 글씨.\n\"서준아, 네 사물함 비번 또 까먹었지? 오늘 날짜잖아! - 지우\"",
+      "onExamine": { "effects": [{ "setFlag": "note_seen" }] }
+    },
+    "locker": {
+      "names": ["사물함", "locker", "락커"],
+      "description": [
+        { "when": { "solved": "locker_lock" }, "text": "'박서준' 이름표가 붙은 사물함. 문이 열려 있고 교과서와 체육복이 보인다." },
+        { "text": "'박서준' 이름표가 붙은 사물함. 3자리 번호 자물쇠가 걸려 있다." }
+      ],
+      "lock": "locker_lock"
+    },
+    "class_key": {
+      "names": ["교실열쇠", "classkey", "열쇠", "key"],
+      "hidden": true,
+      "takeable": true,
+      "description": "'3-2' 라고 적힌 꼬리표가 달린 열쇠."
+    },
+    "window": {
+      "names": ["창문", "window"],
+      "description": "3층이다. 창살까지 있어서 이쪽으로는 못 나간다.",
+      "onInteract": { "message": "창문을 열어 봤다. 시원한 바람과 창살. 그뿐이다." }
+    },
+    "class_door": {
+      "names": ["문", "door", "교실문"],
+      "description": "앞문. 열쇠 구멍이 있다.",
+      "lock": "class_lock"
+    },
+
+    "bulletin": {
+      "names": ["게시판", "bulletin", "공지"],
+      "description": "행정실 공지.\n\"야간에 정문을 이용할 때는 키패드에 우리 학교 개교 연도 네 자리를 입력하세요.\"",
+      "onExamine": { "effects": [{ "setFlag": "bulletin_seen" }] }
+    },
+    "plaque": {
+      "names": ["명판", "plaque", "교훈"],
+      "description": "놋쇠 명판.\n\"1987년 3월 개교  ·  교훈: 바르게, 슬기롭게\"",
+      "onExamine": { "effects": [{ "setFlag": "plaque_seen" }] }
+    },
+    "extinguisher": {
+      "names": ["소화기", "extinguisher"],
+      "description": "빨간 소화기. 점검표에 '이상 없음'. 지금은 쓸 일이 없다."
+    },
+    "gate": {
+      "names": ["키패드", "keypad", "정문문"],
+      "description": "정문 옆의 숫자 키패드. 4자리.",
+      "lock": "gate_lock"
+    }
+  },
+
+  "locks": {
+    "locker_lock": {
+      "type": "code",
+      "answer": "314",
+      "failMessage": "자물쇠가 열리지 않는다.",
+      "onSolve": {
+        "message": "딸깍. 사물함이 열렸다. 교과서 위에 열쇠가 하나 놓여 있다.",
+        "effects": [{ "reveal": "class_key" }]
+      }
+    },
+    "class_lock": {
+      "type": "key",
+      "keyItem": "class_key",
+      "consume": true,
+      "onSolve": { "message": "열쇠가 돌아가고 교실 문이 열렸다." }
+    },
+    "gate_lock": {
+      "type": "code",
+      "answer": "1987",
+      "failMessage": "삐— 키패드가 빨갛게 깜빡인다.",
+      "onSolve": { "message": "삑. 초록불과 함께 정문 잠금이 풀렸다." }
+    }
+  },
+
+  "hints": [
+    { "when": { "notFlag": "podium_checked" }, "text": "교탁을 조사해 보세요." },
+    { "when": { "notFlag": "note_seen" }, "text": "쪽지를 주워서 읽어 보세요." },
+    { "when": { "notFlag": "board_seen" }, "text": "칠판에 오늘 날짜가 적혀 있습니다." },
+    { "when": { "notSolved": "locker_lock" }, "text": "오늘 날짜(월과 일)를 세 자리로 사물함에 입력하세요." },
+    { "when": { "notSolved": "class_lock" }, "text": "사물함 안의 열쇠를 줍고 문에 사용하세요." },
+    { "when": { "notFlag": "bulletin_seen" }, "text": "복도 게시판을 읽어 보세요." },
+    { "when": { "notFlag": "plaque_seen" }, "text": "복도의 명판에 개교 연도가 있습니다." },
+    { "when": { "notSolved": "gate_lock" }, "text": "개교 연도 네 자리를 키패드에 입력하세요." }
+  ],
+
+  "endings": {
+    "success": "정문을 밀고 운동장으로 뛰어나갔다. 뒤에서 경비 아저씨가 \"야! 너 아직 있었냐!\" 하고 소리친다. 당신은 학교를 탈출했다.",
+    "timeout": "복도 끝에서 철컥, 정문이 잠기는 소리가 들렸다. 오늘 밤은 교실에서 자야 할 것 같다."
+  }
+}

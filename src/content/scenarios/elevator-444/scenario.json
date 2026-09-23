@@ -1,0 +1,1880 @@
+{
+  "id": "elevator-444",
+  "title": "엘리베이터 괴담: 444층",
+  "timeLimitSec": 3600,
+  "hintPenaltySec": 180,
+  "retryPenaltySec": 180,
+  "startRoom": "home",
+  "intro": "한빛맨션 1동. 지은 지 40년 된 아파트.\n동생 지우가 사흘째 돌아오지 않는다. 마지막으로 남긴 메시지는 딱 한 줄. \"엘리베이터 게임, 진짜였어.\"\n벽시계는 새벽 3시 44분. 소문대로라면 4시 44분에 문이 닫히고, 그 뒤로는 아무도 돌아오지 못한다.\n60분. 지우를 데려와야 한다.",
+  "rooms": {
+    "home": {
+      "name": "302호 거실",
+      "description": "형광등이 웅웅거리는 거실. 벽에 달력, 냉장고에 고지서, 식탁에 서류 뭉치. 안쪽이 지우 방이다.",
+      "objects": [
+        "calendar",
+        "fridge",
+        "contract",
+        "tv"
+      ],
+      "exits": [
+        {
+          "names": [
+            "지우방",
+            "방",
+            "안방"
+          ],
+          "to": "jiwoo"
+        },
+        {
+          "names": [
+            "복도",
+            "현관",
+            "hallway"
+          ],
+          "to": "corridor3"
+        }
+      ]
+    },
+    "jiwoo": {
+      "name": "지우 방",
+      "description": "이불이 걷힌 침대. 벽에 폴라로이드가 잔뜩 붙어 있고, 책상 서랍에 자물쇠가 달려 있다.",
+      "objects": [
+        "drawer",
+        "diary",
+        "polaroids",
+        "bed"
+      ],
+      "exits": [
+        {
+          "names": [
+            "거실",
+            "밖",
+            "living"
+          ],
+          "to": "home"
+        }
+      ],
+      "hintCode": "E1"
+    },
+    "corridor3": {
+      "name": "3층 복도",
+      "description": "센서등이 늦게 켜지는 복도. 엘리베이터 문에 '고장 – 1층에서 탑승' 종이가 붙어 있다. 계단이 아래로 이어진다.",
+      "objects": [
+        "broken_sign"
+      ],
+      "exits": [
+        {
+          "names": [
+            "302호",
+            "집",
+            "home"
+          ],
+          "to": "home"
+        },
+        {
+          "names": [
+            "계단",
+            "로비",
+            "1층",
+            "stairs",
+            "lobby"
+          ],
+          "to": "lobby"
+        }
+      ]
+    },
+    "lobby": {
+      "name": "1층 로비",
+      "description": "낡은 로비. 벽에 층별 안내판, 우편함이 줄지어 있고 경비실 창은 어둡다. 엘리베이터 문이 반쯤 열린 채 떨고 있고, 그 옆 철문에 '전기실' 팻말이 붙어 있다.",
+      "objects": [
+        "directory",
+        "mailbox",
+        "guard_key",
+        "guard_door",
+        "basement_door"
+      ],
+      "exits": [
+        {
+          "names": [
+            "계단",
+            "3층",
+            "stairs"
+          ],
+          "to": "corridor3"
+        },
+        {
+          "names": [
+            "경비실",
+            "guard"
+          ],
+          "to": "guard",
+          "lockedBy": "guard_lock",
+          "lockedMessage": "경비실 문은 잠겨 있다. 열쇠 구멍이 있다."
+        },
+        {
+          "names": [
+            "전기실",
+            "지하",
+            "basement"
+          ],
+          "to": "basement",
+          "lockedBy": "basement_lock",
+          "lockedMessage": "전기실 철문은 잠겨 있다."
+        },
+        {
+          "names": [
+            "엘리베이터",
+            "elevator",
+            "승강기"
+          ],
+          "to": "elevator"
+        }
+      ],
+      "hintCode": "E2"
+    },
+    "guard": {
+      "name": "경비실",
+      "description": "식은 커피와 CCTV 모니터. 책상 위에 입주자 명부가 펼쳐져 있고, 벽에 누런 부적과 열쇠걸이가 있다.",
+      "objects": [
+        "ledger",
+        "talisman",
+        "cctv",
+        "keyrack",
+        "basement_key"
+      ],
+      "exits": [
+        {
+          "names": [
+            "로비",
+            "lobby"
+          ],
+          "to": "lobby"
+        }
+      ],
+      "hintCode": "E3"
+    },
+    "basement": {
+      "name": "전기실",
+      "description": "습한 지하. 벽 한 면이 배전반이고 차단기 다섯 개가 A부터 E까지 나란히 내려가 있다. 옆에 도면과 승강기 점검 기록이 걸려 있다.",
+      "objects": [
+        "blueprint",
+        "inspection",
+        "brk_a",
+        "brk_b",
+        "brk_c",
+        "brk_d",
+        "brk_e"
+      ],
+      "exits": [
+        {
+          "names": [
+            "로비",
+            "위",
+            "lobby",
+            "up"
+          ],
+          "to": "lobby"
+        }
+      ],
+      "hintCode": "E4"
+    },
+    "elevator": {
+      "name": "엘리베이터",
+      "description": [
+        {
+          "when": {
+            "flag": "seq6"
+          },
+          "text": "좁은 엘리베이터 안. 구석에 여자가 등을 돌리고 서 있다. 숨소리가 들리지 않는다. 버튼판만 봐라."
+        },
+        {
+          "when": {
+            "flag": "power_on"
+          },
+          "text": "좁고 낡은 엘리베이터. 버튼판의 숫자가 1부터 10까지, 층수 표시등이 불규칙하게 깜빡인다."
+        },
+        {
+          "text": "좁고 낡은 엘리베이터. 버튼판은 캄캄하고 표시등도 꺼져 있다. 전원이 나간 것 같다."
+        }
+      ],
+      "objects": [
+        "btn1",
+        "btn2",
+        "btn4",
+        "btn6",
+        "btn7",
+        "btn10",
+        "btn_other",
+        "woman"
+      ],
+      "exits": [
+        {
+          "names": [
+            "로비",
+            "lobby",
+            "밖"
+          ],
+          "to": "lobby"
+        }
+      ],
+      "hintCode": "E5"
+    },
+    "corridor444": {
+      "name": "444층 복도",
+      "description": "끝이 보이지 않는 복도. 모든 문패가 '444'다. 단 하나, 왼쪽 네 번째 문만 '4404'. 벽지에 작은 손자국이 줄지어 찍혀 있고, 소화전과 우편함이 있다. 복도 끝에 비상계단.",
+      "objects": [
+        "handprints",
+        "hydrant",
+        "photo",
+        "doors444",
+        "mailbox444",
+        "letter",
+        "door4404"
+      ],
+      "exits": [
+        {
+          "names": [
+            "4404호",
+            "4404"
+          ],
+          "to": "room4404",
+          "lockedBy": "door4404_lock",
+          "lockedMessage": "4404호 문은 잠겨 있다. 문 위에 4자리 다이얼."
+        },
+        {
+          "names": [
+            "계단",
+            "비상계단",
+            "stairs"
+          ],
+          "to": "stairwell444"
+        },
+        {
+          "names": [
+            "엘리베이터",
+            "elevator",
+            "승강기"
+          ],
+          "to": "elevator444"
+        }
+      ],
+      "onEnter": {
+        "when": {
+          "notFlag": "arrived"
+        },
+        "message": "표시등이 '444'에서 멈췄다. 문이 열린다. 공기가 물속처럼 무겁다.",
+        "effects": [
+          {
+            "setFlag": "arrived"
+          }
+        ]
+      },
+      "hintCode": "E6"
+    },
+    "stairwell444": {
+      "name": "444층 계단참",
+      "description": "비상계단. 위로도 아래로도 계단이 이어지는데, 층 표시는 전부 '444'. 벽에 분필 낙서, 계단 밑에 어두운 공간.",
+      "objects": [
+        "chalk",
+        "under_stairs",
+        "shoe"
+      ],
+      "exits": [
+        {
+          "names": [
+            "아래",
+            "복도",
+            "down"
+          ],
+          "to": "corridor444"
+        },
+        {
+          "names": [
+            "위",
+            "up"
+          ],
+          "to": "stairwell444"
+        }
+      ],
+      "onEnter": [
+        {
+          "when": {
+            "flag": "stairs_seen"
+          },
+          "message": "올라가도, 내려가도 같은 계단참이다. 벽의 '444'만 조금 더 진해졌다."
+        },
+        {
+          "effects": [
+            {
+              "setFlag": "stairs_seen"
+            }
+          ]
+        }
+      ]
+    },
+    "room4404": {
+      "name": "4404호",
+      "description": "302호와 똑같은 구조인데 모든 것이 뒤집혀 있다. 거실 한가운데 낡은 제사상, 그 위에 이름이 지워진 위패. 안방에 옷장, 벽에 거울.",
+      "objects": [
+        "altar",
+        "tablet",
+        "wardrobe",
+        "doll",
+        "mirror444",
+        "child"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor"
+          ],
+          "to": "corridor444"
+        }
+      ],
+      "hintCode": "E7"
+    },
+    "elevator444": {
+      "name": "444층 엘리베이터",
+      "description": "같은 엘리베이터인데 버튼이 전부 뜯겨 나가고 '1' 하나만 남았다.",
+      "objects": [
+        "btn1_444"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor",
+            "444층"
+          ],
+          "to": "corridor444"
+        }
+      ]
+    },
+    "dawn": {
+      "name": "새벽의 로비",
+      "description": "문이 열린다. 1층. 경비실 창에 불이 켜져 있고, 로비 소파에 지우가 웅크려 잠들어 있다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+  "objects": {
+    "calendar": {
+      "names": [
+        "달력",
+        "calendar"
+      ],
+      "description": "11월 달력. 4일에 하트와 '지우 생일'. 28일에 '관리비'. 15일에 '엘베 ㄱ?' 라고 썼다 지운 자국.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "calendar_seen"
+          }
+        ]
+      }
+    },
+    "fridge": {
+      "names": [
+        "냉장고",
+        "고지서",
+        "fridge"
+      ],
+      "description": "관리비 고지서.\n\"우편함 비밀번호를 잊으셨나요? 초기 비밀번호는 입주 연도 뒤 두 자리 + 입주 월 두 자리입니다. – 관리사무소\"",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "bill_seen"
+          }
+        ]
+      }
+    },
+    "contract": {
+      "names": [
+        "계약서",
+        "contract",
+        "서류"
+      ],
+      "description": "임대차 계약서. \"입주일: 2019년 3월 1일. 임차인: 지우\". 계약 기간 2년, 갱신 도장이 두 번.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "contract_seen"
+          }
+        ]
+      }
+    },
+    "tv": {
+      "names": [
+        "TV",
+        "티비",
+        "텔레비전"
+      ],
+      "description": "꺼져 있는데 화면에 희미하게 숫자 444가 잔상처럼 남아 있다."
+    },
+    "drawer": {
+      "names": [
+        "서랍",
+        "drawer",
+        "책상"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "drawer_lock"
+          },
+          "text": "열린 서랍. 일기장이 있던 자리만 비어 있다."
+        },
+        {
+          "text": "지우 책상 서랍. 4자리 자물쇠. 지우가 늘 쓰는 번호는 하나뿐이다."
+        }
+      ],
+      "lock": "drawer_lock",
+      "hintCode": "E1"
+    },
+    "diary": {
+      "names": [
+        "일기장",
+        "diary",
+        "일기"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "지우의 일기. 마지막 장.\n\"엘리베이터 게임. 혼자 타고, 순서대로 누른다.\n  4 → 2 → 6 → 2 → (이 아파트의 가장 높은 층) → (그 애가 세상을 떠난 나이)\n마지막 층에서 문이 열리면 여자가 탄다. 절대 보지 마. 절대 말 걸지 마. 그냥 1을 눌러.\n그러면 내려가는 대신 올라간다. 순서가 틀리면 처음부터.\n경비 아저씨 부적 꼭 챙겨. 그거 없이는 데려가지도 않고, 가서도 못 버틴대.\n돌아오려면 그 애를 달래야 한대. 그 애의 것들을 돌려주고, 이름을 불러 주고, 그 애가 기다리는 걸 줘야 한대.\"",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "diary_seen"
+          }
+        ]
+      }
+    },
+    "polaroids": {
+      "names": [
+        "폴라로이드",
+        "사진들",
+        "polaroids"
+      ],
+      "description": "지우와 친구들. 아래에 날짜가 적혀 있다. 0812, 0927, 1031... 마지막 한 장은 엘리베이터 안을 찍었는데 아무도 없다. 날짜 대신 '444'."
+    },
+    "bed": {
+      "names": [
+        "침대",
+        "bed"
+      ],
+      "description": "이불이 걷혀 있다. 베개 밑에 아무것도 없다."
+    },
+    "broken_sign": {
+      "names": [
+        "종이",
+        "안내문",
+        "sign"
+      ],
+      "description": "'고장 – 1층에서 탑승'. 그 밑에 볼펜으로 누가 작게 썼다. \"고장 아님. 전기실에서 내려 둠. 타지 마. – 경비\""
+    },
+    "directory": {
+      "names": [
+        "안내판",
+        "층별안내판",
+        "directory"
+      ],
+      "description": "층별 안내.\n  1 로비 · 2~9 주거 · 10 기계실 (옥상 출입 금지)\n4층 자리는 누가 긁어 지워 놓았다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "directory_seen"
+          }
+        ]
+      }
+    },
+    "mailbox": {
+      "names": [
+        "우편함",
+        "mailbox",
+        "302호우편함"
+      ],
+      "description": "302호 우편함. 4자리 번호 자물쇠. 틈으로 열쇠 꼬리표가 보인다.",
+      "lock": "mailbox_lock",
+      "hintCode": "E2"
+    },
+    "guard_key": {
+      "names": [
+        "경비실열쇠",
+        "guardkey"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "'경비실' 꼬리표가 달린 열쇠. 지우가 왜 이걸 우편함에 넣어 뒀을까."
+    },
+    "guard_door": {
+      "names": [
+        "경비실문",
+        "guarddoor"
+      ],
+      "description": "경비실 문. 안은 캄캄하다. 열쇠 구멍.",
+      "lock": "guard_lock",
+      "hintCode": "E3"
+    },
+    "basement_door": {
+      "names": [
+        "전기실문",
+        "철문",
+        "basementdoor"
+      ],
+      "description": "'전기실 – 관계자 외 출입 금지'. 열쇠 구멍.",
+      "lock": "basement_lock",
+      "hintCode": "E4"
+    },
+    "ledger": {
+      "names": [
+        "명부",
+        "입주자명부",
+        "ledger",
+        "장부"
+      ],
+      "description": "입주자 명부. 오래된 페이지에 붉은 줄이 그어진 항목.\n\"404호 김OO 가족. 1998.4.4 여아(7세) 하은 사망 – 승강기 사고. 이후 4층 공실.\"\n여백에 경비원 글씨: \"그 애는 아직 엄마를 기다린다. 엄마는 그 해 겨울에 떠났다.\"",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "ledger_seen"
+          }
+        ]
+      },
+      "hintCode": "E3"
+    },
+    "talisman": {
+      "names": [
+        "부적",
+        "talisman"
+      ],
+      "takeable": true,
+      "description": "누렇게 바랜 부적. '護身'. 지니고 있으면 손이 닿지 못한다고 한다.",
+      "onTake": {
+        "effects": [
+          {
+            "setFlag": "talisman_taken"
+          }
+        ]
+      }
+    },
+    "cctv": {
+      "names": [
+        "CCTV",
+        "모니터",
+        "cctv"
+      ],
+      "description": "엘리베이터 내부 화면. 전원이 나가 있는데도 4, 2, 6... 층 표시가 혼자 바뀌고 있다."
+    },
+    "keyrack": {
+      "names": [
+        "열쇠걸이",
+        "keyrack",
+        "걸이"
+      ],
+      "description": "열쇠걸이. 고리마다 호수가 적혀 있는데 대부분 비었다.",
+      "onExamine": {
+        "when": {
+          "notFlag": "rack_seen"
+        },
+        "message": "맨 아래 고리에 '전기실' 열쇠가 하나 걸려 있다.",
+        "effects": [
+          {
+            "reveal": "basement_key"
+          },
+          {
+            "setFlag": "rack_seen"
+          }
+        ]
+      }
+    },
+    "basement_key": {
+      "names": [
+        "전기실열쇠",
+        "basementkey"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "'전기실' 꼬리표. 기름때가 묻었다."
+    },
+    "blueprint": {
+      "names": [
+        "도면",
+        "blueprint",
+        "회로도"
+      ],
+      "description": "누렇게 바랜 전기 회로도.\n\"승강기 전원: 2번 회로\"\n\"회로 번호는 배전반 오른쪽 끝을 1번으로 하여 왼쪽으로 센다.\"\n차단기 라벨이 지워진 뒤 누가 볼펜으로 덧붙였다. \"틀리면 건물 전체가 나간다. 조심.\"",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "blueprint_seen"
+          }
+        ]
+      },
+      "hintCode": "E4"
+    },
+    "inspection": {
+      "names": [
+        "점검기록",
+        "기록",
+        "inspection"
+      ],
+      "description": "1998.4.4 승강기 점검 기록. \"4층과 5층 사이 정지. 문 개방 불가. 내부 승객 1명(아동).\" 그 뒤 페이지는 찢겨 나갔다."
+    },
+    "brk_a": {
+      "names": [
+        "차단기A",
+        "A",
+        "a"
+      ],
+      "description": "차단기 A. 라벨은 지워져 읽을 수 없다.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "power_on"
+          },
+          "message": "차단기들은 이미 제자리다. 건드리지 말자."
+        },
+        {
+          "message": "딸깍. 건물 전체가 캄캄해졌다가 비상등이 돌아온다. 위층 어딘가에서 문 여닫는 소리가 연달아 난다. 다시 올리는 데 시간을 썼다.",
+          "effects": [
+            {
+              "addPenalty": 60
+            }
+          ]
+        }
+      ]
+    },
+    "brk_b": {
+      "names": [
+        "차단기B",
+        "B",
+        "b"
+      ],
+      "description": "차단기 B. 라벨은 지워져 읽을 수 없다.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "power_on"
+          },
+          "message": "차단기들은 이미 제자리다. 건드리지 말자."
+        },
+        {
+          "message": "딸깍. 건물 전체가 캄캄해졌다가 비상등이 돌아온다. 위층 어딘가에서 문 여닫는 소리가 연달아 난다. 다시 올리는 데 시간을 썼다.",
+          "effects": [
+            {
+              "addPenalty": 60
+            }
+          ]
+        }
+      ]
+    },
+    "brk_c": {
+      "names": [
+        "차단기C",
+        "C",
+        "c"
+      ],
+      "description": "차단기 C. 라벨은 지워져 읽을 수 없다.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "power_on"
+          },
+          "message": "차단기들은 이미 제자리다. 건드리지 말자."
+        },
+        {
+          "message": "딸깍. 건물 전체가 캄캄해졌다가 비상등이 돌아온다. 위층 어딘가에서 문 여닫는 소리가 연달아 난다. 다시 올리는 데 시간을 썼다.",
+          "effects": [
+            {
+              "addPenalty": 60
+            }
+          ]
+        }
+      ]
+    },
+    "brk_d": {
+      "names": [
+        "차단기D",
+        "D",
+        "d"
+      ],
+      "description": "차단기 D. 라벨은 지워져 읽을 수 없다.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "power_on"
+          },
+          "message": "차단기들은 이미 제자리다. 건드리지 말자."
+        },
+        {
+          "message": "딸깍. 어디선가 모터가 웅— 하고 깨어난다. 로비 쪽에서 '띵' 소리.",
+          "effects": [
+            {
+              "setFlag": "power_on"
+            }
+          ]
+        }
+      ]
+    },
+    "brk_e": {
+      "names": [
+        "차단기E",
+        "E",
+        "e"
+      ],
+      "description": "차단기 E. 라벨은 지워져 읽을 수 없다.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "power_on"
+          },
+          "message": "차단기들은 이미 제자리다. 건드리지 말자."
+        },
+        {
+          "message": "딸깍. 건물 전체가 캄캄해졌다가 비상등이 돌아온다. 위층 어딘가에서 문 여닫는 소리가 연달아 난다. 다시 올리는 데 시간을 썼다.",
+          "effects": [
+            {
+              "addPenalty": 60
+            }
+          ]
+        }
+      ]
+    },
+    "btn1": {
+      "names": [
+        "1층버튼",
+        "1층",
+        "1"
+      ],
+      "description": "1층 버튼. 유독 반질반질하다.",
+      "onInteract": [
+        {
+          "when": {
+            "notFlag": "power_on"
+          },
+          "message": "버튼을 눌러도 불이 들어오지 않는다. 엘리베이터는 죽어 있다."
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "flag": "seq6"
+              },
+              {
+                "hasItem": "talisman"
+              }
+            ]
+          },
+          "message": "1층을 눌렀다. 엘리베이터가 내려가는 대신 올라간다. 8, 9, 10... 표시등이 깨지듯 번쩍이더니 '444'.",
+          "effects": [
+            {
+              "moveTo": "corridor444"
+            },
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        },
+        {
+          "when": {
+            "flag": "seq6"
+          },
+          "message": "1층을 눌렀다. 올라가는 듯하더니 엘리베이터가 추락하듯 떨어진다. 문이 열리자 1층 로비. 여자는 사라졌다.\n귓가에 속삭임. \"지닌 것이 없는 자는 데려가지 않는다.\"",
+          "effects": [
+            {
+              "addPenalty": 120
+            },
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        },
+        {
+          "message": "1층. 문이 열리고 익숙한 로비가 보인다. 아무 일도 없다.",
+          "effects": [
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        }
+      ]
+    },
+    "btn2": {
+      "names": [
+        "2층버튼",
+        "2층",
+        "2"
+      ],
+      "description": "2층 버튼. 누렇게 변색됐다.",
+      "onInteract": [
+        {
+          "when": {
+            "notFlag": "power_on"
+          },
+          "message": "버튼을 눌러도 불이 들어오지 않는다. 엘리베이터는 죽어 있다."
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "flag": "seq1"
+              },
+              {
+                "notFlag": "seq2"
+              }
+            ]
+          },
+          "message": "2층. 문이 열리고 아무도 없는 복도가 보인다. 다시 닫힌다.",
+          "effects": [
+            {
+              "setFlag": "seq2"
+            }
+          ]
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "flag": "seq3"
+              },
+              {
+                "notFlag": "seq4"
+              }
+            ]
+          },
+          "message": "2층. 문이 열리고 아무도 없는 복도가 보인다. 다시 닫힌다.",
+          "effects": [
+            {
+              "setFlag": "seq4"
+            }
+          ]
+        },
+        {
+          "message": "엘리베이터가 덜컹 멈추더니 표시등이 전부 꺼졌다 켜진다. 문이 열리자 1층 로비다. 처음부터 다시 해야 한다.",
+          "effects": [
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        }
+      ]
+    },
+    "btn4": {
+      "names": [
+        "4층버튼",
+        "4층",
+        "4"
+      ],
+      "description": "4층 버튼. 누렇게 변색됐다.",
+      "onInteract": [
+        {
+          "when": {
+            "notFlag": "power_on"
+          },
+          "message": "버튼을 눌러도 불이 들어오지 않는다. 엘리베이터는 죽어 있다."
+        },
+        {
+          "when": {
+            "notFlag": "seq1"
+          },
+          "message": "4층. 문이 열리고 아무도 없는 복도가 보인다. 다시 닫힌다.",
+          "effects": [
+            {
+              "setFlag": "seq1"
+            }
+          ]
+        },
+        {
+          "message": "엘리베이터가 덜컹 멈추더니 표시등이 전부 꺼졌다 켜진다. 문이 열리자 1층 로비다. 처음부터 다시 해야 한다.",
+          "effects": [
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        }
+      ]
+    },
+    "btn6": {
+      "names": [
+        "6층버튼",
+        "6층",
+        "6"
+      ],
+      "description": "6층 버튼. 누렇게 변색됐다.",
+      "onInteract": [
+        {
+          "when": {
+            "notFlag": "power_on"
+          },
+          "message": "버튼을 눌러도 불이 들어오지 않는다. 엘리베이터는 죽어 있다."
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "flag": "seq2"
+              },
+              {
+                "notFlag": "seq3"
+              }
+            ]
+          },
+          "message": "6층. 문이 열리고 아무도 없는 복도가 보인다. 다시 닫힌다.",
+          "effects": [
+            {
+              "setFlag": "seq3"
+            }
+          ]
+        },
+        {
+          "message": "엘리베이터가 덜컹 멈추더니 표시등이 전부 꺼졌다 켜진다. 문이 열리자 1층 로비다. 처음부터 다시 해야 한다.",
+          "effects": [
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        }
+      ]
+    },
+    "btn7": {
+      "names": [
+        "7층버튼",
+        "7층",
+        "7"
+      ],
+      "description": "7층 버튼. 누렇게 변색됐다.",
+      "onInteract": [
+        {
+          "when": {
+            "notFlag": "power_on"
+          },
+          "message": "버튼을 눌러도 불이 들어오지 않는다. 엘리베이터는 죽어 있다."
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "flag": "seq5"
+              },
+              {
+                "notFlag": "seq6"
+              }
+            ]
+          },
+          "message": "7층. 문이 열린다. 아무도 없는 복도. 아니, 누군가 탔다. 긴 머리의 젊은 여자가 구석에 등을 보이고 선다.\n일기장의 말이 떠오른다. 보지 마라. 말 걸지 마라. 그냥 1층을 눌러라.",
+          "effects": [
+            {
+              "setFlag": "seq6"
+            },
+            {
+              "reveal": "woman"
+            }
+          ]
+        },
+        {
+          "message": "엘리베이터가 덜컹 멈추더니 표시등이 전부 꺼졌다 켜진다. 문이 열리자 1층 로비다. 처음부터 다시 해야 한다.",
+          "effects": [
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        }
+      ]
+    },
+    "btn10": {
+      "names": [
+        "10층버튼",
+        "10층",
+        "10"
+      ],
+      "description": "10층 버튼. 누렇게 변색됐다.",
+      "onInteract": [
+        {
+          "when": {
+            "notFlag": "power_on"
+          },
+          "message": "버튼을 눌러도 불이 들어오지 않는다. 엘리베이터는 죽어 있다."
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "flag": "seq4"
+              },
+              {
+                "notFlag": "seq5"
+              }
+            ]
+          },
+          "message": "10층. 문이 열리고 아무도 없는 복도가 보인다. 다시 닫힌다.",
+          "effects": [
+            {
+              "setFlag": "seq5"
+            }
+          ]
+        },
+        {
+          "message": "엘리베이터가 덜컹 멈추더니 표시등이 전부 꺼졌다 켜진다. 문이 열리자 1층 로비다. 처음부터 다시 해야 한다.",
+          "effects": [
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        }
+      ]
+    },
+    "btn_other": {
+      "names": [
+        "다른버튼",
+        "3층",
+        "5층",
+        "8층",
+        "9층",
+        "3",
+        "5",
+        "8",
+        "9"
+      ],
+      "description": "나머지 층 버튼.",
+      "onInteract": [
+        {
+          "when": {
+            "notFlag": "power_on"
+          },
+          "message": "버튼을 눌러도 불이 들어오지 않는다. 엘리베이터는 죽어 있다."
+        },
+        {
+          "message": "엘리베이터가 덜컹 멈추더니 표시등이 전부 꺼졌다 켜진다. 문이 열리자 1층 로비다. 처음부터 다시 해야 한다.",
+          "effects": [
+            {
+              "clearFlag": "seq1"
+            },
+            {
+              "clearFlag": "seq2"
+            },
+            {
+              "clearFlag": "seq3"
+            },
+            {
+              "clearFlag": "seq4"
+            },
+            {
+              "clearFlag": "seq5"
+            },
+            {
+              "clearFlag": "seq6"
+            },
+            {
+              "hide": "woman"
+            }
+          ]
+        }
+      ]
+    },
+    "woman": {
+      "names": [
+        "여자",
+        "그녀",
+        "woman"
+      ],
+      "hidden": true,
+      "description": "돌아보고 말았다. 여자가 천천히 고개를 돌린다. 얼굴이 없다.",
+      "onExamine": {
+        "effects": [
+          {
+            "scare": "              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n          ▄███████████████████████▄\n        ▄███████████████████████████▄\n       ███████████████████████████████\n      █████████████████████████████████\n      ██████       ███████       ██████\n      █████         █████         █████\n      █████   ▄██   █████   ██▄   █████\n      ██████       ███████       ██████\n      █████████████████████████████████\n      █████████████████████████████████\n      ███████████████       ███████████\n       █████████████         █████████\n        ████████████         ████████\n         ████████████       ████████\n          ▀██████████████████████▀\n             ▀▀████████████▀▀\n      ▐█▌  ▐█▌   ▐█▌   ▐█▌  ▐█▌  ▐█▌"
+          },
+          {
+            "gameOver": "그녀가 웃는다. 엘리베이터 불이 꺼진다. 다음 날 아침, 1층에 도착한 엘리베이터는 비어 있었다."
+          }
+        ]
+      }
+    },
+    "handprints": {
+      "names": [
+        "손자국",
+        "벽지",
+        "handprints"
+      ],
+      "description": "어린아이 손자국. 전부 같은 방향, 4404호 쪽을 가리키고 있다. 세어 보니 네 개, 네 개, 그리고 아무것도 없는 자리, 네 개."
+    },
+    "hydrant": {
+      "names": [
+        "소화전",
+        "hydrant"
+      ],
+      "description": "녹슨 소화전 함. 문이 조금 열려 있어 안이 들여다보인다.",
+      "onExamine": [
+        {
+          "when": {
+            "flag": "hydrant_opened"
+          },
+          "message": "비어 있다."
+        },
+        {
+          "message": "문을 열자 호스 대신 액자 하나가 들어 있다. 어머니와 어린 여자아이가 이 아파트 앞에서 웃고 있다.",
+          "effects": [
+            {
+              "reveal": "photo"
+            },
+            {
+              "setFlag": "hydrant_opened"
+            }
+          ]
+        }
+      ],
+      "hintCode": "E6"
+    },
+    "photo": {
+      "names": [
+        "사진",
+        "액자",
+        "photo"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "빛바랜 가족사진. 뒷면: '하은이 일곱 살 봄'.",
+      "onUse": {
+        "target": "altar",
+        "message": "사진을 제사상 위에 세운다. 촛불 하나가 저절로 켜진다.",
+        "effects": [
+          {
+            "setFlag": "photo_placed"
+          },
+          {
+            "removeItem": "photo"
+          }
+        ]
+      }
+    },
+    "doors444": {
+      "names": [
+        "문패",
+        "다른문",
+        "444호"
+      ],
+      "description": "손잡이를 돌려 봤지만 전부 벽에 그려진 문이다."
+    },
+    "mailbox444": {
+      "names": [
+        "우편함",
+        "4404호우편함",
+        "mailbox"
+      ],
+      "description": "4404호 우편함. 4자리 다이얼. 뚜껑에 아이 글씨로 '그 해'. 안에 봉투가 비쳐 보인다.",
+      "lock": "mailbox444_lock",
+      "hintCode": "E6"
+    },
+    "letter": {
+      "names": [
+        "편지",
+        "봉투",
+        "letter"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "누렇게 바랜 봉투. '하은이에게 – 엄마가'. 뜯지 않았다. 이건 당신이 읽을 편지가 아니다.",
+      "onUse": {
+        "target": "child",
+        "message": "봉투를 내밀자 아이가 두 손으로 받는다. 뜯지도 않고 가슴에 꼭 안더니, 처음으로 웃는다. 촛불이 한꺼번에 꺼지고, 복도 쪽에서 '띵' 하고 엘리베이터가 도착하는 소리가 난다.",
+        "effects": [
+          {
+            "setFlag": "appeased"
+          },
+          {
+            "removeItem": "letter"
+          },
+          {
+            "hide": "child"
+          }
+        ]
+      }
+    },
+    "door4404": {
+      "names": [
+        "4404호문",
+        "문",
+        "door"
+      ],
+      "description": "4404호 문. 문 위에 4자리 다이얼, 분필로 '그 날' 이라고 적혀 있다.",
+      "lock": "door4404_lock",
+      "hintCode": "E6"
+    },
+    "chalk": {
+      "names": [
+        "낙서",
+        "분필",
+        "chalk"
+      ],
+      "description": "아이 글씨.\n\"엄마 오면 신발 신고 나갈 거야. 사진이랑 곰이랑 신발이랑. 다 챙겨야 돼.\""
+    },
+    "under_stairs": {
+      "names": [
+        "계단밑",
+        "밑",
+        "under"
+      ],
+      "description": "계단 아래 어두운 공간. 먼지 냄새.",
+      "onExamine": [
+        {
+          "when": {
+            "flag": "shoe_found"
+          },
+          "message": "이제 아무것도 없다."
+        },
+        {
+          "message": "손을 넣어 더듬자 작은 운동화 한 짝이 잡힌다. 한 짝뿐이다.",
+          "effects": [
+            {
+              "reveal": "shoe"
+            },
+            {
+              "setFlag": "shoe_found"
+            }
+          ]
+        }
+      ],
+      "hintCode": "E6"
+    },
+    "shoe": {
+      "names": [
+        "신발",
+        "운동화",
+        "shoe"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "빨간 어린이 운동화 한 짝. 안쪽에 '하은'.",
+      "onUse": {
+        "target": "altar",
+        "message": "신발을 상 아래 가지런히 놓는다. 세 번째 촛불이 켜지고, 위패의 지워진 자리가 희미하게 빛난다.",
+        "effects": [
+          {
+            "setFlag": "shoe_placed"
+          },
+          {
+            "removeItem": "shoe"
+          }
+        ]
+      }
+    },
+    "altar": {
+      "names": [
+        "제사상",
+        "상",
+        "altar"
+      ],
+      "description": [
+        {
+          "when": {
+            "all": [
+              {
+                "flag": "photo_placed"
+              },
+              {
+                "flag": "doll_placed"
+              },
+              {
+                "flag": "shoe_placed"
+              }
+            ]
+          },
+          "text": "사진, 인형, 신발이 놓인 제사상. 촛불 세 개. 이제 위패에 이름만 남았다."
+        },
+        {
+          "text": "먼지 쌓인 제사상. 촛대 세 개. 아이의 것들을 올려야 할 것 같다. 벽의 낙서가 뭘 챙기라고 했더라."
+        }
+      ],
+      "hintCode": "E7"
+    },
+    "tablet": {
+      "names": [
+        "위패",
+        "tablet",
+        "이름"
+      ],
+      "description": "나무 위패. 성은 '金' 이라 새겨져 있는데 이름 두 글자는 긁혀 지워졌다. 이름을 불러 주면(입력하면) 될 것 같다.",
+      "lock": "tablet_lock",
+      "hintCode": "E7"
+    },
+    "wardrobe": {
+      "names": [
+        "옷장",
+        "wardrobe",
+        "장롱"
+      ],
+      "description": "삐걱거리는 옷장. 안에서 뭔가 긁는 소리가 난다.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "wardrobe_opened"
+          },
+          "message": "이제 비어 있다."
+        },
+        {
+          "when": {
+            "hasItem": "talisman"
+          },
+          "message": "문을 열자 하얀 손이 튀어나오다가 부적 앞에서 멈춘다. 손은 물러나고, 바닥에 낡은 인형만 남는다.",
+          "effects": [
+            {
+              "reveal": "doll"
+            },
+            {
+              "setFlag": "wardrobe_opened"
+            }
+          ]
+        },
+        {
+          "message": "문을 열자 안쪽 어둠에서 하얀 손이 뻗어 나온다.",
+          "effects": [
+            {
+              "scare": "              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n          ▄███████████████████████▄\n        ▄███████████████████████████▄\n       ███████████████████████████████\n      █████████████████████████████████\n      ██████       ███████       ██████\n      █████         █████         █████\n      █████   ▄██   █████   ██▄   █████\n      ██████       ███████       ██████\n      █████████████████████████████████\n      █████████████████████████████████\n      ███████████████       ███████████\n       █████████████         █████████\n        ████████████         ████████\n         ████████████       ████████\n          ▀██████████████████████▀\n             ▀▀████████████▀▀\n      ▐█▌  ▐█▌   ▐█▌   ▐█▌  ▐█▌  ▐█▌"
+            },
+            {
+              "gameOver": "손이 발목을 잡았다. 옷장 문이 닫힌다. 안에서는 열 수 없다."
+            }
+          ]
+        }
+      ],
+      "hintCode": "E7"
+    },
+    "doll": {
+      "names": [
+        "인형",
+        "doll",
+        "곰인형"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "한쪽 눈이 떨어진 곰인형. 목에 '하은' 이름표.",
+      "onUse": {
+        "target": "altar",
+        "message": "인형을 사진 옆에 앉힌다. 두 번째 촛불이 켜진다.",
+        "effects": [
+          {
+            "setFlag": "doll_placed"
+          },
+          {
+            "removeItem": "doll"
+          }
+        ]
+      }
+    },
+    "mirror444": {
+      "names": [
+        "거울",
+        "mirror"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "appeased"
+          },
+          "text": "거울에 당신 혼자 비친다."
+        },
+        {
+          "text": "거울 속 당신 뒤에 작은 아이가 서 있다. 돌아보면 아무도 없다."
+        }
+      ]
+    },
+    "child": {
+      "names": [
+        "아이",
+        "하은",
+        "child",
+        "여자아이"
+      ],
+      "hidden": true,
+      "description": [
+        {
+          "when": {
+            "flag": "appeased"
+          },
+          "text": "아이는 이제 없다. 촛불만 조용히 탄다."
+        },
+        {
+          "text": "문가에 선 일곱 살 아이. 사진을 보고, 인형을 안고, 신발을 신었다. 당신을 올려다보며 입 모양으로 묻는다. \"엄마는?\""
+        }
+      ]
+    },
+    "btn1_444": {
+      "names": [
+        "1층버튼",
+        "1층",
+        "1",
+        "버튼"
+      ],
+      "description": "하나 남은 버튼.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "appeased"
+          },
+          "message": "1층을 누른다. 엘리베이터가 부드럽게 내려간다. 444, 10, 9... 3, 2, 1.",
+          "effects": [
+            {
+              "moveTo": "dawn"
+            }
+          ]
+        },
+        {
+          "message": "1층을 눌렀다. 내려가는 듯하더니 다시 444에서 문이 열린다. 복도 끝에서 작은 아이가 이쪽을 보고 있다. 아직 보내 주지 않는다.",
+          "effects": [
+            {
+              "addPenalty": 120
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "locks": {
+    "drawer_lock": {
+      "type": "code",
+      "answer": "1104",
+      "failMessage": "열리지 않는다.",
+      "onSolve": {
+        "message": "서랍이 열렸다. 일기장 한 권.",
+        "effects": [
+          {
+            "reveal": "diary"
+          }
+        ]
+      }
+    },
+    "mailbox_lock": {
+      "type": "code",
+      "answer": "1903",
+      "failMessage": "다이얼이 헛돈다.",
+      "onSolve": {
+        "message": "우편함이 열렸다. 전단지 밑에 열쇠.",
+        "effects": [
+          {
+            "reveal": "guard_key"
+          }
+        ]
+      }
+    },
+    "guard_lock": {
+      "type": "key",
+      "keyItem": "guard_key",
+      "consume": true,
+      "onSolve": {
+        "message": "경비실 문이 열렸다. 안에 아무도 없다."
+      }
+    },
+    "basement_lock": {
+      "type": "key",
+      "keyItem": "basement_key",
+      "consume": true,
+      "onSolve": {
+        "message": "철문이 끼익 열린다. 아래에서 습한 바람."
+      }
+    },
+    "door4404_lock": {
+      "type": "code",
+      "answer": "0404",
+      "failMessage": "다이얼이 차갑게 식는다.",
+      "onFail": {
+        "effects": [
+          {
+            "addPenalty": 30
+          }
+        ]
+      },
+      "onSolve": {
+        "message": "문이 안쪽으로 저절로 열린다."
+      }
+    },
+    "mailbox444_lock": {
+      "type": "code",
+      "answer": "1998",
+      "failMessage": "열리지 않는다.",
+      "onSolve": {
+        "message": "우편함이 열렸다. 봉투 하나.",
+        "effects": [
+          {
+            "reveal": "letter"
+          }
+        ]
+      }
+    },
+    "tablet_lock": {
+      "type": "code",
+      "answer": [
+        "하은",
+        "김하은"
+      ],
+      "requires": {
+        "all": [
+          {
+            "flag": "photo_placed"
+          },
+          {
+            "flag": "doll_placed"
+          },
+          {
+            "flag": "shoe_placed"
+          }
+        ]
+      },
+      "requiresMessage": "이름을 부르기 전에 상을 먼저 차려야 한다. 아이의 것을 전부 올려라.",
+      "failMessage": "위패가 차갑게 식는다. 그 이름이 아니다.",
+      "maxAttempts": 3,
+      "onMaxAttempts": {
+        "effects": [
+          {
+            "scare": "              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄\n          ▄███████████████████████▄\n        ▄███████████████████████████▄\n       ███████████████████████████████\n      █████████████████████████████████\n      ██████       ███████       ██████\n      █████         █████         █████\n      █████   ▄██   █████   ██▄   █████\n      ██████       ███████       ██████\n      █████████████████████████████████\n      █████████████████████████████████\n      ███████████████       ███████████\n       █████████████         █████████\n        ████████████         ████████\n         ████████████       ████████\n          ▀██████████████████████▀\n             ▀▀████████████▀▀\n      ▐█▌  ▐█▌   ▐█▌   ▐█▌  ▐█▌  ▐█▌"
+          },
+          {
+            "gameOver": "세 번 잘못 불린 이름에 아이가 울기 시작한다. 촛불이 꺼지고, 문패가 전부 '4404'로 바뀐다. 당신 것도."
+          }
+        ]
+      },
+      "onSolve": {
+        "message": "\"하은아.\"\n촛불이 크게 일렁인다. 거실 문가에 작은 아이가 서 있다. 사진을 보고, 인형을 안고, 신발을 신고, 당신을 올려다본다. 아직 웃지 않는다.",
+        "effects": [
+          {
+            "reveal": "child"
+          },
+          {
+            "setFlag": "named"
+          }
+        ]
+      }
+    }
+  },
+  "hints": [
+    {
+      "when": {
+        "notFlag": "calendar_seen"
+      },
+      "text": "거실 달력을 조사하세요.",
+      "code": "E1"
+    },
+    {
+      "when": {
+        "notSolved": "drawer_lock"
+      },
+      "text": "지우 생일을 월일 네 자리로 지우 방 서랍에 입력하세요.",
+      "code": "E1"
+    },
+    {
+      "when": {
+        "notFlag": "diary_seen"
+      },
+      "text": "서랍 속 일기장을 읽어 두세요. 게임 규칙이 적혀 있습니다.",
+      "code": "E1"
+    },
+    {
+      "when": {
+        "notFlag": "bill_seen"
+      },
+      "text": "냉장고의 고지서를 읽어 보세요.",
+      "code": "E2"
+    },
+    {
+      "when": {
+        "notFlag": "contract_seen"
+      },
+      "text": "식탁 위 계약서에 입주일이 있습니다.",
+      "code": "E2"
+    },
+    {
+      "when": {
+        "notSolved": "mailbox_lock"
+      },
+      "text": "입주 연도 뒤 두 자리와 월 두 자리를 로비 우편함에 입력하세요.",
+      "code": "E2"
+    },
+    {
+      "when": {
+        "notSolved": "guard_lock"
+      },
+      "text": "우편함 속 열쇠로 경비실문을 여세요.",
+      "code": "E3"
+    },
+    {
+      "when": {
+        "notFlag": "ledger_seen"
+      },
+      "text": "경비실 명부를 조사하세요. 아이의 이름, 나이, 사고 날짜가 전부 거기 있습니다.",
+      "code": "E3"
+    },
+    {
+      "when": {
+        "notFlag": "talisman_taken"
+      },
+      "text": "경비실 벽의 부적을 반드시 챙기세요. 없으면 444층에 갈 수 없습니다.",
+      "code": "E3"
+    },
+    {
+      "when": {
+        "notSolved": "basement_lock"
+      },
+      "text": "경비실 열쇠걸이의 전기실 열쇠로 로비의 전기실문을 여세요.",
+      "code": "E4"
+    },
+    {
+      "when": {
+        "notFlag": "blueprint_seen"
+      },
+      "text": "전기실 도면을 읽어 보세요.",
+      "code": "E4"
+    },
+    {
+      "when": {
+        "notFlag": "power_on"
+      },
+      "text": "오른쪽 끝(E)을 1번으로 왼쪽으로 세면 2번은 D입니다. 차단기 D를 올리세요.",
+      "code": "E4"
+    },
+    {
+      "when": {
+        "notFlag": "directory_seen"
+      },
+      "text": "로비 안내판에서 이 아파트의 가장 높은 층을 확인하세요.",
+      "code": "E5"
+    },
+    {
+      "when": {
+        "all": [
+          {
+            "notFlag": "arrived"
+          },
+          {
+            "notFlag": "seq6"
+          }
+        ]
+      },
+      "text": "엘리베이터에서 4, 2, 6, 2, 10, 7 순서로 누르세요. 마지막은 명부에 적힌 아이의 나이입니다. 틀리면 처음부터.",
+      "code": "E5"
+    },
+    {
+      "when": {
+        "notFlag": "arrived"
+      },
+      "text": "여자를 조사하지 말고 1층을 누르세요.",
+      "code": "E5"
+    },
+    {
+      "when": {
+        "notFlag": "hydrant_opened"
+      },
+      "text": "444층 복도의 소화전을 조사하세요.",
+      "code": "E6"
+    },
+    {
+      "when": {
+        "notSolved": "mailbox444_lock"
+      },
+      "text": "444층 우편함에는 사고가 난 해 네 자리를 입력하세요.",
+      "code": "E6"
+    },
+    {
+      "when": {
+        "notFlag": "shoe_found"
+      },
+      "text": "비상계단 계단참에서 계단밑을 조사하세요.",
+      "code": "E6"
+    },
+    {
+      "when": {
+        "notSolved": "door4404_lock"
+      },
+      "text": "4404호 문에는 사고 날짜를 월일 네 자리로 입력하세요.",
+      "code": "E6"
+    },
+    {
+      "when": {
+        "notFlag": "wardrobe_opened"
+      },
+      "text": "부적을 지닌 채 4404호 옷장을 여세요. 부적 없이 열면 안 됩니다.",
+      "code": "E7"
+    },
+    {
+      "when": {
+        "any": [
+          {
+            "notFlag": "photo_placed"
+          },
+          {
+            "notFlag": "doll_placed"
+          },
+          {
+            "notFlag": "shoe_placed"
+          }
+        ]
+      },
+      "text": "사진, 인형, 신발을 각각 제사상에 사용하세요.",
+      "code": "E7"
+    },
+    {
+      "when": {
+        "notFlag": "named"
+      },
+      "text": "명부에 적힌 아이의 이름을 위패에 입력하세요. 세 번 틀리면 끝입니다.",
+      "code": "E7"
+    },
+    {
+      "when": {
+        "notFlag": "appeased"
+      },
+      "text": "아이가 기다리는 것은 엄마의 편지입니다. 편지를 아이에게 사용하세요.",
+      "code": "E7"
+    },
+    {
+      "text": "444층 엘리베이터에서 1층을 누르세요.",
+      "code": "E7"
+    }
+  ],
+  "endings": {
+    "success": "지우가 눈을 비비며 일어난다. \"...언니? 나 왜 여기서 자?\" 벽시계는 4시 43분. 엘리베이터 표시등이 '1'에서 조용히 꺼진다. 당신은 돌아왔다.",
+    "timeout": "4시 44분. 엘리베이터 문이 닫힌다. 표시등은 444에서 더는 움직이지 않는다."
+  }
+}

@@ -63,6 +63,36 @@ const WALKTHROUGHS = {
     "사용 젖은휴지 핸드드라이어", "조합 마른휴지 종이타월",
     "이동 칸", "사용 완벽한휴지", "이동 세면대", "누르기 비누", "이동 복도",
   ],
+  "after-school": [
+    "조사 칠판", "조사 교탁", "줍기 쪽지", "조사 쪽지", "입력 314 사물함", "줍기 교실열쇠", "사용 교실열쇠 문",
+    "이동 복도", "조사 게시판", "조사 명판", "입력 1987 키패드", "이동 운동장",
+  ],
+  "magic-theater": [
+    "조사 포스터", "조사 거울", "입력 488 화장대", "줍기 소품실열쇠",
+    "이동 무대뒤", "당기기 밧줄", "사용 소품실열쇠 소품실문", "이동 소품실",
+    "조사 카드", "조사 규칙", "입력 9642 마술상자", "줍기 태엽열쇠",
+    "이동 무대뒤", "이동 무대", "사용 태엽열쇠 자동인형", "줍기 티켓", "입력 5863 로비문",
+    "이동 로비", "사용 티켓 매표소", "줍기 정문열쇠", "사용 정문열쇠 정문문", "이동 거리",
+  ],
+  "deep-station": [
+    "조사 명찰", "조사 날짜표시", "조사 일지", "조사 모스표", "입력 0717 침실문",
+    "이동 통로", "조사 수심계", "이동 실험실", "조사 주기율표", "입력 816 약품장", "줍기 뜰채", "사용 뜰채 수조", "줍기 청색카드",
+    "이동 통로", "사용 청색카드 통제실문", "이동 통제실", "조사 비상함", "줍기 지렛대", "조사 무전기", "입력 2739 서랍", "줍기 시동키",
+    "이동 통로", "사용 지렛대 기관실문", "이동 기관실", "조사 게이지", "조사 안내판", "입력 464 압력제어판",
+    "이동 통로", "이동 통제실", "조사 모니터",
+    "이동 통로", "입력 0312 격납고해치", "이동 격납고", "사용 시동키 잠수정해치", "이동 잠수정",
+  ],
+  "elevator-444": [
+    "조사 달력", "조사 냉장고", "조사 계약서", "이동 지우방", "입력 1104 서랍", "줍기 일기장", "조사 일기장", "이동 거실",
+    "이동 복도", "이동 계단", "조사 안내판", "입력 1903 우편함", "줍기 경비실열쇠", "사용 경비실열쇠 경비실문",
+    "이동 경비실", "조사 명부", "줍기 부적", "조사 열쇠걸이", "줍기 전기실열쇠", "이동 로비",
+    "사용 전기실열쇠 전기실문", "이동 전기실", "조사 도면", "누르기 차단기D", "이동 로비", "이동 엘리베이터",
+    "누르기 4층", "누르기 2층", "누르기 6층", "누르기 2층", "누르기 10층", "누르기 7층", "누르기 1층",
+    "조사 소화전", "줍기 사진", "입력 1998 우편함", "줍기 편지", "이동 계단", "조사 계단밑", "줍기 신발", "이동 아래",
+    "입력 0404 4404호문", "이동 4404호", "열기 옷장", "줍기 인형",
+    "사용 사진 제사상", "사용 인형 제사상", "사용 신발 제사상", "입력 김하은 위패", "사용 편지 아이",
+    "이동 복도", "이동 엘리베이터", "누르기 1층",
+  ],
 };
 
 test("모든 시나리오에 walkthrough 가 있다", async () => {
@@ -110,8 +140,10 @@ test("힌트 순서와 패널티, 타이머", async () => {
   assert.equal(game.state.hintsUsed, 1);
   assert.equal(game.remainingMs(), 1800_000 - 120_000);
 
+  assert.match(game.run("힌트")[0].body, /일기장/); // 같은 상태에서 다시 물으면 다음 힌트
+  assert.match(game.run("힌트")[0].body, /그림/);
   game.run("조사 책상");
-  assert.match(game.run("힌트")[0].body, /일기장/);
+  assert.match(game.run("힌트")[0].body, /생일|금고/); // 이미 본 건 건너뛴다
 
   now.advance(1800_000);
   const msgs = game.run("보기");
@@ -168,4 +200,82 @@ test("observatory: 전원 없이는 승강기 패널이 안 보이고 필름 인
   // 녹슨 열쇠는 어디에도 맞지 않는다
   for (const c of ["조사 공구함", "줍기 녹슨열쇠", "이동 복도"]) game.run(c);
   assert.equal(game.run("사용 녹슨열쇠 소장실문")[0].type, "error");
+});
+
+test("deep-station: 압력 복구 전 모니터는 코드를 숨기고, 수조에 맨손을 넣으면 게임 오버", async () => {
+  const scenario = await loadScenario("deep-station");
+  const game = new Game(scenario, { now: fakeClock() });
+  for (const c of [
+    "입력 0717 침실문", "이동 통로", "이동 실험실", "입력 816 약품장", "줍기 뜰채", "사용 뜰채 수조", "줍기 청색카드",
+    "이동 통로", "사용 청색카드 통제실문", "이동 통제실",
+  ]) game.run(c);
+  const before = game.run("조사 모니터");
+  assert.ok(!game.state.flags.includes("monitor_code_seen"));
+  assert.ok(!before.some((m) => /수심/.test(m.body)));
+  assert.ok(game.state.inventory.includes("blue_card")); // 카드는 소모되지 않는다
+
+  // 압력 오답은 60초 패널티
+  for (const c of ["조사 비상함", "줍기 지렛대", "이동 통로", "사용 지렛대 기관실문", "이동 기관실"]) game.run(c);
+  const penaltyBefore = game.state.penaltyMs;
+  game.run("입력 000 압력제어판");
+  assert.equal(game.state.penaltyMs - penaltyBefore, 60_000);
+
+  // 뜰채 없이 수조를 조작하면 감전
+  const g2 = new Game(scenario, { now: fakeClock() });
+  for (const c of ["입력 0717 침실문", "이동 통로", "이동 실험실"]) g2.run(c);
+  assert.equal(g2.run("줍기 청색카드")[0].type, "error"); // 아직 hidden
+  g2.run("조작 수조");
+  assert.equal(g2.status, "lost");
+  assert.equal(g2.state.lostBy, "trap");
+});
+
+test("elevator-444: 전원·부적·순서·함정·달래기 게이트", async () => {
+  const scenario = await loadScenario("elevator-444");
+  const RITUAL = ["누르기 4", "누르기 2", "누르기 6", "누르기 2", "누르기 10", "누르기 7"];
+  const PREP = ["이동 복도", "이동 계단", "입력 1903 우편함", "줍기 경비실열쇠", "사용 경비실열쇠 경비실문", "이동 경비실",
+    "조사 열쇠걸이", "줍기 전기실열쇠", "이동 로비", "사용 전기실열쇠 전기실문", "이동 전기실"];
+
+  const game = new Game(scenario, { now: fakeClock() });
+  for (const c of PREP) game.run(c);
+  game.run("누르기 차단기A"); // 오답 차단기 → 1분
+  assert.equal(game.state.penaltyMs, 60_000);
+  game.run("이동 로비"); game.run("이동 엘리베이터");
+  game.run("누르기 4"); // 전원 없음
+  assert.ok(!game.state.flags.includes("seq1"));
+  for (const c of ["이동 로비", "이동 전기실", "누르기 차단기D", "이동 로비", "이동 엘리베이터", "누르기 4", "누르기 2", "누르기 5"]) game.run(c);
+  assert.ok(!game.state.flags.includes("seq1")); // 5층은 리셋
+  for (const c of RITUAL) game.run(c);
+  game.run("누르기 1"); // 부적 없음 → 못 감
+  assert.equal(game.state.room, "elevator");
+  assert.equal(game.state.penaltyMs, 180_000);
+  for (const c of RITUAL) game.run(c);
+  game.run("조사 여자");
+  assert.equal(game.state.lostBy, "trap");
+
+  const g2 = new Game(scenario, { now: fakeClock() });
+  for (const c of [...PREP, "누르기 차단기D", "이동 로비", "이동 경비실", "줍기 부적", "이동 로비", "이동 엘리베이터", ...RITUAL, "누르기 1"]) g2.run(c);
+  assert.equal(g2.state.room, "corridor444");
+  g2.run("이동 계단"); g2.run("이동 위");
+  assert.equal(g2.state.room, "stairwell444"); // 무한 계단
+  for (const c of ["이동 아래", "입력 0404 4404호문", "이동 4404호"]) g2.run(c);
+  assert.equal(g2.run("입력 하은 위패")[0].type, "error"); // 상 먼저
+  g2.run("열기 옷장");
+  assert.ok(g2.visibleObjects().some((o) => o.id === "doll"));
+  for (const c of ["줍기 인형", "사용 인형 제사상", "이동 복도", "조사 소화전", "줍기 사진", "이동 계단", "조사 계단밑", "줍기 신발", "이동 아래", "이동 4404호", "사용 사진 제사상", "사용 신발 제사상", "입력 하은 위패"]) g2.run(c);
+  assert.ok(g2.visibleObjects().some((o) => o.id === "child"));
+  g2.run("이동 복도"); g2.run("이동 엘리베이터");
+  g2.run("누르기 1"); // 편지 안 줌
+  assert.equal(g2.state.room, "elevator444");
+});
+
+test("힌트 코드: 코드별 힌트를 순서대로, 없는 코드는 에러", async () => {
+  const scenario = await loadScenario("elevator-444");
+  const game = new Game(scenario, { now: fakeClock() });
+  assert.match(game.run("힌트 e1")[0].body, /달력/);
+  assert.match(game.run("힌트 E1")[0].body, /생일/);
+  assert.match(game.run("힌트 E4")[0].body, /전기실/);
+  assert.equal(game.run("힌트 X9")[0].type, "error");
+  assert.ok(game.run("조사 달력").some((m) => /힌트 코드/.test(m.body)) === false); // 달력엔 코드 없음
+  assert.ok(game.run("이동 지우방").some((m) => /힌트 코드 E1/.test(m.body)));
+  assert.ok(game.run("조사 서랍").some((m) => /힌트 코드 E1/.test(m.body)));
 });
