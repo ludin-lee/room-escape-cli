@@ -167,7 +167,7 @@ function checkDescription(desc, where, err) {
   }
 }
 
-const KNOWN_EFFECTS = new Set(["addItem", "removeItem", "setFlag", "clearFlag", "reveal", "hide", "moveTo", "message", "addPenalty", "gameOver"]);
+const KNOWN_EFFECTS = new Set(["addItem", "removeItem", "setFlag", "clearFlag", "reveal", "hide", "moveTo", "message", "addPenalty", "gameOver", "scare"]);
 
 function checkEffects(effects, where, objects, rooms, err) {
   for (const ef of effects ?? []) {

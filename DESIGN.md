@@ -65,7 +65,11 @@ room-escape/
 │   │       │   └── scenario.json
 │   │       ├── zombie-street/ # "죽은 자들의 거리" (45분, 방 7개, 조합 레시피 5개, 함정 3종)
 │   │       │   └── scenario.json
-│   │       └── no-paper/     # "휴지 없는 화장실" (20분, 방 3개, 코믹. 출구 방 onEnter 로 조건부 엔딩)
+│   │       ├── no-paper/     # "휴지 없는 화장실" (20분, 방 3개, 코믹. 출구 방 onEnter 로 조건부 엔딩)
+│   │       ├── after-school/ # "방과 후 교실" (15분, 방 3개, 퍼즐 3개, 난이도 하)
+│   │       ├── magic-theater/ # "마술사의 극장" (30분, 방 5개, 퍼즐 7개, 난이도 중)
+│   │       ├── deep-station/ # "해저 기지 아쿠아" (50분, 방 7개, 퍼즐 9개, 난이도 상)
+│   │       └── elevator-444/ # "엘리베이터 괴담: 444층" (60분, 방 12개, 버튼 순서를 flag 체인으로 표현, 난이도 상)
 │   │           └── scenario.json
 │   └── save/
 │       └── store.js          # ~/.room-escape/saves/<slot>.json 읽기/쓰기 (UI 전용)
@@ -171,7 +175,7 @@ const restored = Game.fromJSON(scenario, snapshot, { now });
 
 | type | 푸는 방법 | 필수 필드 |
 |---|---|---|
-| `code` | `입력 <코드> [대상]` | `answer` (문자열, 공백·하이픈 제거 후 비교) |
+| `code` | `입력 <코드> [대상]` | `answer` (문자열 또는 문자열 배열. 공백·하이픈 제거 후 비교, 배열이면 하나라도 맞으면 통과) |
 | `key` | `사용 <아이템> <대상>` | `keyItem` (오브젝트 id). 사용 시 `consume: true` 면 아이템 제거 |
 
 두 타입 공통 선택 필드:
@@ -193,7 +197,8 @@ const restored = Game.fromJSON(scenario, snapshot, { now });
 
 ### 효과(Effect) 종류
 `addItem`, `removeItem`, `setFlag`, `clearFlag`, `reveal`, `hide`, `moveTo`, `message`,
-`addPenalty: <초>` (남은 시간 차감. 시스템 메시지 자동 출력), `gameOver: "<메시지>"` (즉시 패배. `status = lost`, `lostBy = "trap"`, 메시지는 ending 타입으로 출력)
+`addPenalty: <초>` (남은 시간 차감. 시스템 메시지 자동 출력), `gameOver: "<메시지>"` (즉시 패배. `status = lost`, `lostBy = "trap"`, 메시지는 ending 타입으로 출력),
+`scare: "<아스키 아트>"` (점프 스케어. 타자 효과 없이 벨과 함께 한 번에 빨갛게 출력. `gameOver` 앞에 두면 얼굴 → 사망 메시지 순)
 
 조건/효과가 데이터로만 표현되므로 **퍼즐 로직에 코드가 들어가지 않는다.**
 
@@ -204,7 +209,8 @@ const restored = Game.fromJSON(scenario, snapshot, { now });
 - **재도전**: `Game.run()` 은 매 턴 시작 시 상태를 체크포인트로 저장한다. 함정 사망 직후(`canRetry()`) `retry()` 를 부르면 체크포인트로 되돌리고, 죽은 뒤 흐른 시간 + `retryPenaltySec` (기본 180) 을 차감하며 `attempts` 를 비우고 `retries` 를 올린다. UI 는 게임 오버 화면 뒤에 `(Y/n)` 로 묻는다. 시간 초과는 재도전 불가.
 
 ### 힌트
-- `hints` 배열을 위에서부터 훑어 **`when` 을 만족하는 첫 번째** 힌트를 보여준다.
+- `hints` 배열을 위에서부터 훑어 `when` 을 만족하는 힌트 중 **아직 안 보여 준 첫 번째**를 보여준다 (`state.hintsSeen`). 같은 상태에서 다시 물으면 다음 힌트, 다 봤으면 처음부터.
+- 힌트에 `code: "E3"` 를 달고 오브젝트·방에 `hintCode: "E3"` 를 달면, 조사/입장 시 `(힌트 코드 E3)` 가 붙고 `힌트 E3` 로 그 코드의 힌트만 순서대로 볼 수 있다 (실제 방탈출의 힌트 번호 스티커). 없는 코드는 에러.
 - 만족하는 힌트가 없으면 "더 이상 힌트가 없습니다."
 - 힌트를 볼 때마다 `hintPenaltySec` 만큼 남은 시간이 줄어든다 (9장).
 

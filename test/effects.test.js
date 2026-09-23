@@ -21,7 +21,7 @@ test("효과 적용", () => {
   assert.deepEqual(s.inventory, []);
   assert.deepEqual(s.flags, []);
   assert.deepEqual(s.revealed, []);
-  assert.deepEqual(s.hidden, ["x"]);
+  assert.deepEqual(s.hidden, ["key", "x"]); // removeItem 은 방에서도 숨긴다
 });
 
 test("중복 추가 방지 / 알 수 없는 효과", () => {
@@ -44,4 +44,9 @@ test("조건 평가", () => {
   assert.equal(evaluate({ all: [{ flag: "f" }, { inRoom: "b" }] }, s), false);
   assert.equal(evaluate({ any: [{ flag: "f" }, { inRoom: "b" }] }, s), true);
   assert.throws(() => evaluate({ weird: 1 }, s), /알 수 없는 조건/);
+});
+
+test("scare 효과는 scare 타입 메시지를 만든다", () => {
+  const state = { inventory: [], flags: [], revealed: [], hidden: [], solvedLocks: [], penaltyMs: 0 };
+  assert.deepEqual(apply([{ scare: "(0_0)" }], state), [{ type: "scare", body: "(0_0)" }]);
 });

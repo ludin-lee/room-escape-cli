@@ -8,6 +8,7 @@ const STYLE = {
   system: ["gray"],
   hint: ["magenta"],
   ending: ["bold", "green"],
+  scare: ["bold", "red"],
 };
 
 export function render(message, { color = true } = {}) {
@@ -15,6 +16,7 @@ export function render(message, { color = true } = {}) {
   let body = message.body;
   if (message.type === "room") body = `\n== ${body} ==`;
   if (message.type === "ending") body = `\n${body}`;
+  if (message.type === "scare") body = `\x07\n${body}\n`; // 벨 + 즉시 출력
   return color && style.length ? styleText(style, body) : body;
 }
 
@@ -32,6 +34,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export async function typeOut(messages, write, { msPerChar = 12, color = true } = {}) {
   for (const m of messages) {
     const line = render(m, { color });
+    if (m.type === "scare" && msPerChar > 0) await sleep(700); // 정적 뒤에 확
     if (!TYPED.has(m.type) || msPerChar <= 0) { write(line + "\n"); continue; }
     for (const ch of line) {
       write(ch);

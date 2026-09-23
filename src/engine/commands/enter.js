@@ -32,7 +32,7 @@ export default function enter(ctx) {
     return [ctx.error(lock.requiresMessage ?? "지금은 손댈 수 없다.")];
   }
 
-  if (normalize(code) === normalize(lock.answer)) return ctx.solveLock(lockId);
+  if ([].concat(lock.answer).some((a) => normalize(code) === normalize(a))) return ctx.solveLock(lockId);
 
   // 오답: failMessage → onFail 효과 → 횟수 제한(maxAttempts) 처리
   const messages = [ctx.error(lock.failMessage ?? "아무 일도 일어나지 않는다.")];
