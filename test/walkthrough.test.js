@@ -93,6 +93,15 @@ const WALKTHROUGHS = {
     "사용 사진 제사상", "사용 인형 제사상", "사용 신발 제사상", "입력 김하은 위패", "사용 편지 아이",
     "이동 복도", "이동 엘리베이터", "누르기 1층",
   ],
+  "loop-train": [
+    "조사 승차권", "조사 노인", "이동 식당칸", "조사 게시판", "이동 화물칸", "입력 1210 두꺼비집",
+    "이동 식당칸", "이동 객실", "당기기 비상제동",
+    "조사 노인", "이동 식당칸", "입력 0917 주방문", "이동 주방", "조사 근무표", "조사 서랍", "줍기 밸브핸들",
+    "이동 식당칸", "이동 화물칸", "입력 2058 기관실문", "이동 기관실", "조사 달력", "조사 기관사",
+    "이동 화물칸", "이동 식당칸", "이동 객실", "당기기 비상제동",
+    "조사 노인", "이동 식당칸", "이동 주방", "조사 서랍", "줍기 밸브핸들", "이동 식당칸", "이동 화물칸",
+    "조작 두꺼비집", "사용 밸브핸들 유압밸브", "이동 기관실", "입력 0302 브레이크", "당기기 브레이크",
+  ],
 };
 
 test("모든 시나리오에 walkthrough 가 있다", async () => {
@@ -278,4 +287,27 @@ test("힌트 코드: 코드별 힌트를 순서대로, 없는 코드는 에러",
   assert.ok(game.run("조사 달력").some((m) => /힌트 코드/.test(m.body)) === false); // 달력엔 코드 없음
   assert.ok(game.run("이동 지우방").some((m) => /힌트 코드 E1/.test(m.body)));
   assert.ok(game.run("조사 서랍").some((m) => /힌트 코드 E1/.test(m.body)));
+});
+
+test("loop-train: 루프는 아이템·장치를 초기화하고 지식은 남기며, 5번째 죽음은 게임 오버", async () => {
+  const scenario = await loadScenario("loop-train");
+  const game = new Game(scenario, { now: fakeClock() });
+  game.run("당기기 비상제동");
+  for (const c of ["조사 노인", "이동 식당칸", "입력 0917 주방문", "이동 주방", "조사 서랍", "줍기 밸브핸들", "이동 식당칸", "이동 화물칸"]) game.run(c);
+  assert.ok(game.state.inventory.includes("valve_handle"));
+  assert.match(game.run("사용 밸브핸들 두꺼비집")[0].body, /잠겨|번호/); // 조작 훅으로 넘어간다
+  game.run("사용 밸브핸들 유압밸브"); // 전원 차단 전 → 증기 → 루프 (돌리기와 동일)
+  assert.equal(game.status, "playing");
+  assert.equal(game.state.room, "car1");
+  assert.ok(game.state.flags.includes("loop2"));
+  assert.ok(!game.state.inventory.includes("valve_handle"));
+  assert.ok(game.state.solvedLocks.includes("kitchen_lock")); // 연 문은 기억
+  game.run("이동 식당칸"); game.run("이동 주방");
+  assert.ok(!game.visibleObjects().some((o) => o.id === "valve_handle")); // 서랍은 다시 닫힘
+  for (const c of ["이동 식당칸", "이동 객실", "당기기 비상제동", "당기기 비상제동"]) game.run(c);
+  assert.ok(game.state.flags.includes("loop4"));
+  assert.equal(game.status, "playing");
+  game.run("당기기 비상제동");
+  assert.equal(game.status, "lost");
+  assert.equal(game.state.lostBy, "trap");
 });

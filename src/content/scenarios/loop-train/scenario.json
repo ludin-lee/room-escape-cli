@@ -1,0 +1,1041 @@
+{
+  "id": "loop-train",
+  "title": "심야 열차 00:10",
+  "timeLimitSec": 3000,
+  "hintPenaltySec": 180,
+  "retryPenaltySec": 120,
+  "startRoom": "car1",
+  "intro": "제1210 심야 열차. 00:00 정각에 출발했다.\n00:10, 열차는 강 위의 철교에서 떨어진다. 당신은 그걸 안다. 이미 한 번 겪었으니까.\n눈을 뜨면 다시 00:00, 같은 좌석이다. 몸에 지닌 것은 사라지지만 머리에 든 것은 남는다.\n몇 번이나 돌아올 수 있을지는 모른다. 50분 안에 이 열차를 다리 앞에서 세워라.",
+  "rooms": {
+    "car1": {
+      "name": "3호차 객실",
+      "hintCode": "T1",
+      "description": [
+        {
+          "when": {
+            "flag": "looped"
+          },
+          "text": "다시 3호차 객실. 모든 것이 처음 그대로다. 옆자리 노인만 이쪽을 보고 있다."
+        },
+        {
+          "text": "낡은 객차. 승객 대부분이 졸고 있다. 옆자리 노인은 깊이 잠들었고, 벽에 시계와 비상제동 손잡이가 있다. 창밖으로 역 불빛이 멀어진다."
+        }
+      ],
+      "objects": [
+        "ticket",
+        "oldman",
+        "window",
+        "clock",
+        "emergency_brake"
+      ],
+      "exits": [
+        {
+          "names": [
+            "식당칸",
+            "앞",
+            "dining",
+            "forward"
+          ],
+          "to": "car2"
+        }
+      ]
+    },
+    "car2": {
+      "name": "식당칸",
+      "hintCode": "T2",
+      "description": "불 꺼진 식당칸. 승무원이 카운터 뒤에 서 있다. 벽에 시간표가 붙은 게시판, 구석에 커피머신. 카운터 옆 주방문에는 번호 자물쇠.",
+      "objects": [
+        "attendant",
+        "board",
+        "coffee",
+        "kitchen_door"
+      ],
+      "exits": [
+        {
+          "names": [
+            "객실",
+            "뒤",
+            "3호차",
+            "back"
+          ],
+          "to": "car1"
+        },
+        {
+          "names": [
+            "주방",
+            "kitchen"
+          ],
+          "to": "kitchen",
+          "lockedBy": "kitchen_lock",
+          "lockedMessage": "주방문은 잠겨 있다. 4자리 번호."
+        },
+        {
+          "names": [
+            "화물칸",
+            "앞",
+            "cargo",
+            "forward"
+          ],
+          "to": "car3"
+        }
+      ]
+    },
+    "kitchen": {
+      "name": "주방",
+      "hintCode": "T3",
+      "description": "좁은 주방. 벽에 근무표, 서랍 달린 조리대, 냉동고.",
+      "objects": [
+        "roster",
+        "drawer",
+        "valve_handle",
+        "freezer"
+      ],
+      "exits": [
+        {
+          "names": [
+            "식당칸",
+            "밖",
+            "dining"
+          ],
+          "to": "car2"
+        }
+      ]
+    },
+    "car3": {
+      "name": "화물칸",
+      "hintCode": "T4",
+      "description": "덜컹거리는 화물칸. 묶인 상자들 사이로 벽의 두꺼비집과 커다란 유압 밸브가 보인다. 앞쪽 철문에 '기관실' 표시와 키패드.",
+      "objects": [
+        "crates",
+        "breaker",
+        "valve",
+        "engine_door"
+      ],
+      "exits": [
+        {
+          "names": [
+            "식당칸",
+            "뒤",
+            "dining",
+            "back"
+          ],
+          "to": "car2"
+        },
+        {
+          "names": [
+            "기관실",
+            "앞",
+            "engine",
+            "forward"
+          ],
+          "to": "engine",
+          "lockedBy": "engine_lock",
+          "lockedMessage": "기관실 문은 잠겨 있다. 키패드 4자리."
+        }
+      ]
+    },
+    "engine": {
+      "name": "기관실",
+      "hintCode": "T5",
+      "description": "계기판 불빛만 가득한 기관실. 기관사는 의자에 고꾸라져 있다. 벽에 달력, 중앙에 봉인된 브레이크 레버. 전면 유리 너머로 강이 다가온다.",
+      "objects": [
+        "driver",
+        "calendar",
+        "panel",
+        "brake"
+      ],
+      "exits": [
+        {
+          "names": [
+            "화물칸",
+            "뒤",
+            "cargo",
+            "back"
+          ],
+          "to": "car3"
+        }
+      ]
+    },
+    "bridge": {
+      "name": "철교 앞",
+      "description": "열차가 다리 10미터 앞에서 멈춘다. 시계가 00:10을 지나 00:11로 넘어간다. 처음이다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+  "objects": {
+    "ticket": {
+      "names": [
+        "승차권",
+        "표",
+        "ticket"
+      ],
+      "description": "제1210 열차 · 3호차 14A · 00:00 발. 뒷면에 당신 글씨로 '10분. 다리.' 라고 적혀 있다. 언제 썼는지 기억이 없다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "ticket_seen"
+          }
+        ]
+      }
+    },
+    "oldman": {
+      "names": [
+        "노인",
+        "옆자리",
+        "oldman",
+        "할아버지"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "looped"
+          },
+          "text": "옆자리 노인. 눈을 뜨고 당신을 똑바로 본다. 이 사람도 기억한다."
+        },
+        {
+          "text": "옆자리 노인. 깊이 잠들어 있다."
+        }
+      ],
+      "onExamine": [
+        {
+          "when": {
+            "flag": "loop4"
+          },
+          "message": "\"이번이 마지막이야. 다음엔 나도 못 깨어나. 전원, 밸브, 브레이크. 순서 틀리지 마.\""
+        },
+        {
+          "when": {
+            "flag": "loop2"
+          },
+          "message": "\"브레이크에 봉인이 걸려 있지? 기관사가 죽기 전에 중얼거렸어. '아내 생일'. 기관실 달력을 봐.\"\n노인이 눈을 감는다. \"전원부터 끊어. 그다음 밸브. 반대로 하면 증기에 죽어.\"",
+          "effects": [
+            {
+              "setFlag": "know_seal"
+            }
+          ]
+        },
+        {
+          "when": {
+            "flag": "loop1"
+          },
+          "message": "\"너도 기억하는군.\" 노인이 낮게 말한다. \"나는 여덟 번째야. 주방문 번호는 0917. 승무원이 누르는 걸 봤어. 안에 쓸 만한 게 있을 거다.\"",
+          "effects": [
+            {
+              "setFlag": "know_kitchen"
+            }
+          ]
+        },
+        {
+          "message": "어깨를 흔들어도 깨지 않는다. 숨은 쉬고 있다."
+        }
+      ],
+      "onInteract": {
+        "message": "흔들어 봤다. 조사하는 편이 낫겠다."
+      }
+    },
+    "window": {
+      "names": [
+        "창문",
+        "창",
+        "window"
+      ],
+      "description": "어두운 강변. 멀리 철교의 붉은 등이 보인다. 10분 뒤 저기다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "window_seen"
+          }
+        ]
+      }
+    },
+    "clock": {
+      "names": [
+        "시계",
+        "clock"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "loop4"
+          },
+          "text": "00:00. 초침이 유난히 느리다. 마지막이다."
+        },
+        {
+          "text": "벽시계 00:00. 초침이 돈다. 매번 여기서 시작한다."
+        }
+      ]
+    },
+    "emergency_brake": {
+      "names": [
+        "비상제동",
+        "손잡이",
+        "brake",
+        "비상"
+      ],
+      "description": "붉은 비상제동 손잡이. '비상시 당기시오'. 당기면 이 루프를 끝내고 처음으로 돌아갈 수 있을 것이다. 남은 기회가 줄어든다.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "loop4"
+          },
+          "message": "비상제동을 당겼다. 쇳소리와 함께 열차가 급정거한다. 승객들이 쏟아지고, 3초 뒤 뒤따르던 화물열차가 들이받는다.",
+          "effects": [
+            {
+              "gameOver": "다섯 번째다. 이번엔 눈을 뜨지 못했다. 열차는 00:10에 다리에서 떨어졌고, 더는 아무도 돌아오지 않는다."
+            }
+          ]
+        },
+        {
+          "when": {
+            "flag": "loop3"
+          },
+          "message": "비상제동을 당겼다. 쇳소리와 함께 열차가 급정거한다. 승객들이 쏟아지고, 3초 뒤 뒤따르던 화물열차가 들이받는다.\n\n…눈을 뜬다. 3호차 좌석. 창밖은 아직 역 불빛이고, 시계는 00:00. 가방에 넣었던 것은 없고, 문 번호는 손이 기억한다. (4번째 루프. 남은 기회 1번)",
+          "effects": [
+            {
+              "setFlag": "loop4"
+            },
+            {
+              "moveTo": "car1"
+            },
+            {
+              "removeItem": "valve_handle"
+            },
+            {
+              "hide": "valve_handle"
+            },
+            {
+              "clearFlag": "power_cut"
+            },
+            {
+              "clearFlag": "valve_open"
+            },
+            {
+              "clearFlag": "drawer_opened"
+            },
+            {
+              "setFlag": "looped"
+            }
+          ]
+        },
+        {
+          "when": {
+            "flag": "loop2"
+          },
+          "message": "비상제동을 당겼다. 쇳소리와 함께 열차가 급정거한다. 승객들이 쏟아지고, 3초 뒤 뒤따르던 화물열차가 들이받는다.\n\n…눈을 뜬다. 3호차 좌석. 창밖은 아직 역 불빛이고, 시계는 00:00. 가방에 넣었던 것은 없고, 문 번호는 손이 기억한다. (3번째 루프. 남은 기회 2번)",
+          "effects": [
+            {
+              "setFlag": "loop3"
+            },
+            {
+              "moveTo": "car1"
+            },
+            {
+              "removeItem": "valve_handle"
+            },
+            {
+              "hide": "valve_handle"
+            },
+            {
+              "clearFlag": "power_cut"
+            },
+            {
+              "clearFlag": "valve_open"
+            },
+            {
+              "clearFlag": "drawer_opened"
+            },
+            {
+              "setFlag": "looped"
+            }
+          ]
+        },
+        {
+          "when": {
+            "flag": "loop1"
+          },
+          "message": "비상제동을 당겼다. 쇳소리와 함께 열차가 급정거한다. 승객들이 쏟아지고, 3초 뒤 뒤따르던 화물열차가 들이받는다.\n\n…눈을 뜬다. 3호차 좌석. 창밖은 아직 역 불빛이고, 시계는 00:00. 가방에 넣었던 것은 없고, 문 번호는 손이 기억한다. (2번째 루프. 남은 기회 3번)",
+          "effects": [
+            {
+              "setFlag": "loop2"
+            },
+            {
+              "moveTo": "car1"
+            },
+            {
+              "removeItem": "valve_handle"
+            },
+            {
+              "hide": "valve_handle"
+            },
+            {
+              "clearFlag": "power_cut"
+            },
+            {
+              "clearFlag": "valve_open"
+            },
+            {
+              "clearFlag": "drawer_opened"
+            },
+            {
+              "setFlag": "looped"
+            }
+          ]
+        },
+        {
+          "message": "비상제동을 당겼다. 쇳소리와 함께 열차가 급정거한다. 승객들이 쏟아지고, 3초 뒤 뒤따르던 화물열차가 들이받는다.\n\n…눈을 뜬다. 3호차 좌석. 창밖은 아직 역 불빛이고, 시계는 00:00. 가방에 넣었던 것은 없고, 문 번호는 손이 기억한다. (1번째 루프. 남은 기회 3번)",
+          "effects": [
+            {
+              "setFlag": "loop1"
+            },
+            {
+              "moveTo": "car1"
+            },
+            {
+              "removeItem": "valve_handle"
+            },
+            {
+              "hide": "valve_handle"
+            },
+            {
+              "clearFlag": "power_cut"
+            },
+            {
+              "clearFlag": "valve_open"
+            },
+            {
+              "clearFlag": "drawer_opened"
+            },
+            {
+              "setFlag": "looped"
+            }
+          ]
+        }
+      ]
+    },
+    "attendant": {
+      "names": [
+        "승무원",
+        "차장",
+        "attendant"
+      ],
+      "description": "졸린 눈의 승무원. \"주방은 관계자 외 출입 금지입니다. 기관실도요.\" 무슨 말을 해도 규정 얘기뿐이다."
+    },
+    "board": {
+      "names": [
+        "게시판",
+        "시간표",
+        "board"
+      ],
+      "description": "운행표.\n  제1210 열차 · 00:00 발 · 기관사 朴 · 차장 崔\n밑에 볼펜: '두꺼비집 잠금은 열차 번호.'",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "board_seen"
+          }
+        ]
+      }
+    },
+    "coffee": {
+      "names": [
+        "커피머신",
+        "커피",
+        "coffee"
+      ],
+      "description": "식은 커피 냄새. 컵 하나에 립스틱 자국. 지금은 아니다."
+    },
+    "kitchen_door": {
+      "names": [
+        "주방문",
+        "kitchendoor"
+      ],
+      "description": "'관계자 외 출입 금지'. 4자리 번호 자물쇠.",
+      "lock": "kitchen_lock",
+      "hintCode": "T2"
+    },
+    "roster": {
+      "names": [
+        "근무표",
+        "roster",
+        "명단"
+      ],
+      "description": "이번 주 기관사 근무표. 사번.\n  김 4471 · 박 2058 · 이 7730\n오늘 당직 칸은 커피 얼룩으로 지워졌다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "roster_seen"
+          }
+        ]
+      }
+    },
+    "drawer": {
+      "names": [
+        "서랍",
+        "조리대",
+        "drawer"
+      ],
+      "description": "조리대 서랍. 칼, 행주, 그리고 뭔가 무거운 것.",
+      "onExamine": [
+        {
+          "when": {
+            "flag": "drawer_opened"
+          },
+          "message": "이미 꺼냈다."
+        },
+        {
+          "message": "서랍 안쪽에 T자 밸브 핸들이 굴러다닌다.",
+          "effects": [
+            {
+              "reveal": "valve_handle"
+            },
+            {
+              "setFlag": "drawer_opened"
+            }
+          ]
+        }
+      ]
+    },
+    "valve_handle": {
+      "names": [
+        "밸브핸들",
+        "핸들",
+        "handle"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "T자 쇠 핸들. 화물칸의 유압 밸브에 맞는 크기다. 루프가 돌면 여기 없다는 걸 잊지 마라."
+    },
+    "freezer": {
+      "names": [
+        "냉동고",
+        "freezer"
+      ],
+      "description": "얼음과 냉동 만두. 쓸모없다."
+    },
+    "crates": {
+      "names": [
+        "상자",
+        "화물",
+        "crates"
+      ],
+      "description": "'취급주의' 상자들. 열어 봤자 부품이다."
+    },
+    "breaker": {
+      "names": [
+        "두꺼비집",
+        "배전반",
+        "breaker"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "power_cut"
+          },
+          "text": "견인 전원 차단기가 내려가 있다. 열차는 관성으로 달린다."
+        },
+        {
+          "when": {
+            "solved": "breaker_lock"
+          },
+          "text": "잠금이 풀린 두꺼비집. '견인 전원' 차단기가 올라가 있다. 내리면 된다."
+        },
+        {
+          "text": "두꺼비집. 4자리 자물쇠로 덮개가 잠겨 있다."
+        }
+      ],
+      "lock": "breaker_lock",
+      "hintCode": "T4",
+      "onInteract": [
+        {
+          "when": {
+            "notSolved": "breaker_lock"
+          },
+          "message": "덮개가 잠겨 있다. 번호부터."
+        },
+        {
+          "when": {
+            "flag": "power_cut"
+          },
+          "message": "이미 내렸다."
+        },
+        {
+          "message": "'견인 전원' 차단기를 내린다. 모터 소리가 잦아들고 열차가 관성으로 미끄러진다. 속도는 아직 그대로다.",
+          "effects": [
+            {
+              "setFlag": "power_cut"
+            }
+          ]
+        }
+      ]
+    },
+    "valve": {
+      "names": [
+        "유압밸브",
+        "밸브",
+        "valve"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "valve_open"
+          },
+          "text": "유압 밸브가 열려 있다. 브레이크 배관에 압력이 찬다."
+        },
+        {
+          "text": "커다란 유압 밸브. 핸들이 뽑혀 있어 맨손으로는 돌릴 수 없다. 배관에 '전원 차단 후 조작' 경고 스티커."
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "valve_open"
+          },
+          "message": "이미 열려 있다."
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "flag": "power_cut"
+              },
+              {
+                "hasItem": "valve_handle"
+              }
+            ]
+          },
+          "message": "핸들을 끼우고 돌린다. 쉭— 배관에 압력이 차오른다. 이제 기관실 브레이크가 먹힐 것이다.",
+          "effects": [
+            {
+              "setFlag": "valve_open"
+            }
+          ]
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "hasItem": "valve_handle"
+              },
+              {
+                "flag": "loop4"
+              }
+            ]
+          },
+          "message": "핸들을 돌리자 견인 전원이 살아 있는 배관으로 유압이 역류한다. 밸브가 터지고 증기가 얼굴을 덮친다.",
+          "effects": [
+            {
+              "gameOver": "다섯 번째다. 이번엔 눈을 뜨지 못했다. 열차는 00:10에 다리에서 떨어졌고, 더는 아무도 돌아오지 않는다."
+            }
+          ]
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "hasItem": "valve_handle"
+              },
+              {
+                "flag": "loop3"
+              }
+            ]
+          },
+          "message": "핸들을 돌리자 견인 전원이 살아 있는 배관으로 유압이 역류한다. 밸브가 터지고 증기가 얼굴을 덮친다.\n\n…눈을 뜬다. 3호차 좌석. 창밖은 아직 역 불빛이고, 시계는 00:00. 가방에 넣었던 것은 없고, 문 번호는 손이 기억한다. (4번째 루프. 남은 기회 1번)",
+          "effects": [
+            {
+              "setFlag": "loop4"
+            },
+            {
+              "moveTo": "car1"
+            },
+            {
+              "removeItem": "valve_handle"
+            },
+            {
+              "hide": "valve_handle"
+            },
+            {
+              "clearFlag": "power_cut"
+            },
+            {
+              "clearFlag": "valve_open"
+            },
+            {
+              "clearFlag": "drawer_opened"
+            },
+            {
+              "setFlag": "looped"
+            }
+          ]
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "hasItem": "valve_handle"
+              },
+              {
+                "flag": "loop2"
+              }
+            ]
+          },
+          "message": "핸들을 돌리자 견인 전원이 살아 있는 배관으로 유압이 역류한다. 밸브가 터지고 증기가 얼굴을 덮친다.\n\n…눈을 뜬다. 3호차 좌석. 창밖은 아직 역 불빛이고, 시계는 00:00. 가방에 넣었던 것은 없고, 문 번호는 손이 기억한다. (3번째 루프. 남은 기회 2번)",
+          "effects": [
+            {
+              "setFlag": "loop3"
+            },
+            {
+              "moveTo": "car1"
+            },
+            {
+              "removeItem": "valve_handle"
+            },
+            {
+              "hide": "valve_handle"
+            },
+            {
+              "clearFlag": "power_cut"
+            },
+            {
+              "clearFlag": "valve_open"
+            },
+            {
+              "clearFlag": "drawer_opened"
+            },
+            {
+              "setFlag": "looped"
+            }
+          ]
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "hasItem": "valve_handle"
+              },
+              {
+                "flag": "loop1"
+              }
+            ]
+          },
+          "message": "핸들을 돌리자 견인 전원이 살아 있는 배관으로 유압이 역류한다. 밸브가 터지고 증기가 얼굴을 덮친다.\n\n…눈을 뜬다. 3호차 좌석. 창밖은 아직 역 불빛이고, 시계는 00:00. 가방에 넣었던 것은 없고, 문 번호는 손이 기억한다. (2번째 루프. 남은 기회 3번)",
+          "effects": [
+            {
+              "setFlag": "loop2"
+            },
+            {
+              "moveTo": "car1"
+            },
+            {
+              "removeItem": "valve_handle"
+            },
+            {
+              "hide": "valve_handle"
+            },
+            {
+              "clearFlag": "power_cut"
+            },
+            {
+              "clearFlag": "valve_open"
+            },
+            {
+              "clearFlag": "drawer_opened"
+            },
+            {
+              "setFlag": "looped"
+            }
+          ]
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "hasItem": "valve_handle"
+              },
+              {
+                "notFlag": "loop1"
+              }
+            ]
+          },
+          "message": "핸들을 돌리자 견인 전원이 살아 있는 배관으로 유압이 역류한다. 밸브가 터지고 증기가 얼굴을 덮친다.\n\n…눈을 뜬다. 3호차 좌석. 창밖은 아직 역 불빛이고, 시계는 00:00. 가방에 넣었던 것은 없고, 문 번호는 손이 기억한다. (1번째 루프. 남은 기회 3번)",
+          "effects": [
+            {
+              "setFlag": "loop1"
+            },
+            {
+              "moveTo": "car1"
+            },
+            {
+              "removeItem": "valve_handle"
+            },
+            {
+              "hide": "valve_handle"
+            },
+            {
+              "clearFlag": "power_cut"
+            },
+            {
+              "clearFlag": "valve_open"
+            },
+            {
+              "clearFlag": "drawer_opened"
+            },
+            {
+              "setFlag": "looped"
+            }
+          ]
+        },
+        {
+          "message": "핸들이 없다. 맨손으로는 꿈쩍도 않는다."
+        }
+      ]
+    },
+    "engine_door": {
+      "names": [
+        "기관실문",
+        "키패드",
+        "enginedoor"
+      ],
+      "description": "기관실 철문. 키패드 위에 '당직 기관사 사번'. 틀리면 경보가 울린다.",
+      "lock": "engine_lock",
+      "hintCode": "T4"
+    },
+    "driver": {
+      "names": [
+        "기관사",
+        "driver",
+        "시신"
+      ],
+      "description": "기관사는 숨이 없다. 손목에 결혼반지, 주머니는 비었다. 출발 직후 쓰러진 것 같다."
+    },
+    "calendar": {
+      "names": [
+        "달력",
+        "calendar"
+      ],
+      "description": "3월 달력. 2일에 하트와 '여보', 15일에 별과 '우리 딸'.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "calendar_seen"
+          }
+        ]
+      }
+    },
+    "panel": {
+      "names": [
+        "제어판",
+        "계기판",
+        "panel"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "valve_open"
+          },
+          "text": "속도 96km/h. 유압 게이지가 초록. 브레이크 봉인만 풀면 된다."
+        },
+        {
+          "when": {
+            "flag": "power_cut"
+          },
+          "text": "속도 98km/h, 견인 OFF. 유압 게이지는 0."
+        },
+        {
+          "text": "속도 100km/h. 유압 게이지 0. 브레이크는 유압 없이는 종이나 다름없다."
+        }
+      ]
+    },
+    "brake": {
+      "names": [
+        "브레이크",
+        "레버",
+        "brakelever"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "brake_lock"
+          },
+          "text": "봉인이 풀린 브레이크 레버. 당기면 된다. 유압이 있어야 먹힌다."
+        },
+        {
+          "text": "브레이크 레버에 4자리 봉인 자물쇠. '기관사 외 해제 금지'."
+        }
+      ],
+      "lock": "brake_lock",
+      "hintCode": "T5",
+      "onInteract": [
+        {
+          "when": {
+            "notSolved": "brake_lock"
+          },
+          "message": "봉인이 걸려 있어 레버가 움직이지 않는다."
+        },
+        {
+          "when": {
+            "flag": "valve_open"
+          },
+          "message": "레버를 끝까지 당긴다. 바퀴가 비명을 지르고 불꽃이 튄다. 다리의 붉은 등이 코앞에서… 멈췄다.",
+          "effects": [
+            {
+              "moveTo": "bridge"
+            }
+          ]
+        },
+        {
+          "message": "레버가 헛돈다. 유압이 없다. 화물칸 밸브를 먼저 열어야 한다."
+        }
+      ]
+    }
+  },
+  "locks": {
+    "kitchen_lock": {
+      "type": "code",
+      "answer": "0917",
+      "failMessage": "열리지 않는다.",
+      "onSolve": {
+        "message": "주방문이 열렸다."
+      }
+    },
+    "breaker_lock": {
+      "type": "code",
+      "answer": "1210",
+      "failMessage": "자물쇠가 헛돈다.",
+      "onSolve": {
+        "message": "덮개가 열렸다. '견인 전원' 차단기가 보인다."
+      }
+    },
+    "engine_lock": {
+      "type": "code",
+      "answer": "2058",
+      "failMessage": "삐— 경보가 울리고 승무원이 달려온다. 변명하느라 시간을 썼다.",
+      "onFail": {
+        "effects": [
+          {
+            "addPenalty": 90
+          }
+        ]
+      },
+      "onSolve": {
+        "message": "삑. 기관실 문이 열렸다."
+      }
+    },
+    "brake_lock": {
+      "type": "code",
+      "answer": "0302",
+      "failMessage": "봉인은 꿈쩍도 않는다.",
+      "onFail": {
+        "effects": [
+          {
+            "addPenalty": 60
+          }
+        ]
+      },
+      "onSolve": {
+        "message": "봉인 자물쇠가 툭 떨어진다."
+      }
+    }
+  },
+  "hints": [
+    {
+      "code": "T1",
+      "when": {
+        "notFlag": "ticket_seen"
+      },
+      "text": "승차권을 조사하세요. 열차 번호가 있습니다."
+    },
+    {
+      "code": "T2",
+      "when": {
+        "notFlag": "board_seen"
+      },
+      "text": "식당칸 게시판을 읽으세요."
+    },
+    {
+      "code": "T4",
+      "when": {
+        "notSolved": "breaker_lock"
+      },
+      "text": "두꺼비집 자물쇠는 열차 번호 네 자리입니다."
+    },
+    {
+      "code": "T1",
+      "when": {
+        "notFlag": "loop1"
+      },
+      "text": "노인은 한 번 죽기 전엔 깨지 않습니다. 볼 것을 다 봤으면 비상제동을 당겨 루프를 돌리세요."
+    },
+    {
+      "code": "T1",
+      "when": {
+        "notFlag": "know_kitchen"
+      },
+      "text": "루프가 돈 뒤 노인을 조사하세요."
+    },
+    {
+      "code": "T2",
+      "when": {
+        "notSolved": "kitchen_lock"
+      },
+      "text": "노인이 알려 준 번호를 주방문에 입력하세요."
+    },
+    {
+      "code": "T3",
+      "when": {
+        "notFlag": "roster_seen"
+      },
+      "text": "주방 근무표를 읽으세요."
+    },
+    {
+      "code": "T4",
+      "when": {
+        "notSolved": "engine_lock"
+      },
+      "text": "게시판의 기관사 성(朴)에 해당하는 사번을 기관실 키패드에 입력하세요."
+    },
+    {
+      "code": "T5",
+      "when": {
+        "notFlag": "calendar_seen"
+      },
+      "text": "기관실 달력을 조사하세요."
+    },
+    {
+      "code": "T1",
+      "when": {
+        "notFlag": "know_seal"
+      },
+      "text": "봉인 번호는 노인이 두 번째 루프 뒤에 알려 줍니다. 비상제동으로 한 번 더 돌리세요."
+    },
+    {
+      "code": "T5",
+      "when": {
+        "notSolved": "brake_lock"
+      },
+      "text": "봉인 번호는 기관사 아내의 생일, 달력의 하트 날짜를 월일 네 자리로."
+    },
+    {
+      "code": "T4",
+      "when": {
+        "notFlag": "power_cut"
+      },
+      "text": "두꺼비집을 조작해 견인 전원부터 내리세요."
+    },
+    {
+      "code": "T3",
+      "when": {
+        "notFlag": "valve_open"
+      },
+      "text": "주방 서랍의 밸브핸들을 들고, 전원을 끊은 뒤 화물칸 유압밸브를 돌리세요. 전원 전에 돌리면 죽습니다."
+    },
+    {
+      "code": "T5",
+      "text": "기관실 브레이크를 당기세요."
+    }
+  ],
+  "endings": {
+    "success": "열차가 멈춘 채로 1분이 지난다. 옆자리 노인이 창가에서 손을 흔든다. 00:11. 루프는 끝났다.",
+    "timeout": "시계가 00:10을 가리킨다. 이번에는 돌아오지 못했다."
+  }
+}
