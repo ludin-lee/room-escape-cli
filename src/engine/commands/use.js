@@ -1,6 +1,7 @@
 import { apply } from "../effects.js";
 import { evaluate } from "../conditions.js";
 import { josa } from "../josa.js";
+import { pickHook, runHook as runInteract } from "../hooks.js";
 
 export default function use(ctx) {
   if (!ctx.target) return [ctx.error("무엇을 사용할까요? 예: 사용 열쇠 문")];
@@ -33,6 +34,11 @@ export default function use(ctx) {
   //    자물쇠에 맞지 않는 아이템이라도 훅이 있으면 그 반응을 우선한다 (엉뚱한 도구를 쓰는 함정 등)
   const hook = pickUseHook(item.onUse, target.id);
   if (hook) return runHook(hook, ctx);
+
+  // 3) 대상에 onInteract 가 있으면 "아이템을 들고 조작한 것" 으로 본다 (사용 밸브핸들 유압밸브 = 돌리기 유압밸브).
+  //    hasItem 조건은 조작 훅 안에서 검사되므로 아이템이 맞는지도 거기서 판정된다.
+  const interact = pickHook(target.onInteract, ctx.state);
+  if (interact) return runInteract(interact, ctx.state);
 
   if (isKeyLock) {
     if (ctx.state.solvedLocks.includes(target.lock)) return [{ type: "text", body: "이미 열려 있다." }];
