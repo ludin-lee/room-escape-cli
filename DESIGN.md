@@ -70,7 +70,12 @@ room-escape/
 │   │       ├── magic-theater/ # "마술사의 극장" (30분, 방 5개, 퍼즐 7개, 난이도 중)
 │   │       ├── deep-station/ # "해저 기지 아쿠아" (50분, 방 7개, 퍼즐 9개, 난이도 상)
 │   │       ├── elevator-444/ # "엘리베이터 괴담: 444층" (60분, 방 12개, 버튼 순서를 flag 체인으로 표현, 난이도 상)
-│   │       └── loop-train/   # "심야 열차 00:10" (50분, 방 6개, 루프 = moveTo+removeItem+clearFlag 효과 묶음, loop1~4 플래그로 횟수 제한, 난이도 최상)
+│   │       ├── loop-train/   # "심야 열차 00:10" (50분, 방 6개, 루프 = moveTo+removeItem+clearFlag 효과 묶음, loop1~4 플래그로 횟수 제한, 난이도 최상)
+│   │       ├── abduction/    # "증인 없는 밤" (60분, 방 7개, 묶인 단계는 hidden+조건부 설명으로 범위 제한, 난이도 상)
+│   │       ├── derelict-ship/ # "오르페우스: 산소 60분" (전력 배분 = 플래그 토글 + 방 onEnter addPenalty, requires 로 키패드 게이트)
+│   │       ├── cursed-study/ # "사라진 고고학자의 서재" (UV = onUse 대상별 맵, 저울 순서 = onUse when 체인, 책장/쇠문은 moveTo)
+│   │       ├── museum-heist/ # "교대 시간 60분" (거울 플래그 조합 → onUse when, 위장은 recipe 결과물, 출구 방 onEnter 로 분기 엔딩)
+│   │       └── teahouse/     # "찻집 '기억'" (시대 이동 = onInteract moveTo, 글자 자물쇠 = 한글 answer 배열)
 │   │           └── scenario.json
 │   └── save/
 │       └── store.js          # ~/.room-escape/saves/<slot>.json 읽기/쓰기 (UI 전용)
@@ -108,6 +113,7 @@ const restored = Game.fromJSON(scenario, snapshot, { now });
   "id": "old-study",
   "title": "낡은 서재",
   "timeLimitSec": 1800,
+  "difficulty": "중",          // 하 | 중 | 상 | 최상. 목록·메뉴에 표시
   "hintPenaltySec": 120,
   "retryPenaltySec": 180,      // (선택) 함정 사망 후 재도전 시 차감. 기본 180
   "startRoom": "study",

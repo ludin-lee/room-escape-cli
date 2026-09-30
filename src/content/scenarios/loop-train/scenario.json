@@ -2,6 +2,7 @@
   "id": "loop-train",
   "title": "심야 열차 00:10",
   "timeLimitSec": 3000,
+  "difficulty": "최상",
   "hintPenaltySec": 180,
   "retryPenaltySec": 120,
   "startRoom": "car1",

@@ -1,0 +1,461 @@
+{
+  "id": "teahouse",
+  "title": "찻집 '기억'",
+  "timeLimitSec": 2700,
+  "difficulty": "중",
+  "hintPenaltySec": 120,
+  "retryPenaltySec": 120,
+  "startRoom": "teahouse",
+  "intro": "골목 끝 찻집 '기억'. 비를 피해 들어왔는데 주인 할머니가 말한다.\n\"내가 뭘 잃어버렸는지 모르겠어. 물건을 만지면 그때로 갈 수 있으니, 찾아다 주겠나. 마지막 손님이 나갈 때까지.\"\n벽시계는 45분 뒤 문 닫는 시간을 가리킨다.",
+  "rooms": {
+    "teahouse": {
+      "name": "찻집 (지금)",
+      "hintCode": "C1",
+      "description": [
+        {
+          "when": {
+            "flag": "memory_done"
+          },
+          "text": "찻집. 할머니가 사진을 두 손으로 들고 있다. 창밖 비가 그쳤다."
+        },
+        {
+          "text": "낡은 찻집. 카운터 뒤 할머니, 벽의 오르골, 구석 턴테이블, 선반의 낡은 찻잔. 카운터에 4자리 자물쇠가 달린 서랍과 글자 자물쇠가 달린 나무 상자."
+        }
+      ],
+      "objects": [
+        "owner",
+        "music_box",
+        "turntable",
+        "teacup",
+        "drawer_now",
+        "word_box",
+        "old_photo",
+        "wall_clock"
+      ],
+      "exits": []
+    },
+    "y1988": {
+      "name": "찻집 (1988년)",
+      "hintCode": "C2",
+      "description": "같은 찻집, 새 벽지. 라디오에서 올림픽 중계. 젊은 여자가 카운터에서 편지를 쓴다. 테이블에 신문, 벽에 오르골이 새것처럼 반짝인다.",
+      "objects": [
+        "young_owner",
+        "letter",
+        "newspaper88",
+        "music_box88",
+        "teacup88"
+      ],
+      "exits": []
+    },
+    "y2003": {
+      "name": "찻집 (2003년)",
+      "hintCode": "C3",
+      "description": "같은 찻집, 손님이 많다. 구석 테이블에 어린아이가 혼자 앉아 크레파스로 그림을 그린다. 턴테이블에서 LP 가 돈다. 카운터에 다이어리.",
+      "objects": [
+        "child",
+        "diary03",
+        "lp",
+        "crayon_drawing",
+        "teacup03",
+        "photo_half_b"
+      ],
+      "exits": []
+    },
+    "dawn": {
+      "name": "골목",
+      "description": "문이 열리고 비 갠 골목. 등 뒤에서 풍경 소리.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+  "objects": {
+    "owner": {
+      "names": [
+        "할머니",
+        "주인",
+        "owner"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "photo_joined"
+          },
+          "text": "할머니가 사진을 본다. 오래 본다. \"…이 아이, 너였구나. 매일 여기서 엄마를 기다리던.\" 당신도 그제야 기억난다."
+        },
+        {
+          "text": "주인 할머니. \"물건을 만져 봐. 오르골, 턴테이블, 찻잔. 어디로든 데려갈 게야.\""
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "memory_done"
+          },
+          "message": "할머니가 문을 열어 준다.",
+          "effects": [
+            {
+              "moveTo": "dawn"
+            }
+          ]
+        },
+        {
+          "message": "할머니가 웃기만 한다. \"만져 보라니까.\""
+        }
+      ]
+    },
+    "music_box": {
+      "names": [
+        "오르골",
+        "musicbox"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "drawer_lock"
+          },
+          "text": "멜로디가 멎은 오르골."
+        },
+        {
+          "text": "낡은 오르골. 태엽을 감으면 네 음이 흐른다: 도 · 미 · 솔 · 도. 그리고 태엽이 걸린다."
+        }
+      ],
+      "onInteract": {
+        "message": "태엽을 감는다. 도, 미, 솔, 도… 그리고 시야가 흐려진다. 벽지가 새것이 된다.",
+        "effects": [
+          {
+            "moveTo": "y1988"
+          }
+        ]
+      }
+    },
+    "turntable": {
+      "names": [
+        "턴테이블",
+        "LP판",
+        "turntable"
+      ],
+      "description": "턴테이블. 바늘이 B면 3번 트랙에 올려져 있다. 음반 라벨: 'A면 1~5 · B면 1~4'.",
+      "onInteract": {
+        "message": "바늘을 내린다. 지지직, 피아노… 손님들의 웅성거림이 겹치며 2003년이 된다.",
+        "effects": [
+          {
+            "moveTo": "y2003"
+          }
+        ]
+      }
+    },
+    "teacup": {
+      "names": [
+        "찻잔",
+        "teacup"
+      ],
+      "description": "이 빠진 찻잔. 지금 여기의 것. 다른 시대에서 이걸 만지면 돌아온다."
+    },
+    "drawer_now": {
+      "names": [
+        "서랍",
+        "카운터서랍",
+        "drawer"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "drawer_lock"
+          },
+          "text": "열린 서랍. 사진 반쪽이 있던 자리."
+        },
+        {
+          "text": "카운터 서랍. 4자리 자물쇠. 옆에 메모: '음계는 숫자다. 도=1.'"
+        }
+      ],
+      "lock": "drawer_lock",
+      "hintCode": "C1"
+    },
+    "word_box": {
+      "names": [
+        "나무상자",
+        "상자",
+        "글자자물쇠",
+        "wordbox"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "word_lock"
+          },
+          "text": "열린 나무 상자."
+        },
+        {
+          "text": "나무 상자. 한글 세 글자 자물쇠. 뚜껑에 '그 해 우리가 함께 본 것'."
+        }
+      ],
+      "lock": "word_lock",
+      "hintCode": "C1"
+    },
+    "old_photo": {
+      "names": [
+        "사진반쪽A",
+        "반쪽A",
+        "photoA"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "찢어진 사진의 왼쪽. 젊은 여자가 찻집 앞에 서 있다. 오른쪽에 누군가의 손."
+    },
+    "photo_half_b": {
+      "names": [
+        "사진반쪽B",
+        "반쪽B",
+        "photoB"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "찢어진 사진의 오른쪽. 어린아이가 여자의 손을 잡고 있다. 아이 얼굴이 낯익다."
+    },
+    "wall_clock": {
+      "names": [
+        "벽시계",
+        "시계",
+        "clock"
+      ],
+      "description": "문 닫는 시간까지 째깍거린다."
+    },
+    "young_owner": {
+      "names": [
+        "젊은여자",
+        "여자",
+        "youngowner"
+      ],
+      "description": "젊은 시절의 주인. 편지를 쓰다 운다. 당신을 보지 못한다."
+    },
+    "letter": {
+      "names": [
+        "편지",
+        "letter"
+      ],
+      "description": "\"…네가 태어난 해 우리는 함께 ______ 을 봤지. 텔레비전 앞에서. 언젠가 이 사진을 반으로 나눠 갖자.\" 빈칸이 있다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "letter_seen"
+          }
+        ]
+      }
+    },
+    "newspaper88": {
+      "names": [
+        "신문",
+        "newspaper"
+      ],
+      "description": "1988년 9월 17일. 1면: '서울 올림픽 개막'.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "news_seen"
+          }
+        ]
+      }
+    },
+    "music_box88": {
+      "names": [
+        "새오르골",
+        "오르골",
+        "musicbox88"
+      ],
+      "description": "새 오르골. 바닥에 각인: '도 미 솔 도 — 첫 손님에게'. 그 밑에 작게 4자리: 1351."
+    },
+    "teacup88": {
+      "names": [
+        "찻잔",
+        "teacup"
+      ],
+      "description": "새 찻잔. 손을 대면 지금으로 돌아간다.",
+      "onInteract": {
+        "message": "찻잔에 손을 대자 올림픽 중계가 멀어진다. 지금이다.",
+        "effects": [
+          {
+            "moveTo": "teahouse"
+          }
+        ]
+      }
+    },
+    "child": {
+      "names": [
+        "아이",
+        "어린아이",
+        "child"
+      ],
+      "description": "혼자 그림을 그리는 아이. 당신을 올려다본다. 이 아이는 당신을 본다. 주머니에서 뭔가 꺼내 테이블에 놓는다.",
+      "onExamine": {
+        "when": {
+          "notFlag": "child_gave"
+        },
+        "message": "아이가 찢어진 사진 반쪽을 밀어 준다. \"아줌마가 나머지 반은 서랍에 넣어 뒀어.\"",
+        "effects": [
+          {
+            "reveal": "photo_half_b"
+          },
+          {
+            "setFlag": "child_gave"
+          }
+        ]
+      }
+    },
+    "diary03": {
+      "names": [
+        "다이어리",
+        "diary"
+      ],
+      "description": "2003년 다이어리. \"매일 오는 아이. 엄마는 오지 않는다. 사진 반쪽은 서랍에, 번호는 오르골.\"",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "diary_seen"
+          }
+        ]
+      }
+    },
+    "lp": {
+      "names": [
+        "LP",
+        "음반",
+        "lp"
+      ],
+      "description": "돌아가는 LP. B면 3번 트랙 제목: '기억'."
+    },
+    "crayon_drawing": {
+      "names": [
+        "그림",
+        "크레파스그림",
+        "drawing"
+      ],
+      "description": "아이의 그림. 찻집 앞에 선 두 사람, 위에 '올림픽' 이라고 삐뚤빼뚤 썼다. 엄마가 해 준 얘기를 그린 것이다."
+    },
+    "teacup03": {
+      "names": [
+        "찻잔",
+        "teacup"
+      ],
+      "description": "손님용 찻잔. 손을 대면 지금으로 돌아간다.",
+      "onInteract": {
+        "message": "찻잔에 손을 대자 웅성거림이 잦아든다. 지금이다.",
+        "effects": [
+          {
+            "moveTo": "teahouse"
+          }
+        ]
+      }
+    },
+    "photo": {
+      "names": [
+        "사진",
+        "photo"
+      ],
+      "description": "맞춘 사진. 1988년 찻집 앞. 젊은 여자와 어린 당신.",
+      "onUse": {
+        "target": "owner",
+        "message": "사진을 건넨다. 할머니가 오래 본다. \"…이 아이, 너였구나. 매일 여기서 엄마를 기다리던.\" 당신도 그제야 기억난다. 이 찻집이 엄마가 일하던 곳이라는 걸.",
+        "effects": [
+          {
+            "setFlag": "photo_joined"
+          },
+          {
+            "setFlag": "memory_done"
+          },
+          {
+            "moveTo": "dawn"
+          }
+        ]
+      }
+    }
+  },
+  "recipes": [
+    {
+      "inputs": [
+        "old_photo",
+        "photo_half_b"
+      ],
+      "output": "photo",
+      "message": "두 반쪽을 맞춘다. 찻집 앞, 젊은 여자와 손을 잡은 아이. 아이의 얼굴이… 당신이다."
+    }
+  ],
+  "locks": {
+    "drawer_lock": {
+      "type": "code",
+      "answer": "1351",
+      "failMessage": "열리지 않는다.",
+      "onSolve": {
+        "message": "서랍이 열린다. 찢어진 사진 반쪽.",
+        "effects": [
+          {
+            "reveal": "old_photo"
+          }
+        ]
+      }
+    },
+    "word_lock": {
+      "type": "code",
+      "answer": [
+        "올림픽",
+        "서울올림픽"
+      ],
+      "failMessage": "글자가 맞지 않는다.",
+      "onSolve": {
+        "message": "상자가 열린다. 안에는 낡은 열쇠고리와 쪽지: '사진을 맞춰 나에게 보여 줘.'"
+      }
+    }
+  },
+  "hints": [
+    {
+      "code": "C1",
+      "when": {
+        "notFlag": "diary_seen"
+      },
+      "text": "턴테이블을 조작해 2003년으로 가서 다이어리와 아이를 살펴보세요."
+    },
+    {
+      "code": "C3",
+      "when": {
+        "notFlag": "child_gave"
+      },
+      "text": "2003년의 아이를 조사하세요."
+    },
+    {
+      "code": "C1",
+      "when": {
+        "notSolved": "drawer_lock"
+      },
+      "text": "오르골 음계를 숫자로 (도=1, 미=3, 솔=5) 서랍에 입력하세요."
+    },
+    {
+      "code": "C2",
+      "when": {
+        "notFlag": "letter_seen"
+      },
+      "text": "오르골을 조작해 1988년으로 가서 편지와 신문을 읽으세요."
+    },
+    {
+      "code": "C1",
+      "when": {
+        "notSolved": "word_lock"
+      },
+      "text": "편지의 빈칸은 신문 1면에 있습니다. 나무상자에 세 글자를 입력하세요."
+    },
+    {
+      "code": "C1",
+      "when": {
+        "notFlag": "photo_joined"
+      },
+      "text": "사진 반쪽 두 개를 조합하세요."
+    },
+    {
+      "code": "C1",
+      "text": "맞춘 사진을 할머니에게 사용하세요."
+    }
+  ],
+  "endings": {
+    "success": "할머니가 사진을 카운터 위에 세운다. \"이제 기억났어. 너도.\" 문을 열자 비가 그쳤다. 당신은 매일 기다리던 아이였고, 오늘 마침내 누군가 당신을 기억했다.",
+    "timeout": "마지막 손님이 나가고 불이 꺼진다. 할머니는 내일도 같은 질문을 할 것이다."
+  }
+}

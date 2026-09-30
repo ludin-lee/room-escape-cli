@@ -2,6 +2,7 @@
   "id": "elevator-444",
   "title": "엘리베이터 괴담: 444층",
   "timeLimitSec": 3600,
+  "difficulty": "상",
   "hintPenaltySec": 180,
   "retryPenaltySec": 180,
   "startRoom": "home",

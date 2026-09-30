@@ -2,62 +2,181 @@
   "id": "deep-station",
   "title": "해저 기지 아쿠아",
   "timeLimitSec": 3000,
+  "difficulty": "상",
   "hintPenaltySec": 180,
   "startRoom": "quarters",
   "intro": "수심 300미터. 해저 연구 기지 '아쿠아-7' 의 침실에서 눈을 떴다.\n경보음은 멎었고 동료들은 보이지 않는다. 통로 스피커가 갈라진 목소리로 반복한다.\n\"격납고 압력 이상. 잠수정 발진 대기. 산소 잔량 50분.\"\n50분 안에 잠수정을 타고 수면으로 올라가야 한다.",
-
   "rooms": {
     "quarters": {
       "name": "승무원 침실",
       "description": "좁은 2층 침대와 사물함. 벽에 긁어서 센 날짜 표시와 모스 부호표가 붙어 있고, 침대 위에 항해 일지가 펼쳐져 있다. 문에는 숫자 키패드가 있다.",
-      "objects": ["badge", "calendar", "log", "morse_chart", "bunk", "quarters_door"],
+      "objects": [
+        "badge",
+        "calendar",
+        "log",
+        "morse_chart",
+        "bunk",
+        "quarters_door"
+      ],
       "exits": [
-        { "names": ["통로", "corridor", "중앙통로"], "to": "corridor", "lockedBy": "quarters_lock", "lockedMessage": "격벽문이 잠겨 있다. 키패드에 4자리 번호를 넣어야 한다." }
+        {
+          "names": [
+            "통로",
+            "corridor",
+            "중앙통로"
+          ],
+          "to": "corridor",
+          "lockedBy": "quarters_lock",
+          "lockedMessage": "격벽문이 잠겨 있다. 키패드에 4자리 번호를 넣어야 한다."
+        }
       ]
     },
     "corridor": {
       "name": "중앙 통로",
       "description": "붉은 비상등이 도는 둥근 통로. 실험실 문은 열려 있다. 통제실 문에는 카드 리더기가, 기관실 문에는 휘어진 핸들이 있다. 통로 끝의 격납고 해치에는 키패드가 붙어 있고, 그 옆에 수심계가 있다.",
-      "objects": ["control_door", "engine_door", "hangar_hatch", "depth_gauge", "emergency_light"],
+      "objects": [
+        "control_door",
+        "engine_door",
+        "hangar_hatch",
+        "depth_gauge",
+        "emergency_light"
+      ],
       "exits": [
-        { "names": ["침실", "quarters"], "to": "quarters" },
-        { "names": ["실험실", "lab"], "to": "lab" },
-        { "names": ["통제실", "control"], "to": "control", "lockedBy": "control_lock", "lockedMessage": "통제실 문은 카드 리더기로만 열린다." },
-        { "names": ["기관실", "engine"], "to": "engine", "lockedBy": "engine_lock", "lockedMessage": "기관실 문 핸들이 휘어져 돌아가지 않는다. 뭔가로 젖혀야 한다." },
-        { "names": ["격납고", "hangar"], "to": "hangar", "lockedBy": "hangar_lock", "lockedMessage": "격납고 해치는 잠겨 있다. 키패드에 4자리 번호를 넣어야 한다." }
+        {
+          "names": [
+            "침실",
+            "quarters"
+          ],
+          "to": "quarters"
+        },
+        {
+          "names": [
+            "실험실",
+            "lab"
+          ],
+          "to": "lab"
+        },
+        {
+          "names": [
+            "통제실",
+            "control"
+          ],
+          "to": "control",
+          "lockedBy": "control_lock",
+          "lockedMessage": "통제실 문은 카드 리더기로만 열린다."
+        },
+        {
+          "names": [
+            "기관실",
+            "engine"
+          ],
+          "to": "engine",
+          "lockedBy": "engine_lock",
+          "lockedMessage": "기관실 문 핸들이 휘어져 돌아가지 않는다. 뭔가로 젖혀야 한다."
+        },
+        {
+          "names": [
+            "격납고",
+            "hangar"
+          ],
+          "to": "hangar",
+          "lockedBy": "hangar_lock",
+          "lockedMessage": "격납고 해치는 잠겨 있다. 키패드에 4자리 번호를 넣어야 한다."
+        }
       ]
     },
     "lab": {
       "name": "실험실",
       "description": "형광등이 깜빡이는 실험실. 벽에 주기율표가 붙어 있고, 큰 수조에서 뭔가 천천히 움직인다. 구석에 잠긴 약품장과 현미경이 있다.",
-      "objects": ["periodic_table", "cabinet", "net", "tank", "blue_card", "microscope"],
+      "objects": [
+        "periodic_table",
+        "cabinet",
+        "net",
+        "tank",
+        "blue_card",
+        "microscope"
+      ],
       "exits": [
-        { "names": ["통로", "corridor", "중앙통로"], "to": "corridor" }
+        {
+          "names": [
+            "통로",
+            "corridor",
+            "중앙통로"
+          ],
+          "to": "corridor"
+        }
       ]
     },
     "control": {
       "name": "통제실",
       "description": "모니터가 늘어선 통제실. 무전기에서 잡음 섞인 신호가 반복해서 들린다. 책상 서랍에는 번호 자물쇠가 달려 있고, 벽에 '비상용' 이라고 쓰인 철제 함이 있다.",
-      "objects": ["monitor", "radio", "drawer", "ignition_key", "emergency_box", "crowbar"],
+      "objects": [
+        "monitor",
+        "radio",
+        "drawer",
+        "ignition_key",
+        "emergency_box",
+        "crowbar"
+      ],
       "exits": [
-        { "names": ["통로", "corridor", "중앙통로"], "to": "corridor" }
+        {
+          "names": [
+            "통로",
+            "corridor",
+            "중앙통로"
+          ],
+          "to": "corridor"
+        }
       ]
     },
     "engine": {
       "name": "기관실",
       "description": "펌프 소리가 멎은 기관실. 벽에 압력 게이지 세 개가 나란히 있고, 그 아래 안내판과 압력 제어판이 있다. 온도계가 붉은 눈금을 가리킨다.",
-      "objects": ["gauges", "placard", "pressure_panel", "thermometer"],
+      "objects": [
+        "gauges",
+        "placard",
+        "pressure_panel",
+        "thermometer"
+      ],
       "exits": [
-        { "names": ["통로", "corridor", "중앙통로"], "to": "corridor" }
+        {
+          "names": [
+            "통로",
+            "corridor",
+            "중앙통로"
+          ],
+          "to": "corridor"
+        }
       ]
     },
     "hangar": {
       "name": "격납고",
       "description": "물이 찰랑이는 발진 풀 위에 소형 잠수정이 크레인에 매달려 있다. 잠수정 해치에 시동키 구멍이 보인다.",
-      "objects": ["sub_hatch", "crane"],
+      "objects": [
+        "sub_hatch",
+        "crane"
+      ],
       "exits": [
-        { "names": ["통로", "corridor", "중앙통로"], "to": "corridor" },
-        { "names": ["잠수정", "sub", "submarine", "밖", "outside"], "to": "sub", "lockedBy": "sub_lock", "lockedMessage": "잠수정 해치는 시동키를 꽂아야 열린다." }
+        {
+          "names": [
+            "통로",
+            "corridor",
+            "중앙통로"
+          ],
+          "to": "corridor"
+        },
+        {
+          "names": [
+            "잠수정",
+            "sub",
+            "submarine",
+            "밖",
+            "outside"
+          ],
+          "to": "sub",
+          "lockedBy": "sub_lock",
+          "lockedMessage": "잠수정 해치는 시동키를 꽂아야 열린다."
+        }
       ]
     },
     "sub": {
@@ -68,205 +187,432 @@
       "isExit": true
     }
   },
-
   "objects": {
     "badge": {
-      "names": ["명찰", "badge", "이름표"],
+      "names": [
+        "명찰",
+        "badge",
+        "이름표"
+      ],
       "description": "잠수복 가슴에 달린 명찰. \"연구원 나해린 · 승무원 번호 07\"",
-      "onExamine": { "effects": [{ "setFlag": "badge_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "badge_seen"
+          }
+        ]
+      }
     },
     "calendar": {
-      "names": ["날짜표시", "calendar", "달력", "벽"],
+      "names": [
+        "날짜표시",
+        "calendar",
+        "달력",
+        "벽"
+      ],
       "description": "벽에 날카로운 것으로 긁어 센 날짜.\n  正 正 正 丅\n정자(正) 세 개가 완성되어 있고, 마지막 글자는 두 획만 그어져 있다. 옆에 '잠수 며칠째' 라고 적혀 있다.",
-      "onExamine": { "effects": [{ "setFlag": "calendar_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "calendar_seen"
+          }
+        ]
+      }
     },
     "log": {
-      "names": ["일지", "log", "항해일지"],
+      "names": [
+        "일지",
+        "log",
+        "항해일지"
+      ],
       "takeable": true,
       "description": "마지막 페이지.\n\"침실 문 번호를 또 잊을까 봐 적어 둔다. 내 승무원 번호 두 자리, 그 뒤에 잠수 며칠째인지 두 자리. 날짜는 벽에 센다.\"\n\"추신: 통제실 무전기는 아직 살아 있다. 숫자는 벽의 표로.\"",
-      "onExamine": { "effects": [{ "setFlag": "log_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "log_seen"
+          }
+        ]
+      }
     },
     "morse_chart": {
-      "names": ["모스표", "morse", "부호표", "모스부호표"],
+      "names": [
+        "모스표",
+        "morse",
+        "부호표",
+        "모스부호표"
+      ],
       "description": "코팅된 모스 부호 숫자표.\n  1 ·−−−−   2 ··−−−   3 ···−−   4 ····−   5 ·····\n  6 −····   7 −−···   8 −−−··   9 −−−−·   0 −−−−−",
-      "onExamine": { "effects": [{ "setFlag": "morse_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "morse_seen"
+          }
+        ]
+      }
     },
     "bunk": {
-      "names": ["침대", "bunk", "bed"],
+      "names": [
+        "침대",
+        "bunk",
+        "bed"
+      ],
       "description": "구겨진 담요. 베개 밑을 뒤져 봤지만 아무것도 없다."
     },
     "quarters_door": {
-      "names": ["침실문", "door", "문", "격벽문"],
+      "names": [
+        "침실문",
+        "door",
+        "문",
+        "격벽문"
+      ],
       "description": "묵직한 격벽문. 옆에 4자리 숫자 키패드.",
       "lock": "quarters_lock"
     },
-
     "control_door": {
-      "names": ["통제실문", "controldoor", "카드리더", "reader"],
+      "names": [
+        "통제실문",
+        "controldoor",
+        "카드리더",
+        "reader"
+      ],
       "description": "'통제실' 문. 옆의 카드 리더기가 파란 불로 깜빡인다.",
       "lock": "control_lock"
     },
     "engine_door": {
-      "names": ["기관실문", "enginedoor", "핸들", "handle"],
+      "names": [
+        "기관실문",
+        "enginedoor",
+        "핸들",
+        "handle"
+      ],
       "description": "'기관실' 문. 둥근 핸들이 휘어져 손으로는 돌아가지 않는다. 틈에 뭔가 끼워 젖히면 될 것 같다.",
       "lock": "engine_lock",
       "onInteract": [
-        { "when": { "solved": "engine_lock" }, "message": "이미 열려 있다." },
-        { "message": "핸들을 온 힘으로 돌려 보지만 꿈쩍도 않는다. 손바닥만 까졌다. 지렛대 같은 게 필요하다." }
+        {
+          "when": {
+            "solved": "engine_lock"
+          },
+          "message": "이미 열려 있다."
+        },
+        {
+          "message": "핸들을 온 힘으로 돌려 보지만 꿈쩍도 않는다. 손바닥만 까졌다. 지렛대 같은 게 필요하다."
+        }
       ]
     },
     "hangar_hatch": {
-      "names": ["격납고해치", "hatch", "해치"],
+      "names": [
+        "격납고해치",
+        "hatch",
+        "해치"
+      ],
       "description": "격납고로 통하는 해치. 4자리 키패드 위에 붉은 글씨로 '압력 이상 시 코드는 통제실 확인'.",
       "lock": "hangar_lock"
     },
     "depth_gauge": {
-      "names": ["수심계", "depthgauge", "수심"],
+      "names": [
+        "수심계",
+        "depthgauge",
+        "수심"
+      ],
       "description": "둥근 수심계. 바늘이 312 m 를 가리킨다.",
-      "onExamine": { "effects": [{ "setFlag": "depth_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "depth_seen"
+          }
+        ]
+      }
     },
     "emergency_light": {
-      "names": ["비상등", "light"],
+      "names": [
+        "비상등",
+        "light"
+      ],
       "description": "붉게 도는 비상등. 통로가 핏빛으로 물든다."
     },
-
     "periodic_table": {
-      "names": ["주기율표", "periodictable", "표"],
+      "names": [
+        "주기율표",
+        "periodictable",
+        "표"
+      ],
       "description": "벽에 붙은 주기율표. 누군가 몇 개에 동그라미를 쳐 두었다.\n  H 수소 1 · C 탄소 6 · N 질소 7 · O 산소 8 · Na 나트륨 11 · Cl 염소 17",
-      "onExamine": { "effects": [{ "setFlag": "table_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "table_seen"
+          }
+        ]
+      }
     },
     "cabinet": {
-      "names": ["약품장", "cabinet"],
+      "names": [
+        "약품장",
+        "cabinet"
+      ],
       "description": "3자리 자물쇠가 달린 약품장. 문에 붙은 라벨.\n\"산소 – 수소 – 탄소\"",
       "lock": "cabinet_lock"
     },
     "net": {
-      "names": ["뜰채", "net", "그물"],
+      "names": [
+        "뜰채",
+        "net",
+        "그물"
+      ],
       "hidden": true,
       "takeable": true,
       "description": "손잡이가 긴 뜰채. 수조 바닥까지 닿을 길이다.",
       "onUse": {
         "target": "tank",
         "message": "뜰채를 조심스레 넣어 바닥을 훑는다. 뱀장어가 몸을 뒤틀며 스파크를 튀기지만, 파란 카드를 건져 올렸다.",
-        "effects": [{ "reveal": "blue_card" }, { "setFlag": "card_fished" }]
+        "effects": [
+          {
+            "reveal": "blue_card"
+          },
+          {
+            "setFlag": "card_fished"
+          }
+        ]
       }
     },
     "tank": {
-      "names": ["수조", "tank", "어항"],
-      "description": [
-        { "when": { "flag": "card_fished" }, "text": "커다란 수조. 전기뱀장어가 여전히 노려보고 있다. 이제 볼일은 없다." },
-        { "text": "커다란 수조. 전기뱀장어 한 마리가 느릿하게 움직인다. 바닥에 파란 카드가 가라앉아 있다. 맨손을 넣었다가는 큰일 나겠다." }
+      "names": [
+        "수조",
+        "tank",
+        "어항"
       ],
-      "onExamine": { "effects": [{ "setFlag": "tank_seen" }] },
+      "description": [
+        {
+          "when": {
+            "flag": "card_fished"
+          },
+          "text": "커다란 수조. 전기뱀장어가 여전히 노려보고 있다. 이제 볼일은 없다."
+        },
+        {
+          "text": "커다란 수조. 전기뱀장어 한 마리가 느릿하게 움직인다. 바닥에 파란 카드가 가라앉아 있다. 맨손을 넣었다가는 큰일 나겠다."
+        }
+      ],
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "tank_seen"
+          }
+        ]
+      },
       "onInteract": [
-        { "when": { "flag": "card_fished" }, "message": "굳이 다시 손을 넣을 이유가 없다." },
+        {
+          "when": {
+            "flag": "card_fished"
+          },
+          "message": "굳이 다시 손을 넣을 이유가 없다."
+        },
         {
           "message": "소매를 걷고 수조에 팔을 넣는다. 카드에 손끝이 닿는 순간, 뱀장어가 몸을 뒤튼다.",
-          "effects": [{ "gameOver": "새하얀 섬광. 600볼트의 방전이 온몸을 훑고 지나간다. 당신은 수조 옆에 쓰러졌다." }]
+          "effects": [
+            {
+              "gameOver": "새하얀 섬광. 600볼트의 방전이 온몸을 훑고 지나간다. 당신은 수조 옆에 쓰러졌다."
+            }
+          ]
         }
       ]
     },
     "blue_card": {
-      "names": ["청색카드", "bluecard", "카드"],
+      "names": [
+        "청색카드",
+        "bluecard",
+        "카드"
+      ],
       "hidden": true,
       "takeable": true,
       "description": "물에 젖은 파란 출입 카드. '통제실 – 관리자'."
     },
     "microscope": {
-      "names": ["현미경", "microscope"],
+      "names": [
+        "현미경",
+        "microscope"
+      ],
       "description": "플랑크톤 슬라이드가 끼워져 있다. 지금은 볼 여유가 없다."
     },
-
     "monitor": {
-      "names": ["모니터", "monitor", "화면"],
+      "names": [
+        "모니터",
+        "monitor",
+        "화면"
+      ],
       "description": [
-        { "when": { "flag": "pressure_ok" }, "text": "메인 모니터. 경보 창이 사라지고 초록 문구가 떠 있다.\n\"압력 정상. 격납고 해치 잠금 해제 코드 = 현재 수심(m)을 4자리로.\"" },
-        { "text": "메인 모니터. 붉은 경보 창이 떠 있다.\n\"격납고 압력 이상 — 해치 잠금. 기관실에서 압력을 복구하십시오.\"" }
+        {
+          "when": {
+            "flag": "pressure_ok"
+          },
+          "text": "메인 모니터. 경보 창이 사라지고 초록 문구가 떠 있다.\n\"압력 정상. 격납고 해치 잠금 해제 코드 = 현재 수심(m)을 4자리로.\""
+        },
+        {
+          "text": "메인 모니터. 붉은 경보 창이 떠 있다.\n\"격납고 압력 이상 — 해치 잠금. 기관실에서 압력을 복구하십시오.\""
+        }
       ],
       "onExamine": {
-        "when": { "flag": "pressure_ok" },
-        "effects": [{ "setFlag": "monitor_code_seen" }]
+        "when": {
+          "flag": "pressure_ok"
+        },
+        "effects": [
+          {
+            "setFlag": "monitor_code_seen"
+          }
+        ]
       }
     },
     "radio": {
-      "names": ["무전기", "radio", "라디오"],
+      "names": [
+        "무전기",
+        "radio",
+        "라디오"
+      ],
       "description": "잡음 사이로 같은 신호가 되풀이된다.\n  ··−−−   −−···   ···−−   −−−−·\n네 묶음이 끝나면 잠시 쉬었다가 처음부터 다시 시작한다.",
-      "onExamine": { "effects": [{ "setFlag": "radio_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "radio_seen"
+          }
+        ]
+      }
     },
     "drawer": {
-      "names": ["서랍", "drawer", "책상"],
+      "names": [
+        "서랍",
+        "drawer",
+        "책상"
+      ],
       "description": "책상 서랍. 4자리 번호 자물쇠. 붙어 있는 라벨: '잠수정 시동키 – 무전 확인 후 개봉'.",
       "lock": "drawer_lock"
     },
     "ignition_key": {
-      "names": ["시동키", "ignitionkey", "키"],
+      "names": [
+        "시동키",
+        "ignitionkey",
+        "키"
+      ],
       "hidden": true,
       "takeable": true,
       "description": "노란 부표가 달린 잠수정 시동키."
     },
     "emergency_box": {
-      "names": ["비상함", "emergencybox", "철제함"],
+      "names": [
+        "비상함",
+        "emergencybox",
+        "철제함"
+      ],
       "description": "'비상용' 철제 함. 유리를 깨고 여는 종류다.",
       "onExamine": {
-        "when": { "notFlag": "box_opened" },
+        "when": {
+          "notFlag": "box_opened"
+        },
         "message": "팔꿈치로 유리를 깼다. 안에 쇠지렛대가 걸려 있다.",
-        "effects": [{ "reveal": "crowbar" }, { "setFlag": "box_opened" }]
+        "effects": [
+          {
+            "reveal": "crowbar"
+          },
+          {
+            "setFlag": "box_opened"
+          }
+        ]
       }
     },
     "crowbar": {
-      "names": ["지렛대", "crowbar", "쇠지렛대"],
+      "names": [
+        "지렛대",
+        "crowbar",
+        "쇠지렛대"
+      ],
       "hidden": true,
       "takeable": true,
       "description": "묵직한 쇠지렛대. 휘어진 것을 젖히기에 딱 좋다."
     },
-
     "gauges": {
-      "names": ["게이지", "gauges", "압력계"],
+      "names": [
+        "게이지",
+        "gauges",
+        "압력계"
+      ],
       "description": "압력 게이지 세 개.\n  A: 2   B: 9   C: 4",
-      "onExamine": { "effects": [{ "setFlag": "gauges_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "gauges_seen"
+          }
+        ]
+      }
     },
     "placard": {
-      "names": ["안내판", "placard", "설명"],
+      "names": [
+        "안내판",
+        "placard",
+        "설명"
+      ],
       "description": "기름때 묻은 안내판.\n\"목표 압력 설정 (세 자리, 순서대로):\n  첫째 자리 = A 의 두 배\n  둘째 자리 = B 에서 3 을 뺀 값\n  셋째 자리 = C 그대로\"",
-      "onExamine": { "effects": [{ "setFlag": "placard_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "placard_seen"
+          }
+        ]
+      }
     },
     "pressure_panel": {
-      "names": ["압력제어판", "제어판", "panel"],
+      "names": [
+        "압력제어판",
+        "제어판",
+        "panel"
+      ],
       "description": "3자리 다이얼이 달린 압력 제어판. 다이얼을 맞추면 펌프가 돌 것이다.",
       "lock": "pressure_lock"
     },
     "thermometer": {
-      "names": ["온도계", "thermometer"],
+      "names": [
+        "온도계",
+        "thermometer"
+      ],
       "description": "38도. 덥다. 그뿐이다."
     },
-
     "sub_hatch": {
-      "names": ["잠수정해치", "subhatch", "시동구멍"],
+      "names": [
+        "잠수정해치",
+        "subhatch",
+        "시동구멍"
+      ],
       "description": "잠수정 상부 해치. 시동키를 꽂는 구멍이 있다.",
       "lock": "sub_lock"
     },
     "crane": {
-      "names": ["크레인", "crane"],
+      "names": [
+        "크레인",
+        "crane"
+      ],
       "description": "잠수정을 매단 크레인. 발진 준비 상태로 고정되어 있다."
     }
   },
-
   "locks": {
     "quarters_lock": {
       "type": "code",
       "answer": "0717",
       "failMessage": "키패드가 붉게 깜빡인다.",
-      "onSolve": { "message": "쉭— 압축 공기 소리와 함께 격벽문이 열렸다." }
+      "onSolve": {
+        "message": "쉭— 압축 공기 소리와 함께 격벽문이 열렸다."
+      }
     },
     "control_lock": {
       "type": "key",
       "keyItem": "blue_card",
-      "onSolve": { "message": "삑. 리더기가 초록불로 바뀌고 통제실 문이 열렸다." }
+      "onSolve": {
+        "message": "삑. 리더기가 초록불로 바뀌고 통제실 문이 열렸다."
+      }
     },
     "engine_lock": {
       "type": "key",
       "keyItem": "crowbar",
-      "onSolve": { "message": "지렛대를 틈에 끼우고 온몸으로 젖힌다. 끼이익— 핸들이 돌아가고 기관실 문이 열렸다." }
+      "onSolve": {
+        "message": "지렛대를 틈에 끼우고 온몸으로 젖힌다. 끼이익— 핸들이 돌아가고 기관실 문이 열렸다."
+      }
     },
     "cabinet_lock": {
       "type": "code",
@@ -274,7 +620,11 @@
       "failMessage": "다이얼이 헛돈다.",
       "onSolve": {
         "message": "약품장이 열렸다. 시약병 옆에 손잡이 긴 뜰채가 세워져 있다.",
-        "effects": [{ "reveal": "net" }]
+        "effects": [
+          {
+            "reveal": "net"
+          }
+        ]
       }
     },
     "drawer_lock": {
@@ -283,52 +633,148 @@
       "failMessage": "서랍은 열리지 않는다.",
       "onSolve": {
         "message": "서랍이 열렸다. 노란 부표가 달린 시동키가 들어 있다.",
-        "effects": [{ "reveal": "ignition_key" }]
+        "effects": [
+          {
+            "reveal": "ignition_key"
+          }
+        ]
       }
     },
     "pressure_lock": {
       "type": "code",
       "answer": "464",
       "failMessage": "펌프가 잘못된 압력으로 돌다가 비명을 지르며 멈춘다. 재가동까지 시간이 걸린다.",
-      "onFail": { "effects": [{ "addPenalty": 60 }] },
+      "onFail": {
+        "effects": [
+          {
+            "addPenalty": 60
+          }
+        ]
+      },
       "onSolve": {
         "message": "펌프가 돌기 시작한다. 게이지 바늘이 하나씩 정상 범위로 올라간다. 통로 스피커: \"격납고 압력 정상.\"",
-        "effects": [{ "setFlag": "pressure_ok" }]
+        "effects": [
+          {
+            "setFlag": "pressure_ok"
+          }
+        ]
       }
     },
     "hangar_lock": {
       "type": "code",
       "answer": "0312",
       "failMessage": "키패드가 붉게 깜빡인다.",
-      "onSolve": { "message": "해치 잠금이 풀리고 무거운 문이 옆으로 밀려난다." }
+      "onSolve": {
+        "message": "해치 잠금이 풀리고 무거운 문이 옆으로 밀려난다."
+      }
     },
     "sub_lock": {
       "type": "key",
       "keyItem": "ignition_key",
       "consume": true,
-      "onSolve": { "message": "시동키를 꽂아 돌리자 해치가 열리고 계기판에 불이 들어온다." }
+      "onSolve": {
+        "message": "시동키를 꽂아 돌리자 해치가 열리고 계기판에 불이 들어온다."
+      }
     }
   },
-
   "hints": [
-    { "when": { "notFlag": "log_seen" }, "text": "침대 위 일지를 읽어 보세요." },
-    { "when": { "notFlag": "badge_seen" }, "text": "당신의 명찰을 조사하세요." },
-    { "when": { "notFlag": "calendar_seen" }, "text": "벽의 날짜 표시를 조사하세요." },
-    { "when": { "notSolved": "quarters_lock" }, "text": "正 한 글자는 5획입니다. 승무원 번호 두 자리 뒤에 센 날짜를 두 자리로 붙이세요." },
-    { "when": { "notFlag": "table_seen" }, "text": "실험실 주기율표를 조사하세요." },
-    { "when": { "notSolved": "cabinet_lock" }, "text": "약품장 라벨의 원소를 원자 번호로 바꿔 순서대로 입력하세요." },
-    { "when": { "notFlag": "card_fished" }, "text": "약품장 안의 뜰채를 수조에 사용하세요. 맨손은 절대 넣지 마세요." },
-    { "when": { "notSolved": "control_lock" }, "text": "건져 낸 청색카드를 통제실문에 사용하세요." },
-    { "when": { "notFlag": "box_opened" }, "text": "통제실의 비상함을 조사하세요." },
-    { "when": { "notSolved": "engine_lock" }, "text": "지렛대를 기관실문에 사용하세요." },
-    { "when": { "notSolved": "pressure_lock" }, "text": "게이지 값에 안내판의 계산을 적용해 세 자리를 압력제어판에 입력하세요." },
-    { "when": { "notFlag": "monitor_code_seen" }, "text": "압력이 복구됐으니 통제실 모니터를 다시 조사하세요." },
-    { "when": { "notSolved": "hangar_lock" }, "text": "통로의 수심계 값을 네 자리로 격납고해치에 입력하세요." },
-    { "when": { "notFlag": "morse_seen" }, "text": "침실의 모스 부호표를 확인해 두세요." },
-    { "when": { "notSolved": "drawer_lock" }, "text": "무전기 신호 네 묶음을 모스표로 숫자로 바꿔 서랍에 입력하세요." },
-    { "when": { "notSolved": "sub_lock" }, "text": "서랍 속 시동키를 격납고의 잠수정해치에 사용하세요." }
+    {
+      "when": {
+        "notFlag": "log_seen"
+      },
+      "text": "침대 위 일지를 읽어 보세요."
+    },
+    {
+      "when": {
+        "notFlag": "badge_seen"
+      },
+      "text": "당신의 명찰을 조사하세요."
+    },
+    {
+      "when": {
+        "notFlag": "calendar_seen"
+      },
+      "text": "벽의 날짜 표시를 조사하세요."
+    },
+    {
+      "when": {
+        "notSolved": "quarters_lock"
+      },
+      "text": "正 한 글자는 5획입니다. 승무원 번호 두 자리 뒤에 센 날짜를 두 자리로 붙이세요."
+    },
+    {
+      "when": {
+        "notFlag": "table_seen"
+      },
+      "text": "실험실 주기율표를 조사하세요."
+    },
+    {
+      "when": {
+        "notSolved": "cabinet_lock"
+      },
+      "text": "약품장 라벨의 원소를 원자 번호로 바꿔 순서대로 입력하세요."
+    },
+    {
+      "when": {
+        "notFlag": "card_fished"
+      },
+      "text": "약품장 안의 뜰채를 수조에 사용하세요. 맨손은 절대 넣지 마세요."
+    },
+    {
+      "when": {
+        "notSolved": "control_lock"
+      },
+      "text": "건져 낸 청색카드를 통제실문에 사용하세요."
+    },
+    {
+      "when": {
+        "notFlag": "box_opened"
+      },
+      "text": "통제실의 비상함을 조사하세요."
+    },
+    {
+      "when": {
+        "notSolved": "engine_lock"
+      },
+      "text": "지렛대를 기관실문에 사용하세요."
+    },
+    {
+      "when": {
+        "notSolved": "pressure_lock"
+      },
+      "text": "게이지 값에 안내판의 계산을 적용해 세 자리를 압력제어판에 입력하세요."
+    },
+    {
+      "when": {
+        "notFlag": "monitor_code_seen"
+      },
+      "text": "압력이 복구됐으니 통제실 모니터를 다시 조사하세요."
+    },
+    {
+      "when": {
+        "notSolved": "hangar_lock"
+      },
+      "text": "통로의 수심계 값을 네 자리로 격납고해치에 입력하세요."
+    },
+    {
+      "when": {
+        "notFlag": "morse_seen"
+      },
+      "text": "침실의 모스 부호표를 확인해 두세요."
+    },
+    {
+      "when": {
+        "notSolved": "drawer_lock"
+      },
+      "text": "무전기 신호 네 묶음을 모스표로 숫자로 바꿔 서랍에 입력하세요."
+    },
+    {
+      "when": {
+        "notSolved": "sub_lock"
+      },
+      "text": "서랍 속 시동키를 격납고의 잠수정해치에 사용하세요."
+    }
   ],
-
   "endings": {
     "success": "잠수정이 기지를 떠나 천천히 떠오른다. 창밖의 어둠이 남빛으로, 다시 은빛으로 바뀐다. 당신은 수면으로 돌아왔다.",
     "timeout": "스피커가 마지막으로 말한다. \"산소 잔량 0.\" 비상등이 하나씩 꺼진다. 시간이 다 되었다."

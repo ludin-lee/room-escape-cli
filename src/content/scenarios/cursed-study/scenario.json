@@ -1,0 +1,630 @@
+{
+  "id": "cursed-study",
+  "title": "사라진 고고학자의 서재",
+  "timeLimitSec": 3300,
+  "difficulty": "상",
+  "hintPenaltySec": 180,
+  "retryPenaltySec": 180,
+  "startRoom": "study",
+  "intro": "고고학과 윤 교수가 실종된 지 사흘. 조교인 당신은 열쇠를 받아 교수의 서재에 들어왔다.\n문이 등 뒤에서 닫히고, 열쇠는 자물쇠 안에서 바스라진다. 책상 위 유물 상자에서 낮은 웅웅거림.\n교수의 마지막 메모: \"55분. 그 안에 봉인을 찾지 못하면 나처럼 된다.\"",
+  "rooms": {
+    "study": {
+      "name": "서재",
+      "hintCode": "A1",
+      "description": [
+        {
+          "when": {
+            "flag": "circle_seen"
+          },
+          "text": "천장까지 닿는 책장, 낡은 책상, 벽의 고지도. 바닥 한가운데 자외선 아래서 드러난 마법진이 희미하게 남아 있다. 그 중심에 유물 상자."
+        },
+        {
+          "text": "천장까지 닿는 책장, 낡은 책상, 벽의 고지도. 방 한가운데 나무 유물 상자가 놓여 있고, 문은 안에서도 열리지 않는다."
+        }
+      ],
+      "objects": [
+        "desk",
+        "uv_light",
+        "old_map",
+        "bookshelf",
+        "veritas",
+        "relic_box",
+        "study_door",
+        "circle",
+        "talisman"
+      ],
+      "exits": []
+    },
+    "archive": {
+      "name": "비밀 서고",
+      "hintCode": "A2",
+      "description": "책장 뒤 좁은 서고. 유물 모형이 늘어선 선반, 놋쇠 저울, 그리고 교수의 일기장. 벽에 라틴어 명문.",
+      "objects": [
+        "shelf_relics",
+        "stone",
+        "skull",
+        "coin",
+        "scale",
+        "diary",
+        "inscription",
+        "vault_door"
+      ],
+      "exits": [
+        {
+          "names": [
+            "서재",
+            "study",
+            "밖"
+          ],
+          "to": "study"
+        }
+      ]
+    },
+    "vault": {
+      "name": "유물실",
+      "hintCode": "A3",
+      "description": "서늘한 지하. 벽감마다 유물, 가운데 석관. 석관 뚜껑에 로마 숫자 다이얼.",
+      "objects": [
+        "sarcophagus",
+        "orb",
+        "niche"
+      ],
+      "exits": [
+        {
+          "names": [
+            "위",
+            "서고",
+            "up"
+          ],
+          "to": "archive"
+        }
+      ]
+    },
+    "outside": {
+      "name": "복도",
+      "description": "서재 문이 스르르 열리고 복도의 형광등 빛이 들어온다. 등 뒤에서 웅웅거림이 멎는다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+  "objects": {
+    "desk": {
+      "names": [
+        "책상",
+        "desk"
+      ],
+      "description": "교수의 책상. 서랍 하나.",
+      "onExamine": {
+        "when": {
+          "notFlag": "desk_opened"
+        },
+        "message": "서랍에서 검은 손전등이 나온다. 렌즈가 보라색이다.",
+        "effects": [
+          {
+            "reveal": "uv_light"
+          },
+          {
+            "setFlag": "desk_opened"
+          }
+        ]
+      }
+    },
+    "uv_light": {
+      "names": [
+        "손전등",
+        "UV",
+        "자외선",
+        "uvlight"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "자외선 손전등. 종이 위의 보이지 않는 잉크를 드러낸다.",
+      "onUse": {
+        "old_map": {
+          "message": "고지도 위에 보라빛 글자가 떠오른다. 여백에 로마 숫자: XIV · VII · III. 그리고 '석관은 이 순서를 기억한다'.",
+          "effects": [
+            {
+              "setFlag": "map_uv"
+            }
+          ]
+        },
+        "bookshelf": {
+          "message": "책등들 사이에서 한 권만 빛난다. 『VERITAS』. 그리고 바닥에 마법진의 윤곽이 드러난다.",
+          "effects": [
+            {
+              "reveal": "veritas"
+            },
+            {
+              "reveal": "circle"
+            },
+            {
+              "setFlag": "circle_seen"
+            }
+          ]
+        },
+        "diary": {
+          "message": "일기의 빈 줄에 잉크가 떠오른다. \"먼저 땅의 것, 다음 죽음의 것, 마지막 탐욕의 것.\"",
+          "effects": [
+            {
+              "setFlag": "diary_uv"
+            }
+          ]
+        },
+        "relic_box": {
+          "message": "상자 표면에 글자. \"열쇠는 문에 있지 않다. 나에게 있다.\"",
+          "effects": [
+            {
+              "setFlag": "box_uv"
+            }
+          ]
+        }
+      }
+    },
+    "old_map": {
+      "names": [
+        "고지도",
+        "지도",
+        "map"
+      ],
+      "description": "양피지 고지도. 지중해와 알 수 없는 섬. 맨눈으로는 특별한 게 없다.",
+      "hintCode": "A1"
+    },
+    "bookshelf": {
+      "names": [
+        "책장",
+        "bookshelf"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "shelf_open"
+          },
+          "text": "한 면이 돌아간 책장. VERITAS 를 당기면 서고로 들어갈 수 있다."
+        },
+        {
+          "text": "고서가 빼곡한 책장. 한 칸이 미세하게 앞으로 나와 있다. 어떤 책인지는 알 수 없다."
+        }
+      ]
+    },
+    "veritas": {
+      "names": [
+        "VERITAS",
+        "베리타스",
+        "책",
+        "veritas"
+      ],
+      "hidden": true,
+      "description": "『VERITAS』. 책등이 가짜다. 당기면 뭔가 움직일 것 같다.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "shelf_open"
+          },
+          "message": "열린 틈으로 서고에 들어간다.",
+          "effects": [
+            {
+              "moveTo": "archive"
+            }
+          ]
+        },
+        {
+          "message": "책을 당기자 딸깍, 책장 한 면이 안쪽으로 돌아가며 좁은 서고가 드러난다. 틈으로 들어간다.",
+          "effects": [
+            {
+              "setFlag": "shelf_open"
+            },
+            {
+              "moveTo": "archive"
+            }
+          ]
+        }
+      ]
+    },
+    "relic_box": {
+      "names": [
+        "유물상자",
+        "상자",
+        "box"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "box_lock"
+          },
+          "text": "열린 유물 상자. 안은 비었다. 웅웅거림도 멎었다."
+        },
+        {
+          "text": "검은 나무 유물 상자. 낮게 웅웅거린다. 뚜껑에 4자리 로마 숫자 다이얼 — 아니, 아라비아 숫자 4자리다."
+        }
+      ],
+      "lock": "box_lock",
+      "hintCode": "A1"
+    },
+    "study_door": {
+      "names": [
+        "문",
+        "door",
+        "서재문"
+      ],
+      "description": "안에서도 열리지 않는 문. 열쇠 구멍에 부서진 열쇠가 박혀 있다. 이 문은 답이 아니다."
+    },
+    "circle": {
+      "names": [
+        "마법진",
+        "circle"
+      ],
+      "hidden": true,
+      "description": "바닥의 마법진. 중심이 비어 있다. 봉인을 놓는 자리 같다."
+    },
+    "talisman": {
+      "names": [
+        "부적",
+        "봉인",
+        "talisman"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "은으로 짠 봉인 부적. 마법진 중심에 놓으면 된다.",
+      "onUse": {
+        "target": "circle",
+        "message": "부적을 중심에 놓는다. 마법진이 한 번 빛나고, 웅웅거림이 멎고, 문의 부서진 열쇠가 저절로 돌아간다.",
+        "effects": [
+          {
+            "moveTo": "outside"
+          }
+        ]
+      }
+    },
+    "shelf_relics": {
+      "names": [
+        "선반",
+        "유물모형",
+        "shelf"
+      ],
+      "description": "유물 모형들. 돌, 해골, 금화가 각각 하나씩. 나머지는 장식.",
+      "onExamine": {
+        "when": {
+          "notFlag": "relics_seen"
+        },
+        "effects": [
+          {
+            "reveal": "stone"
+          },
+          {
+            "reveal": "skull"
+          },
+          {
+            "reveal": "coin"
+          },
+          {
+            "setFlag": "relics_seen"
+          }
+        ],
+        "message": "돌, 해골, 금화 모형을 꺼낼 수 있다."
+      }
+    },
+    "stone": {
+      "names": [
+        "돌",
+        "stone"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "거친 현무암 조각. 땅의 것.",
+      "onUse": {
+        "target": "scale",
+        "when": {
+          "notFlag": "scale1"
+        },
+        "failMessage": "이미 올려져 있다.",
+        "message": "돌을 접시에 올린다. 저울이 조금 기운다.",
+        "effects": [
+          {
+            "setFlag": "scale1"
+          },
+          {
+            "removeItem": "stone"
+          }
+        ]
+      }
+    },
+    "skull": {
+      "names": [
+        "해골",
+        "skull"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "작은 해골 모형. 죽음의 것.",
+      "onUse": {
+        "target": "scale",
+        "when": {
+          "all": [
+            {
+              "flag": "scale1"
+            },
+            {
+              "notFlag": "scale2"
+            }
+          ]
+        },
+        "failMessage": "저울이 거칠게 흔들리며 해골을 튕겨 낸다. 순서가 아니다.",
+        "message": "해골을 돌 위에 얹는다. 저울이 균형을 찾는다.",
+        "effects": [
+          {
+            "setFlag": "scale2"
+          },
+          {
+            "removeItem": "skull"
+          }
+        ]
+      }
+    },
+    "coin": {
+      "names": [
+        "금화",
+        "coin"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "가짜 금화. 탐욕의 것.",
+      "onUse": {
+        "target": "scale",
+        "when": {
+          "all": [
+            {
+              "flag": "scale2"
+            },
+            {
+              "notFlag": "scale3"
+            }
+          ]
+        },
+        "failMessage": "저울이 거칠게 흔들리며 금화를 튕겨 낸다. 순서가 아니다.",
+        "message": "금화를 올리자 저울이 완전히 멈춘다. 바닥에서 쇠문이 열리는 소리.",
+        "effects": [
+          {
+            "setFlag": "scale3"
+          },
+          {
+            "removeItem": "coin"
+          }
+        ]
+      }
+    },
+    "scale": {
+      "names": [
+        "저울",
+        "scale"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "scale3"
+          },
+          "text": "세 유물을 얹은 저울. 완벽한 정지."
+        },
+        {
+          "text": "놋쇠 저울. 접시 하나. 옆에 새겨진 글: '셋을 순서대로. 틀리면 저울이 거부한다.'"
+        }
+      ],
+      "hintCode": "A2"
+    },
+    "diary": {
+      "names": [
+        "일기장",
+        "일기",
+        "diary"
+      ],
+      "description": "교수의 일기. 마지막 장은 절반이 비어 있다. 잉크가 없는 게 아니라 보이지 않는 것 같다.",
+      "hintCode": "A2"
+    },
+    "inscription": {
+      "names": [
+        "명문",
+        "라틴어",
+        "inscription"
+      ],
+      "description": "벽의 라틴어. 'CLAVIS NON IN PORTA, SED IN ARCA' — 열쇠는 문이 아니라 상자에."
+    },
+    "vault_door": {
+      "names": [
+        "쇠문",
+        "바닥문",
+        "vaultdoor"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "scale3"
+          },
+          "text": "열린 쇠문. 아래로 계단."
+        },
+        {
+          "text": "바닥의 쇠문. 손잡이도 자물쇠도 없다. 저울과 연결된 듯하다."
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "scale3"
+          },
+          "message": "쇠문 아래 계단으로 내려간다.",
+          "effects": [
+            {
+              "moveTo": "vault"
+            }
+          ]
+        },
+        {
+          "message": "손잡이도 자물쇠도 없다. 저울이 열어 주는 문이다."
+        }
+      ]
+    },
+    "sarcophagus": {
+      "names": [
+        "석관",
+        "다이얼",
+        "sarcophagus"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "sarc_lock"
+          },
+          "text": "뚜껑이 밀린 석관. 안에 검은 구슬."
+        },
+        {
+          "text": "석관. 뚜껑에 로마 숫자 다이얼 세 칸. I 부터 XX 까지."
+        }
+      ],
+      "lock": "sarc_lock",
+      "hintCode": "A3"
+    },
+    "orb": {
+      "names": [
+        "구슬",
+        "검은구슬",
+        "orb"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "검은 유리 구슬. 기울이면 안에서 숫자가 떠오른다: 3741. 지도의 숫자를 거꾸로 읽은 것이다. 상자는 이 순서를 원한다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "orb_seen"
+          }
+        ]
+      }
+    },
+    "niche": {
+      "names": [
+        "벽감",
+        "niche"
+      ],
+      "description": "벽감의 유물들. 전부 모조품. 교수는 진짜를 상자에 넣었다."
+    }
+  },
+  "locks": {
+    "box_lock": {
+      "type": "code",
+      "answer": "3741",
+      "failMessage": "다이얼이 되돌아간다.",
+      "onFail": {
+        "effects": [
+          {
+            "addPenalty": 60
+          }
+        ]
+      },
+      "onSolve": {
+        "message": "상자가 열린다. 은 부적. 웅웅거림이 잦아든다.",
+        "effects": [
+          {
+            "reveal": "talisman"
+          }
+        ]
+      }
+    },
+    "sarc_lock": {
+      "type": "code",
+      "answer": [
+        "1473",
+        "14 7 3",
+        "XIV VII III",
+        "xivviiiii"
+      ],
+      "failMessage": "다이얼이 무겁게 되돌아간다.",
+      "onSolve": {
+        "message": "뚜껑이 밀린다. 안에 검은 구슬.",
+        "effects": [
+          {
+            "reveal": "orb"
+          }
+        ]
+      }
+    }
+  },
+  "hints": [
+    {
+      "code": "A1",
+      "when": {
+        "notFlag": "desk_opened"
+      },
+      "text": "책상 서랍을 조사하세요."
+    },
+    {
+      "code": "A1",
+      "when": {
+        "notFlag": "circle_seen"
+      },
+      "text": "손전등을 책장에 사용하세요."
+    },
+    {
+      "code": "A1",
+      "when": {
+        "notFlag": "shelf_open"
+      },
+      "text": "빛나는 책 VERITAS 를 당기세요."
+    },
+    {
+      "code": "A2",
+      "when": {
+        "all": [
+          {
+            "flag": "scale3"
+          },
+          {
+            "notFlag": "orb_seen"
+          }
+        ]
+      },
+      "text": "쇠문을 조작해 지하로 내려가세요."
+    },
+    {
+      "code": "A2",
+      "when": {
+        "notFlag": "diary_uv"
+      },
+      "text": "서고의 일기장에 손전등을 사용하세요."
+    },
+    {
+      "code": "A2",
+      "when": {
+        "notFlag": "scale3"
+      },
+      "text": "선반의 모형을 꺼내 저울에 돌 → 해골 → 금화 순으로 사용하세요."
+    },
+    {
+      "code": "A1",
+      "when": {
+        "notFlag": "map_uv"
+      },
+      "text": "서재 고지도에 손전등을 사용하세요."
+    },
+    {
+      "code": "A3",
+      "when": {
+        "notSolved": "sarc_lock"
+      },
+      "text": "지도의 로마 숫자를 아라비아 숫자로 바꿔 석관에 입력하세요."
+    },
+    {
+      "code": "A1",
+      "when": {
+        "notSolved": "box_lock"
+      },
+      "text": "구슬이 알려 준 숫자를 유물상자에 입력하세요. 문은 답이 아닙니다."
+    },
+    {
+      "code": "A1",
+      "text": "부적을 마법진에 사용하세요."
+    }
+  ],
+  "endings": {
+    "success": "복도로 나선다. 문 안쪽에서 교수의 목소리가 들린 것 같다. \"고맙네.\" 서재는 다음 날 비어 있었다. 상자도, 마법진도.",
+    "timeout": "웅웅거림이 멎고 방이 조용해진다. 다음 조교가 열쇠를 받는다."
+  }
+}

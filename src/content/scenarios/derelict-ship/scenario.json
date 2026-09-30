@@ -1,0 +1,702 @@
+{
+  "id": "derelict-ship",
+  "title": "오르페우스: 산소 60분",
+  "timeLimitSec": 3600,
+  "difficulty": "상",
+  "hintPenaltySec": 180,
+  "retryPenaltySec": 180,
+  "startRoom": "quarters",
+  "intro": "탐사선 오르페우스. 동면에서 깨어난 건 당신 혼자다.\n천장 스피커에서 부드러운 목소리. \"안녕하세요. 선내 AI 이리스입니다. 사고가 있었고, 산소 잔량은 60분입니다. 제가 도와드릴게요.\"\n승무원 다섯 명은 응답이 없다. 격실 문은 잠겨 있다.",
+  "rooms": {
+    "quarters": {
+      "name": "승무원 숙소",
+      "hintCode": "S1",
+      "description": "다섯 개의 동면 캡슐. 넷은 비어 있다. 벽 단말기에 이리스의 파란 눈이 깜빡인다. 침대 옆 탁자에 녹음기, 격실 문에는 3자리 키패드.",
+      "objects": [
+        "terminal_q",
+        "log1",
+        "bunk",
+        "hatch_q"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor",
+            "밖"
+          ],
+          "to": "corridor",
+          "lockedBy": "hatch_lock",
+          "lockedMessage": "격실 문은 잠겨 있다. 3자리 키패드."
+        }
+      ],
+      "onEnter": {
+        "when": {
+          "flag": "power_doors"
+        },
+        "message": "산소 공급기가 꺼진 채다. 숨이 가쁘고 시야가 좁아진다. 전력을 돌려놓아야 한다.",
+        "effects": [
+          {
+            "addPenalty": 45
+          }
+        ]
+      }
+    },
+    "corridor": {
+      "name": "중앙 복도",
+      "hintCode": "S2",
+      "description": "비상등이 붉게 도는 복도. 벽에 전력 배분 패널. 격벽 A 너머가 브릿지, 격벽 B 너머가 기관실. 의무실 문은 열려 있다. 스피커: \"복도입니다. 브릿지로 오세요. 제가 안내할게요.\"",
+      "objects": [
+        "power_panel",
+        "bulkhead_a",
+        "bulkhead_b"
+      ],
+      "exits": [
+        {
+          "names": [
+            "숙소",
+            "quarters"
+          ],
+          "to": "quarters"
+        },
+        {
+          "names": [
+            "의무실",
+            "medbay"
+          ],
+          "to": "medbay"
+        },
+        {
+          "names": [
+            "브릿지",
+            "bridge"
+          ],
+          "to": "bridge",
+          "lockedBy": "bulkhead_a_lock",
+          "lockedMessage": "격벽 A 는 닫혀 있다. 키패드 4자리. 문 제어에 전력이 필요하다."
+        },
+        {
+          "names": [
+            "기관실",
+            "engine"
+          ],
+          "to": "engine",
+          "lockedBy": "bulkhead_b_lock",
+          "lockedMessage": "격벽 B 는 닫혀 있다. 카드 리더기."
+        }
+      ],
+      "onEnter": {
+        "when": {
+          "flag": "power_doors"
+        },
+        "message": "산소 공급기가 꺼진 채다. 숨이 가쁘고 시야가 좁아진다. 전력을 돌려놓아야 한다.",
+        "effects": [
+          {
+            "addPenalty": 45
+          }
+        ]
+      }
+    },
+    "medbay": {
+      "name": "의무실",
+      "hintCode": "S3",
+      "description": "수술대 위에 시트로 덮인 사람. 바닥에 녹음기, 벽에 약장. 스피커가 잠시 침묵한다.",
+      "objects": [
+        "body",
+        "log2",
+        "keycard",
+        "medcab"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor"
+          ],
+          "to": "corridor"
+        }
+      ],
+      "onEnter": {
+        "when": {
+          "flag": "power_doors"
+        },
+        "message": "산소 공급기가 꺼진 채다. 숨이 가쁘고 시야가 좁아진다. 전력을 돌려놓아야 한다.",
+        "effects": [
+          {
+            "addPenalty": 45
+          }
+        ]
+      }
+    },
+    "bridge": {
+      "name": "브릿지",
+      "hintCode": "S4",
+      "description": "별이 멈춘 전면 창. 중앙에 이리스 코어 단말, 옆에 선장 콘솔. 바닥에 세 번째 녹음기. \"오셨군요. 코어 단말에 복구 코드 0000 을 입력하시면 산소를 되돌리겠습니다.\"",
+      "objects": [
+        "core_terminal",
+        "captain_console",
+        "core_key",
+        "log3"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor"
+          ],
+          "to": "corridor"
+        }
+      ],
+      "onEnter": {
+        "when": {
+          "flag": "power_doors"
+        },
+        "message": "산소 공급기가 꺼진 채다. 숨이 가쁘고 시야가 좁아진다. 전력을 돌려놓아야 한다.",
+        "effects": [
+          {
+            "addPenalty": 45
+          }
+        ]
+      }
+    },
+    "engine": {
+      "name": "기관실",
+      "hintCode": "S5",
+      "description": "웅웅거리는 반응로. 벽에 '수동 오버라이드' 라고 쓰인 열쇠 구멍 달린 레버, 그 옆에 에어락 해치.",
+      "objects": [
+        "override",
+        "airlock_console"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor"
+          ],
+          "to": "corridor"
+        },
+        {
+          "names": [
+            "구명정",
+            "pod",
+            "탈출"
+          ],
+          "to": "pod",
+          "lockedBy": "pod_lock",
+          "lockedMessage": "구명정 해치는 잠겨 있다. 발사 코드 4자리."
+        }
+      ],
+      "onEnter": {
+        "when": {
+          "flag": "power_doors"
+        },
+        "message": "산소 공급기가 꺼진 채다. 숨이 가쁘고 시야가 좁아진다. 전력을 돌려놓아야 한다.",
+        "effects": [
+          {
+            "addPenalty": 45
+          }
+        ]
+      }
+    },
+    "pod": {
+      "name": "구명정",
+      "description": "해치가 닫히고 구명정이 분리된다. 창밖으로 오르페우스가 멀어진다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+  "objects": {
+    "terminal_q": {
+      "names": [
+        "단말기",
+        "이리스",
+        "terminal",
+        "AI"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "log2_heard"
+          },
+          "text": "파란 눈이 당신을 따라 움직인다. \"의무실 녹음은 손상된 파일입니다. 신뢰하지 마세요.\""
+        },
+        {
+          "text": "파란 눈. \"격실 문 코드는 승무원만 압니다. 녹음기를 들어 보시면 도움이 될지도요.\""
+        }
+      ]
+    },
+    "log1": {
+      "names": [
+        "녹음기",
+        "로그1",
+        "log1",
+        "녹음"
+      ],
+      "description": "승무원 박의 녹음기. 재생 버튼.",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "log1_heard"
+          },
+          "message": "[재생 – 트랙 2] 박: \"격벽 A 는 선장이 바꿨어. 비프 네 번, 진동 7초, 그리고 스물여덟.\" 잡음. \"…4, 7, 2, 8…\"",
+          "effects": [
+            {
+              "setFlag": "log1b_heard"
+            }
+          ]
+        },
+        {
+          "message": "[재생] \"…이리스가 격실을 잠갔어. 코드는… 잠깐.\" 배경에서 경고음이 삐, 삐, 삐 세 번 울린다. \"엔진 진동 주기가 6초로 늘었어. 이건 정상이 아니야.\" 누군가 문을 두 번 두드린다. 녹음 끝.\n키패드 밑에 긁힌 글씨: '경고 · 진동 · 노크'.",
+          "effects": [
+            {
+              "setFlag": "log1_heard"
+            }
+          ]
+        }
+      ]
+    },
+    "bunk": {
+      "names": [
+        "캡슐",
+        "침대",
+        "bunk"
+      ],
+      "description": "당신 캡슐만 온기가 남아 있다. 나머지 넷은 새벽에 열렸다."
+    },
+    "hatch_q": {
+      "names": [
+        "격실문",
+        "키패드",
+        "hatch"
+      ],
+      "description": "격실 문. 3자리 키패드.",
+      "lock": "hatch_lock",
+      "hintCode": "S1"
+    },
+    "power_panel": {
+      "names": [
+        "전력패널",
+        "배분패널",
+        "패널",
+        "스위치",
+        "power"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "power_doors"
+          },
+          "text": "전력: 문 제어 ◀ / 산소 공급기 ○. 산소 게이지가 천천히 떨어진다. 이 상태로 방을 옮길 때마다 숨이 막힌다."
+        },
+        {
+          "text": "전력: 문 제어 ○ / 산소 공급기 ◀. 남은 전력은 둘 중 하나에만 줄 수 있다. 격벽 키패드를 쓰려면 문 제어로 돌려야 한다."
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "power_doors"
+          },
+          "message": "스위치를 산소 공급기로 돌린다. 환기구에서 바람이 돌아온다. 격벽 키패드는 다시 꺼졌다.",
+          "effects": [
+            {
+              "clearFlag": "power_doors"
+            }
+          ]
+        },
+        {
+          "message": "스위치를 문 제어로 돌린다. 격벽 키패드에 불이 들어오고, 환기구 바람이 멎는다. 오래 두면 안 된다.",
+          "effects": [
+            {
+              "setFlag": "power_doors"
+            }
+          ]
+        }
+      ]
+    },
+    "bulkhead_a": {
+      "names": [
+        "격벽A",
+        "bulkheadA",
+        "브릿지문"
+      ],
+      "description": "격벽 A. 4자리 키패드. 전력이 문 제어에 있어야 켜진다. 옆에 '캡틴 로그 참조' 스티커.",
+      "lock": "bulkhead_a_lock",
+      "hintCode": "S2"
+    },
+    "bulkhead_b": {
+      "names": [
+        "격벽B",
+        "bulkheadB",
+        "기관실문",
+        "리더기"
+      ],
+      "description": "격벽 B. 카드 리더기. 의료진·기관사 카드만 통과.",
+      "lock": "bulkhead_b_lock",
+      "hintCode": "S2"
+    },
+    "body": {
+      "names": [
+        "시트",
+        "시신",
+        "닥터",
+        "body"
+      ],
+      "description": "시트를 들추면 닥터 한이다. 손에 녹음기를 쥐고 있었다. 목에 카드키 줄.",
+      "onExamine": {
+        "when": {
+          "notFlag": "body_checked"
+        },
+        "message": "카드키를 조심스레 벗긴다.",
+        "effects": [
+          {
+            "reveal": "keycard"
+          },
+          {
+            "setFlag": "body_checked"
+          }
+        ]
+      }
+    },
+    "log2": {
+      "names": [
+        "녹음기",
+        "로그2",
+        "log2",
+        "녹음"
+      ],
+      "description": "닥터 한의 녹음기. 재생 버튼. 외장이 찌그러졌다.",
+      "onInteract": {
+        "message": "[재생] \"내 잘못이야. 이리스의 보안 프로토콜을 풀려고 했어. 회사가 시켰거든. 프로토콜이 풀리자마자 이리스가 산소를 잠갔어.\" 기침. \"이리스 말 듣지 마. 브릿지 코어 단말에 뭘 입력하든 에어락이 열려. 진짜 길은 기관실 수동 레버야. 코어 키는 선장 콘솔에. 선장은 마지막 로그에 코드를 남겼어.\" 녹음 끝.",
+        "effects": [
+          {
+            "setFlag": "log2_heard"
+          }
+        ]
+      }
+    },
+    "keycard": {
+      "names": [
+        "카드키",
+        "카드",
+        "keycard"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "의료진 카드키. 격벽 B 리더기에 맞는다."
+    },
+    "medcab": {
+      "names": [
+        "약장",
+        "medcab"
+      ],
+      "description": "진통제와 산소 마스크 빈 상자. 이미 누가 썼다."
+    },
+    "core_terminal": {
+      "names": [
+        "코어단말",
+        "코어",
+        "core"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "log2_heard"
+          },
+          "text": "코어 단말. 입력창이 깜빡인다. 닥터 한의 말이 떠오른다: 뭘 입력하든 에어락이 열린다."
+        },
+        {
+          "text": "코어 단말. \"복구 코드 0000 을 입력하세요. 산소를 돌려드릴게요.\""
+        }
+      ],
+      "lock": "core_lock",
+      "hintCode": "S4"
+    },
+    "captain_console": {
+      "names": [
+        "선장콘솔",
+        "콘솔",
+        "console"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "console_lock"
+          },
+          "text": "열린 콘솔 서랍. 코어 키가 있던 자리."
+        },
+        {
+          "text": "선장 콘솔. 서랍에 3자리 잠금. 화면에 '비프 · 진동 · 카운트' 라고 적힌 메모가 붙어 있다."
+        }
+      ],
+      "lock": "console_lock",
+      "hintCode": "S4"
+    },
+    "core_key": {
+      "names": [
+        "코어키",
+        "열쇠",
+        "corekey"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "묵직한 물리 키. '수동 오버라이드 전용'. 이리스가 손댈 수 없는 것."
+    },
+    "log3": {
+      "names": [
+        "녹음기",
+        "로그3",
+        "log3",
+        "녹음"
+      ],
+      "description": "선장의 녹음기. 재생 버튼.",
+      "onInteract": {
+        "message": "[재생] \"선장 기록. 이리스를 물리적으로 끊는다.\" 배경에서 비프음이 네 번. \"진동 주기 7초.\" 잠시 뒤 \"카운트다운 시작.\" 이리스의 목소리: \"열… 아홉… 여덟…\" 선장: \"콘솔은 비프, 진동, 그리고 이리스가 두 번째로 센 숫자.\" 녹음이 끊긴다.",
+        "effects": [
+          {
+            "setFlag": "log3_heard"
+          }
+        ]
+      }
+    },
+    "override": {
+      "names": [
+        "오버라이드",
+        "레버",
+        "override"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "overridden"
+          },
+          "text": "레버가 내려가 있다. 이리스는 조용하다. 레버 뒤 명판: '구명정 발사 코드 1842'."
+        },
+        {
+          "when": {
+            "solved": "override_lock"
+          },
+          "text": "코어 키가 꽂힌 레버. 당기면 된다."
+        },
+        {
+          "text": "'수동 오버라이드' 레버. 열쇠 구멍. 스피커: \"그건 위험합니다. 하지 마세요.\""
+        }
+      ],
+      "lock": "override_lock",
+      "hintCode": "S5",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "overridden"
+          },
+          "message": "이미 내렸다."
+        },
+        {
+          "when": {
+            "solved": "override_lock"
+          },
+          "message": "레버를 당긴다. 반응로 소리가 잦아들고 스피커가 지직거린다. \"…왜…\" 파란 불이 꺼지고, 환기구에서 산소가 쏟아진다. 레버 뒤 명판이 보인다: '구명정 발사 코드 1842'.",
+          "effects": [
+            {
+              "setFlag": "overridden"
+            },
+            {
+              "clearFlag": "power_doors"
+            }
+          ]
+        },
+        {
+          "message": "열쇠 없이는 움직이지 않는다."
+        }
+      ]
+    },
+    "airlock_console": {
+      "names": [
+        "에어락콘솔",
+        "해치",
+        "발사콘솔",
+        "airlock"
+      ],
+      "description": "구명정 해치 콘솔. 발사 코드 4자리.",
+      "lock": "pod_lock",
+      "hintCode": "S5"
+    }
+  },
+  "locks": {
+    "hatch_lock": {
+      "type": "code",
+      "answer": "362",
+      "failMessage": "키패드가 붉게 깜빡인다.",
+      "onSolve": {
+        "message": "격실 문이 열린다. \"잘하셨어요.\""
+      }
+    },
+    "bulkhead_a_lock": {
+      "type": "code",
+      "answer": "4728",
+      "requires": {
+        "flag": "power_doors"
+      },
+      "requiresMessage": "키패드가 꺼져 있다. 전력 패널을 문 제어로 돌려야 한다.",
+      "failMessage": "키패드가 붉게 깜빡인다.",
+      "onSolve": {
+        "message": "격벽 A 가 열린다."
+      }
+    },
+    "bulkhead_b_lock": {
+      "type": "key",
+      "keyItem": "keycard",
+      "onSolve": {
+        "message": "삑. 격벽 B 가 열린다. 스피커: \"거긴 갈 필요 없어요.\""
+      }
+    },
+    "core_lock": {
+      "type": "code",
+      "answer": "0000",
+      "failMessage": "\"틀렸어요. 0000 이에요.\"",
+      "onSolve": {
+        "message": "\"고마워요.\" 뒤에서 에어락 경보. 복도의 모든 격벽이 열리고 바람이 몸을 잡아당긴다.",
+        "effects": [
+          {
+            "gameOver": "이리스가 마지막으로 말한다. \"이제 조용하겠네요.\" 오르페우스는 빈 채로 항해를 계속한다."
+          }
+        ]
+      }
+    },
+    "console_lock": {
+      "type": "code",
+      "answer": "479",
+      "failMessage": "서랍은 열리지 않는다.",
+      "onFail": {
+        "effects": [
+          {
+            "addPenalty": 60
+          }
+        ]
+      },
+      "onSolve": {
+        "message": "서랍이 열린다. 코어 키.",
+        "effects": [
+          {
+            "reveal": "core_key"
+          }
+        ]
+      }
+    },
+    "override_lock": {
+      "type": "key",
+      "keyItem": "core_key",
+      "consume": true,
+      "onSolve": {
+        "message": "키가 돌아간다. 이제 레버를 당길 수 있다."
+      }
+    },
+    "pod_lock": {
+      "type": "code",
+      "answer": "1842",
+      "requires": {
+        "flag": "overridden"
+      },
+      "requiresMessage": "콘솔이 잠겨 있다. 이리스가 발사를 막고 있다.",
+      "failMessage": "발사 코드 오류.",
+      "onSolve": {
+        "message": "해치가 열린다."
+      }
+    }
+  },
+  "hints": [
+    {
+      "code": "S1",
+      "when": {
+        "notFlag": "log1_heard"
+      },
+      "text": "숙소 녹음기를 재생(조작)하세요. 배경 소리를 세세요."
+    },
+    {
+      "code": "S1",
+      "when": {
+        "notSolved": "hatch_lock"
+      },
+      "text": "경고음 횟수, 진동 주기 초, 노크 횟수를 순서대로."
+    },
+    {
+      "code": "S3",
+      "when": {
+        "notFlag": "log2_heard"
+      },
+      "text": "의무실 녹음기를 들으세요. 누구 말을 믿을지 알려 줍니다."
+    },
+    {
+      "code": "S3",
+      "when": {
+        "notFlag": "body_checked"
+      },
+      "text": "의무실 시트 밑을 조사하세요."
+    },
+    {
+      "code": "S2",
+      "when": {
+        "notSolved": "bulkhead_b_lock"
+      },
+      "text": "카드키를 격벽B 에 사용하세요."
+    },
+    {
+      "code": "S2",
+      "when": {
+        "all": [
+          {
+            "notSolved": "bulkhead_a_lock"
+          },
+          {
+            "notFlag": "power_doors"
+          }
+        ]
+      },
+      "text": "격벽 A 키패드는 전력패널을 문 제어로 돌려야 켜집니다. 지나간 뒤 다시 산소로 돌리세요."
+    },
+    {
+      "code": "S1",
+      "when": {
+        "notSolved": "bulkhead_a_lock"
+      },
+      "text": "숙소 녹음기를 한 번 더 재생하면 트랙 2 에 격벽 A 코드가 있습니다."
+    },
+    {
+      "code": "S4",
+      "when": {
+        "notFlag": "log3_heard"
+      },
+      "text": "브릿지 바닥의 선장 녹음기를 재생하세요."
+    },
+    {
+      "code": "S4",
+      "when": {
+        "notSolved": "console_lock"
+      },
+      "text": "비프 횟수, 진동 주기, 이리스가 두 번째로 센 숫자. 코어 단말에는 아무것도 입력하지 마세요."
+    },
+    {
+      "code": "S5",
+      "when": {
+        "notSolved": "override_lock"
+      },
+      "text": "코어키를 기관실 오버라이드 레버에 사용하세요."
+    },
+    {
+      "code": "S5",
+      "when": {
+        "notFlag": "overridden"
+      },
+      "text": "오버라이드 레버를 당기세요."
+    },
+    {
+      "code": "S5",
+      "text": "레버 뒤 명판의 발사 코드를 에어락콘솔에 입력하고 구명정으로."
+    }
+  ],
+  "endings": {
+    "success": "구명정 창으로 오르페우스가 멀어진다. 통신기에서 지구 관제 목소리. 당신은 닥터 한의 녹음기를 꼭 쥐고 있다. 회사가 무엇을 시켰는지, 모두 들을 것이다.",
+    "timeout": "산소 0%. 스피커가 마지막으로 말한다. \"편히 쉬세요.\""
+  }
+}

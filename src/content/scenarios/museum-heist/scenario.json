@@ -1,0 +1,747 @@
+{
+  "id": "museum-heist",
+  "title": "교대 시간 60분",
+  "timeLimitSec": 3600,
+  "difficulty": "상",
+  "hintPenaltySec": 180,
+  "retryPenaltySec": 180,
+  "startRoom": "duct",
+  "intro": "시립미술관. 경비 교대는 새벽 2시, 다음 순찰은 3시.\n당신은 환기 덕트 끝에 엎드려 있다. 목표는 VIP 전시관의 「푸른 방의 소녀」. 레이저 감지망, 압력 센서, 그리고 어디에나 있는 카메라.\n의뢰인의 마지막 말: \"비상구는 잊어. 나갈 땐 당당하게.\"",
+  "rooms": {
+    "duct": {
+      "name": "환기 덕트",
+      "hintCode": "M1",
+      "description": "먼지 낀 덕트. 발밑 격자 너머로 창고가 보인다. 배낭에 도구가 몇 개.",
+      "objects": [
+        "backpack",
+        "laser_pointer",
+        "grate"
+      ],
+      "exits": []
+    },
+    "storage": {
+      "name": "창고",
+      "hintCode": "M1",
+      "description": "포장된 액자와 사다리. 벽에 전시관 도면. 문 너머가 복도.",
+      "objects": [
+        "blueprint",
+        "crate",
+        "ladder"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor"
+          ],
+          "to": "corridor"
+        }
+      ]
+    },
+    "corridor": {
+      "name": "복도",
+      "hintCode": "M2",
+      "description": "대리석 복도. 상설 전시관 벽에 초상화 세 점. 한쪽에 경비실, 끝에 VIP 전시관 문, 반대편은 로비.",
+      "objects": [
+        "portrait_a",
+        "portrait_b",
+        "portrait_c",
+        "catalog",
+        "vip_door"
+      ],
+      "exits": [
+        {
+          "names": [
+            "창고",
+            "storage"
+          ],
+          "to": "storage"
+        },
+        {
+          "names": [
+            "경비실",
+            "security"
+          ],
+          "to": "security"
+        },
+        {
+          "names": [
+            "VIP전시관",
+            "VIP",
+            "전시관",
+            "vip"
+          ],
+          "to": "vip",
+          "lockedBy": "vip_lock",
+          "lockedMessage": "VIP 전시관 문. 키패드 3자리."
+        },
+        {
+          "names": [
+            "로비",
+            "lobby"
+          ],
+          "to": "lobby"
+        }
+      ]
+    },
+    "security": {
+      "name": "경비실",
+      "hintCode": "M3",
+      "description": "모니터 벽. 경비 하나가 의자에서 코를 곤다. 라커, 커피, 순찰 일지.",
+      "objects": [
+        "guard",
+        "locker",
+        "uniform",
+        "patrol_log",
+        "monitors"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor"
+          ],
+          "to": "corridor"
+        }
+      ]
+    },
+    "vip": {
+      "name": "VIP 전시관",
+      "hintCode": "M4",
+      "description": [
+        {
+          "when": {
+            "flag": "sensor_off"
+          },
+          "text": "레이저가 꺼진 전시관. 「푸른 방의 소녀」가 조명 아래 홀로 걸려 있다."
+        },
+        {
+          "text": "붉은 레이저가 격자로 교차하는 전시관. 격자 너머 벽에 「푸른 방의 소녀」가 걸려 있지만 닿을 수 없다. 천장 모서리에 감지 센서, 벽면에 각도 조절 거울 세 개 A·B·C."
+        }
+      ],
+      "objects": [
+        "mirror_a",
+        "mirror_b",
+        "mirror_c",
+        "sensor",
+        "painting",
+        "lasers"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor"
+          ],
+          "to": "corridor"
+        }
+      ]
+    },
+    "lobby": {
+      "name": "로비",
+      "hintCode": "M5",
+      "description": "높은 천장의 로비. 정문 유리문 밖에 야간 경비가 서 있다. 구석에 초록 '비상구' 표시.",
+      "objects": [
+        "front_door",
+        "emergency_exit",
+        "night_guard"
+      ],
+      "exits": [
+        {
+          "names": [
+            "복도",
+            "corridor"
+          ],
+          "to": "corridor"
+        },
+        {
+          "names": [
+            "비상구",
+            "emergency"
+          ],
+          "to": "trap_exit"
+        },
+        {
+          "names": [
+            "정문",
+            "밖",
+            "front",
+            "outside"
+          ],
+          "to": "street"
+        }
+      ]
+    },
+    "trap_exit": {
+      "name": "비상계단",
+      "description": "비상구 문을 여는 순간 사이렌이 울린다. 문 너머는 셔터로 막힌 막다른 계단.",
+      "objects": [],
+      "exits": [
+        {
+          "names": [
+            "로비",
+            "lobby"
+          ],
+          "to": "lobby"
+        }
+      ],
+      "onEnter": {
+        "message": "비상구 문을 미는 순간 경보. 계단은 셔터로 막혀 있다. 의뢰인이 말했었다. 비상구는 잊으라고.",
+        "effects": [
+          {
+            "gameOver": "3분 뒤 경찰. 「푸른 방의 소녀」는 제자리로 돌아갔고, 당신은 그러지 못했다."
+          }
+        ]
+      }
+    },
+    "street": {
+      "name": "새벽 거리",
+      "description": "정문을 지나 새벽 거리로 나선다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true,
+      "onEnter": [
+        {
+          "when": {
+            "hasItem": "disguise"
+          },
+          "message": "경비복 차림으로 야간 경비에게 고개를 까딱한다. \"교대요.\" 그가 하품하며 문을 잡아 준다. 제복 안에서 캔버스가 바스락거린다."
+        },
+        {
+          "when": {
+            "hasItem": "uniform"
+          },
+          "message": "경비복은 입었지만 손에 든 액자가 문제다. 야간 경비의 눈이 액자에 멈춘다.",
+          "effects": [
+            {
+              "gameOver": "\"그거 뭡니까?\" 대답할 말이 없었다."
+            }
+          ]
+        },
+        {
+          "message": "검은 옷의 낯선 사람이 새벽 2시에 정문으로 나온다. 야간 경비가 무전을 든다.",
+          "effects": [
+            {
+              "gameOver": "\"로비에 침입자.\" 정문은 열렸지만 거리는 멀었다."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "objects": {
+    "backpack": {
+      "names": [
+        "배낭",
+        "가방도구",
+        "backpack"
+      ],
+      "description": "레이저 포인터, 케이블 타이, 장갑.",
+      "onExamine": {
+        "when": {
+          "notFlag": "pack_checked"
+        },
+        "message": "레이저 포인터를 꺼낸다.",
+        "effects": [
+          {
+            "reveal": "laser_pointer"
+          },
+          {
+            "setFlag": "pack_checked"
+          }
+        ]
+      }
+    },
+    "laser_pointer": {
+      "names": [
+        "레이저포인터",
+        "포인터",
+        "pointer"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "초록 레이저 포인터. 감지 센서는 자기 파장의 빛이 계속 들어오면 '정상'으로 착각한다. 거울로 각도를 맞춰야 한다.",
+      "onUse": {
+        "target": "sensor",
+        "when": {
+          "all": [
+            {
+              "flag": "mirror_a"
+            },
+            {
+              "flag": "mirror_c"
+            }
+          ]
+        },
+        "failMessage": "빛이 센서에 닿지 않는다. 거울 각도가 맞지 않는다.",
+        "message": "거울 A 에서 C 로, C 에서 센서로. 초록 점이 센서에 꽂히자 붉은 레이저 격자가 한 줄씩 꺼진다.",
+        "effects": [
+          {
+            "setFlag": "sensor_off"
+          },
+          {
+            "hide": "lasers"
+          },
+          {
+            "reveal": "painting"
+          }
+        ]
+      }
+    },
+    "grate": {
+      "names": [
+        "격자",
+        "덕트격자",
+        "grate"
+      ],
+      "description": "발밑 격자. 나사가 헐겁다.",
+      "onInteract": {
+        "message": "격자를 밀어내고 창고로 내려선다.",
+        "effects": [
+          {
+            "moveTo": "storage"
+          }
+        ]
+      }
+    },
+    "blueprint": {
+      "names": [
+        "도면",
+        "blueprint"
+      ],
+      "description": "VIP 전시관 도면. 거울 A·B·C 와 센서 위치. 연필 메모: 'A → C → 센서. B 는 건드리면 경보.'",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "blueprint_seen"
+          }
+        ]
+      }
+    },
+    "crate": {
+      "names": [
+        "액자",
+        "포장액자",
+        "crate"
+      ],
+      "description": "포장된 복제화들. 가치 없음."
+    },
+    "ladder": {
+      "names": [
+        "사다리",
+        "ladder"
+      ],
+      "description": "알루미늄 사다리. 필요 없다."
+    },
+    "portrait_a": {
+      "names": [
+        "초상화A",
+        "장군",
+        "A"
+      ],
+      "description": "「장군」. 눈동자가 오른쪽 옆 그림을 본다. 오른손 손가락 네 개를 펴고 있다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "pa_seen"
+          }
+        ]
+      }
+    },
+    "portrait_b": {
+      "names": [
+        "초상화B",
+        "무희",
+        "B"
+      ],
+      "description": "「무희」. 정면을 응시한다. 손가락 일곱 개를 편 채 춤춘다. 액자 문양은 별 다섯.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "pb_seen"
+          }
+        ]
+      }
+    },
+    "portrait_c": {
+      "names": [
+        "초상화C",
+        "상인",
+        "C"
+      ],
+      "description": "「상인」. 눈동자가 왼쪽 끝 그림을 본다. 손가락 두 개로 동전을 집는다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "pc_seen"
+          }
+        ]
+      }
+    },
+    "catalog": {
+      "names": [
+        "도록",
+        "안내판",
+        "catalog"
+      ],
+      "description": "전시 안내. \"세 초상화는 왼쪽부터 장군·무희·상인. 큐레이터의 장난: 정면을 보는 이가 첫째, 그를 보는 이가 둘째, 또 그를 보는 이가 셋째. 손가락을 세어라.\"",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "catalog_seen"
+          }
+        ]
+      }
+    },
+    "vip_door": {
+      "names": [
+        "VIP문",
+        "키패드",
+        "vipdoor"
+      ],
+      "description": "VIP 전시관 문. 3자리 키패드.",
+      "lock": "vip_lock",
+      "hintCode": "M2"
+    },
+    "guard": {
+      "names": [
+        "경비",
+        "경비원",
+        "guard"
+      ],
+      "description": "코를 고는 경비. 깨우면 끝이다. 명찰 '박'.",
+      "onInteract": {
+        "message": "어깨를 건드리는 순간 눈을 뜬다.",
+        "effects": [
+          {
+            "gameOver": "\"누구야!\" 무전은 빨랐다."
+          }
+        ]
+      }
+    },
+    "locker": {
+      "names": [
+        "라커",
+        "사물함",
+        "locker"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "locker_lock"
+          },
+          "text": "열린 라커. 여벌 경비복이 있던 자리."
+        },
+        {
+          "text": "직원 라커. 3자리 자물쇠. 안쪽에 '박' 명찰 스티커."
+        }
+      ],
+      "lock": "locker_lock",
+      "hintCode": "M3"
+    },
+    "uniform": {
+      "names": [
+        "경비복",
+        "제복",
+        "uniform"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "여벌 경비복과 모자. 입으면 뒷모습은 경비다. 앞모습은 액자를 들고 있으면 안 된다."
+    },
+    "patrol_log": {
+      "names": [
+        "순찰일지",
+        "일지",
+        "log"
+      ],
+      "description": "\"02:00 교대 — 박. 라커 번호 = 사원번호 끝 세 자리.\" 명찰 뒷면에 사원번호 '2019-0417'.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "log_seen"
+          }
+        ]
+      }
+    },
+    "monitors": {
+      "names": [
+        "모니터",
+        "monitors"
+      ],
+      "description": "VIP 전시관 화면에 레이저 격자가 붉게 빛난다. 로비 화면에 야간 경비. 비상구 화면은 셔터가 내려진 계단."
+    },
+    "mirror_a": {
+      "names": [
+        "거울A",
+        "mirrorA"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "mirror_a"
+          },
+          "text": "45도로 돌린 거울 A."
+        },
+        {
+          "text": "각도 조절 거울 A."
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "mirror_a"
+          },
+          "message": "이미 돌렸다."
+        },
+        {
+          "message": "거울 A 를 45도 돌린다.",
+          "effects": [
+            {
+              "setFlag": "mirror_a"
+            }
+          ]
+        }
+      ]
+    },
+    "mirror_b": {
+      "names": [
+        "거울B",
+        "mirrorB"
+      ],
+      "description": "각도 조절 거울 B. 프레임에 가는 전선이 붙어 있다.",
+      "onInteract": {
+        "message": "거울 B 를 돌리는 순간 프레임의 전선이 끊긴다.",
+        "effects": [
+          {
+            "gameOver": "탬퍼 경보. 전시관 셔터가 내려오고 사이렌이 운다."
+          }
+        ]
+      }
+    },
+    "mirror_c": {
+      "names": [
+        "거울C",
+        "mirrorC"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "mirror_c"
+          },
+          "text": "45도로 돌린 거울 C."
+        },
+        {
+          "text": "각도 조절 거울 C."
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "mirror_c"
+          },
+          "message": "이미 돌렸다."
+        },
+        {
+          "message": "거울 C 를 45도 돌린다.",
+          "effects": [
+            {
+              "setFlag": "mirror_c"
+            }
+          ]
+        }
+      ]
+    },
+    "sensor": {
+      "names": [
+        "센서",
+        "감지센서",
+        "sensor"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "sensor_off"
+          },
+          "text": "초록 점이 꽂힌 센서. 정상으로 착각하고 있다."
+        },
+        {
+          "text": "천장 모서리의 감지 센서. 직접 손대면 경보. 빛을 반사시켜 속여야 한다."
+        }
+      ]
+    },
+    "lasers": {
+      "names": [
+        "레이저",
+        "감지망",
+        "lasers"
+      ],
+      "description": "붉은 격자. 그 너머 벽에 「푸른 방의 소녀」. 지나가려다간 끝이다.",
+      "onInteract": {
+        "message": "몸을 낮춰 격자 사이로 들어가 본다. 발끝이 한 줄을 건드린다.",
+        "effects": [
+          {
+            "gameOver": "사이렌. 셔터."
+          }
+        ]
+      }
+    },
+    "painting": {
+      "names": [
+        "명화",
+        "그림",
+        "소녀",
+        "painting"
+      ],
+      "takeable": true,
+      "description": "「푸른 방의 소녀」. 손바닥만 한 캔버스가 이 건물에서 제일 비싸다.",
+      "onTake": {
+        "message": "액자에서 캔버스를 조심스레 분리한다. 압력 센서가 들썩이지만 무게추를 남겨 두었다."
+      },
+      "hidden": true
+    },
+    "front_door": {
+      "names": [
+        "유리문",
+        "frontdoor"
+      ],
+      "description": "유리 정문. 밖에 야간 경비. 당당하게 나갈 사람만 통과한다."
+    },
+    "emergency_exit": {
+      "names": [
+        "비상구표시",
+        "초록표시",
+        "exitsign"
+      ],
+      "description": "초록 비상구 표시. 모니터에서 본 그 셔터 계단이다. 함정."
+    },
+    "night_guard": {
+      "names": [
+        "야간경비",
+        "nightguard"
+      ],
+      "description": "정문 밖 야간 경비. 하품 중. 동료가 나오면 문을 잡아 줄 사람."
+    },
+    "disguise": {
+      "names": [
+        "위장",
+        "변장",
+        "disguise"
+      ],
+      "description": "경비복 차림. 안주머니에 캔버스."
+    }
+  },
+  "recipes": [
+    {
+      "inputs": [
+        "uniform",
+        "painting"
+      ],
+      "output": "disguise",
+      "message": "경비복을 입고 캔버스를 말아 제복 안주머니에 넣는다. 모자를 눌러쓴다."
+    }
+  ],
+  "locks": {
+    "vip_lock": {
+      "type": "code",
+      "answer": "742",
+      "failMessage": "키패드가 붉게 깜빡인다.",
+      "onFail": {
+        "effects": [
+          {
+            "addPenalty": 60
+          }
+        ]
+      },
+      "onSolve": {
+        "message": "VIP 전시관 문이 열린다."
+      }
+    },
+    "locker_lock": {
+      "type": "code",
+      "answer": "417",
+      "failMessage": "열리지 않는다.",
+      "onSolve": {
+        "message": "라커가 열린다. 여벌 경비복.",
+        "effects": [
+          {
+            "reveal": "uniform"
+          }
+        ]
+      }
+    }
+  },
+  "hints": [
+    {
+      "code": "M1",
+      "when": {
+        "notFlag": "pack_checked"
+      },
+      "text": "배낭을 조사하세요."
+    },
+    {
+      "code": "M1",
+      "when": {
+        "inRoom": "duct"
+      },
+      "text": "격자를 조작해 창고로 내려가세요."
+    },
+    {
+      "code": "M1",
+      "when": {
+        "notFlag": "blueprint_seen"
+      },
+      "text": "창고 도면을 읽으세요. 거울 순서가 있습니다."
+    },
+    {
+      "code": "M2",
+      "when": {
+        "notFlag": "catalog_seen"
+      },
+      "text": "복도 도록을 읽으세요."
+    },
+    {
+      "code": "M2",
+      "when": {
+        "notSolved": "vip_lock"
+      },
+      "text": "정면을 보는 그림이 첫째, 그가 보는 그림이 둘째, 나머지가 셋째. 각 그림의 손가락 수를 이어 붙이세요."
+    },
+    {
+      "code": "M4",
+      "when": {
+        "notFlag": "sensor_off"
+      },
+      "text": "거울 A 와 C 만 돌린 뒤 레이저포인터를 센서에 사용하세요. B 는 경보."
+    },
+    {
+      "code": "M3",
+      "when": {
+        "notFlag": "log_seen"
+      },
+      "text": "경비실 순찰일지를 읽으세요. 경비는 깨우지 마세요."
+    },
+    {
+      "code": "M3",
+      "when": {
+        "notSolved": "locker_lock"
+      },
+      "text": "사원번호 끝 세 자리를 라커에 입력하세요."
+    },
+    {
+      "code": "M5",
+      "when": {
+        "notFlag": "sensor_off"
+      },
+      "text": "먼저 VIP 전시관에서 명화를 확보하세요."
+    },
+    {
+      "code": "M5",
+      "text": "경비복과 명화를 조합해 위장한 뒤 정문으로 나가세요. 비상구는 함정입니다."
+    }
+  ],
+  "endings": {
+    "success": "택시 뒷좌석. 제복 단추를 풀자 소녀가 푸른 방에서 당신을 본다. 의뢰인에게 문자 한 통: '교대 완료.'",
+    "timeout": "03:00. 순찰 손전등이 복도를 훑는다. 교대 시간은 끝났다."
+  }
+}

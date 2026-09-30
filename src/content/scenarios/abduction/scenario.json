@@ -1,0 +1,1083 @@
+{
+  "id": "abduction",
+  "title": "증인 없는 밤",
+  "timeLimitSec": 3600,
+  "difficulty": "상",
+  "hintPenaltySec": 180,
+  "retryPenaltySec": 180,
+  "startRoom": "office",
+  "intro": "당신은 시청 감사관이다. 항만 재개발 입찰 비리 장부의 원본을 확보한 날 밤, 주차장에서 뒤통수를 맞았다.\n눈을 뜨니 낡은 사무실 의자. 두 손은 등 뒤로 묶였고 입에는 테이프. 문 너머에서 남자 둘이 웃는다.\n\"새벽 3시에 이송. 서장님이 알아서 해 주신대.\"\n벽시계는 2시. 한 시간 안에 이 팔부터 풀어야 한다.",
+  "rooms": {
+    "office": {
+      "name": "창고 사무실",
+      "hintCode": "K1",
+      "description": [
+        {
+          "when": {
+            "flag": "hands_free"
+          },
+          "text": "손이 풀렸다. 낡은 사무실이 온전히 보인다. 책상, 캐비닛, 쓰레기통, 그리고 천장 구석의 환풍구. 문은 밖에서 잠겼다."
+        },
+        {
+          "when": {
+            "flag": "fallen"
+          },
+          "text": "의자째 옆으로 쓰러졌다. 뺨이 콘크리트 바닥에 닿아 있다. 바닥에 있는 것들이 눈높이에 들어온다."
+        },
+        {
+          "text": "의자에 등 뒤로 묶여 있다. 고개를 돌려 보이는 건 밧줄, 바닥, 밖에서 잠긴 문, 벽시계, 그리고 창문뿐이다. 몸을 움직일 수 있는 건 상체뿐."
+        }
+      ],
+      "objects": [
+        "chair",
+        "rope",
+        "floor",
+        "glass",
+        "door",
+        "clock",
+        "window",
+        "desk",
+        "screwdriver",
+        "memo",
+        "cabinet",
+        "badge",
+        "trash",
+        "id_card",
+        "vent"
+      ],
+      "exits": []
+    },
+    "hall": {
+      "name": "창고 홀",
+      "hintCode": "K2",
+      "description": "높은 천장의 창고. 컨테이너 세 개가 나란히 있고 지게차가 서 있다. 벽에 화물 목록판. 한쪽에 '휴게실' 문, 계단이 지하 기계실로, 큰 셔터 옆 쪽문이 야적장으로 통한다. 휴게실 문틈으로 TV 소리와 담배 냄새.",
+      "objects": [
+        "container1",
+        "container2",
+        "container3",
+        "manifest",
+        "forklift",
+        "bolt_cutter",
+        "lounge_door"
+      ],
+      "exits": [
+        {
+          "names": [
+            "환풍구",
+            "사무실",
+            "vent",
+            "office"
+          ],
+          "to": "office"
+        },
+        {
+          "names": [
+            "휴게실",
+            "lounge"
+          ],
+          "to": "lounge"
+        },
+        {
+          "names": [
+            "기계실",
+            "지하",
+            "계단",
+            "basement",
+            "stairs"
+          ],
+          "to": "machine"
+        },
+        {
+          "names": [
+            "야적장",
+            "밖",
+            "쪽문",
+            "yard",
+            "outside"
+          ],
+          "to": "yard"
+        }
+      ]
+    },
+    "lounge": {
+      "name": "휴게실",
+      "hintCode": "K3",
+      "description": "담배 연기가 남은 휴게실. 켜진 TV, 테이블 위 노트북과 무전기, 그리고 당신 휴대폰. 구석에 금고.",
+      "objects": [
+        "laptop",
+        "safe",
+        "usb",
+        "truck_key",
+        "radio",
+        "phone",
+        "call_112",
+        "call_reporter",
+        "tv"
+      ],
+      "exits": [
+        {
+          "names": [
+            "창고",
+            "홀",
+            "hall",
+            "밖"
+          ],
+          "to": "hall"
+        }
+      ],
+      "onEnter": [
+        {
+          "when": {
+            "flag": "guards_away"
+          },
+          "message": "비어 있다. 담배꽁초가 아직 타고 있다. 오래 비우진 않을 것이다."
+        },
+        {
+          "message": "문을 열자 소파의 두 남자가 동시에 고개를 든다.",
+          "effects": [
+            {
+              "gameOver": "\"어? 풀었네.\" 이번엔 케이블 타이였고, 새벽 3시는 정확히 왔다."
+            }
+          ]
+        }
+      ]
+    },
+    "machine": {
+      "name": "기계실",
+      "hintCode": "K4",
+      "description": "습한 지하. 배전반과 보일러, 벽 아래 철창 달린 하수구. 배전반에 '정문 사이렌 / 비상 조명' 레버가 붙어 있다.",
+      "objects": [
+        "breaker",
+        "boiler",
+        "drain"
+      ],
+      "exits": [
+        {
+          "names": [
+            "창고",
+            "홀",
+            "위",
+            "hall",
+            "up"
+          ],
+          "to": "hall"
+        }
+      ]
+    },
+    "yard": {
+      "name": "야적장",
+      "hintCode": "K5",
+      "description": "가로등 하나뿐인 야적장. 흰 트럭이 시동이 꺼진 채 서 있고, 정문은 쇠사슬로 감겨 있다. 담장 위 CCTV 가 천천히 돈다. 구석에 검은 세단.",
+      "objects": [
+        "truck",
+        "gate",
+        "cctv",
+        "sedan"
+      ],
+      "exits": [
+        {
+          "names": [
+            "창고",
+            "홀",
+            "쪽문",
+            "hall"
+          ],
+          "to": "hall"
+        }
+      ]
+    },
+    "riverside": {
+      "name": "강변 비포장길",
+      "description": "헤드라이트를 끄고 강변길을 달린다. 백미러에 항만의 불빛. 조수석에 USB 가 있다.",
+      "objects": [],
+      "exits": [],
+      "isExit": true
+    }
+  },
+  "objects": {
+    "chair": {
+      "names": [
+        "의자",
+        "chair"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "hands_free"
+          },
+          "text": "쓰러진 사무실 의자. 이제 볼일 없다."
+        },
+        {
+          "when": {
+            "flag": "fallen"
+          },
+          "text": "옆으로 넘어진 의자. 당신도 같이."
+        },
+        {
+          "text": "바퀴 달린 낡은 사무실 의자. 몸을 세게 흔들면 넘어질 것 같다. 아플 것이다."
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "fallen"
+          },
+          "message": "이미 쓰러져 있다."
+        },
+        {
+          "message": "몸을 앞뒤로 흔든다. 두 번, 세 번… 의자가 기울고 바닥에 어깨부터 떨어진다. 이가 갈릴 만큼 아프지만 문 밖은 조용하다. 이제 바닥이 가깝다.",
+          "effects": [
+            {
+              "setFlag": "fallen"
+            }
+          ]
+        }
+      ]
+    },
+    "rope": {
+      "names": [
+        "밧줄",
+        "손목",
+        "rope"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "hands_free"
+          },
+          "text": "끊어진 밧줄이 바닥에 널려 있다."
+        },
+        {
+          "text": "손목을 등 뒤로 묶은 나일론 밧줄. 매듭은 손이 닿지 않는다. 날카로운 것으로 갈면 끊을 수 있을 것이다."
+        }
+      ]
+    },
+    "floor": {
+      "names": [
+        "바닥",
+        "floor"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "fallen"
+          },
+          "text": "콘크리트 바닥. 먼지, 담배꽁초, 그리고 의자 다리 옆에 반짝이는 것."
+        },
+        {
+          "text": "콘크리트 바닥. 의자에 묶인 채로는 멀다."
+        }
+      ],
+      "onExamine": {
+        "when": {
+          "all": [
+            {
+              "flag": "fallen"
+            },
+            {
+              "notFlag": "glass_seen"
+            }
+          ]
+        },
+        "message": "깨진 형광등 유리 조각이다. 손끝이 닿는 거리다.",
+        "effects": [
+          {
+            "reveal": "glass"
+          },
+          {
+            "setFlag": "glass_seen"
+          }
+        ]
+      }
+    },
+    "glass": {
+      "names": [
+        "유리조각",
+        "유리",
+        "glass"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "손바닥 절반 크기의 유리 조각. 날카롭다. 손가락을 베겠지만 밧줄은 갈릴 것이다.",
+      "onUse": {
+        "target": "rope",
+        "message": "등 뒤에서 유리 조각을 밧줄에 대고 간다. 손가락이 베여 미끄럽다. 5분, 10분… 툭. 손이 풀렸다. 테이프를 뜯고 일어선다.",
+        "effects": [
+          {
+            "setFlag": "hands_free"
+          },
+          {
+            "reveal": "desk"
+          },
+          {
+            "reveal": "cabinet"
+          },
+          {
+            "reveal": "trash"
+          },
+          {
+            "reveal": "vent"
+          },
+          {
+            "removeItem": "glass"
+          }
+        ]
+      }
+    },
+    "door": {
+      "names": [
+        "문",
+        "door"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "hands_free"
+          },
+          "text": "밖에서 빗장을 건 철문. 여기로는 못 나간다. 문 너머로 TV 소리."
+        },
+        {
+          "text": "철문. 아까 밖에서 빗장 거는 소리가 났다."
+        }
+      ]
+    },
+    "clock": {
+      "names": [
+        "벽시계",
+        "시계",
+        "clock"
+      ],
+      "description": "02:04. 초침 소리가 유난히 크다. 3시가 이송이다."
+    },
+    "window": {
+      "names": [
+        "창문",
+        "창",
+        "window"
+      ],
+      "description": "먼지 낀 창 너머 야적장. 흰 트럭이 서 있다. 번호판 38머 4012. 그 옆에 검은 세단 한 대.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "plate_seen"
+          }
+        ]
+      }
+    },
+    "desk": {
+      "names": [
+        "책상",
+        "서랍",
+        "desk"
+      ],
+      "hidden": true,
+      "description": [
+        {
+          "when": {
+            "solved": "desk_lock"
+          },
+          "text": "열린 서랍. 드라이버와 메모가 있던 자리."
+        },
+        {
+          "text": "철제 책상. 서랍에 4자리 자물쇠. 포스트잇: '까먹지 마 – 트럭'."
+        }
+      ],
+      "lock": "desk_lock",
+      "hintCode": "K1"
+    },
+    "screwdriver": {
+      "names": [
+        "드라이버",
+        "십자드라이버",
+        "screwdriver"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "십자드라이버. 환풍구 덮개 나사에 맞을 크기다.",
+      "onUse": {
+        "target": "vent",
+        "message": "책상을 밟고 올라가 나사 네 개를 푼다. 덮개가 떨어지며 먼지가 쏟아진다.",
+        "effects": [
+          {
+            "setFlag": "vent_open"
+          }
+        ]
+      }
+    },
+    "memo": {
+      "names": [
+        "메모",
+        "memo",
+        "쪽지"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "납치범 글씨.\n\"03:00 이송. 3번 국도 검문은 서장 라인이 세워 둠. 감사관 물건(USB)은 금고. 비번은 그놈 생일 – 지갑 봐.\"",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "memo_seen"
+          }
+        ]
+      }
+    },
+    "cabinet": {
+      "names": [
+        "캐비닛",
+        "cabinet"
+      ],
+      "hidden": true,
+      "description": "철제 캐비닛. 작업복과 안전모.",
+      "onExamine": {
+        "when": {
+          "notFlag": "cabinet_checked"
+        },
+        "message": "작업복 주머니에서 경찰 명찰이 나온다. 퇴직하면서 반납을 안 했나 보다.",
+        "effects": [
+          {
+            "reveal": "badge"
+          },
+          {
+            "setFlag": "cabinet_checked"
+          }
+        ]
+      }
+    },
+    "badge": {
+      "names": [
+        "명찰",
+        "경찰명찰",
+        "badge"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "경찰 명찰. \"경위 강도훈 · 사번 20-0473\". 납치범이 경찰이었다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "badge_seen"
+          }
+        ]
+      }
+    },
+    "trash": {
+      "names": [
+        "쓰레기통",
+        "trash"
+      ],
+      "hidden": true,
+      "description": "컵라면 용기와 영수증.",
+      "onExamine": {
+        "when": {
+          "notFlag": "trash_checked"
+        },
+        "message": "맨 밑에 당신 지갑이 뒤집혀 있다. 현금은 없고 주민등록증만 남았다.",
+        "effects": [
+          {
+            "reveal": "id_card"
+          },
+          {
+            "setFlag": "trash_checked"
+          }
+        ]
+      }
+    },
+    "id_card": {
+      "names": [
+        "주민등록증",
+        "주민증",
+        "신분증",
+        "idcard"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "당신의 주민등록증. 910723-1******. 놈들이 이걸 봤다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "id_seen"
+          }
+        ]
+      }
+    },
+    "vent": {
+      "names": [
+        "환풍구",
+        "덮개",
+        "vent"
+      ],
+      "hidden": true,
+      "description": [
+        {
+          "when": {
+            "flag": "vent_open"
+          },
+          "text": "덮개를 뗀 환풍구. 사람 하나 겨우 들어갈 크기. 창고 쪽으로 이어진다."
+        },
+        {
+          "text": "천장 구석의 환풍구. 덮개가 십자 나사 네 개로 고정돼 있다."
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "vent_open"
+          },
+          "message": "환풍구로 기어 들어간다. 먼지와 어둠, 그리고 3미터쯤 뒤 창고 홀 천장으로 떨어진다.",
+          "effects": [
+            {
+              "moveTo": "hall"
+            }
+          ]
+        },
+        {
+          "message": "덮개가 나사로 고정돼 있다. 손톱으로는 안 된다."
+        }
+      ]
+    },
+    "container1": {
+      "names": [
+        "컨테이너1",
+        "C-1",
+        "c1"
+      ],
+      "description": "컨테이너 C-1. 옆면 번호 33, 적재 91t. 봉인 자물쇠가 걸려 있는데 목록판에 번호가 그대로 적혀 있다. 열어 보니 빈 팔레트뿐."
+    },
+    "container2": {
+      "names": [
+        "컨테이너2",
+        "C-2",
+        "c2"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "container_lock"
+          },
+          "text": "열린 컨테이너 C-2. 공구 상자들."
+        },
+        {
+          "text": "컨테이너 C-2. 옆면 번호 56, 적재 18t. 4자리 봉인 자물쇠. 문에 '공구' 표시."
+        }
+      ],
+      "lock": "container_lock",
+      "hintCode": "K2"
+    },
+    "container3": {
+      "names": [
+        "컨테이너3",
+        "C-3",
+        "c3"
+      ],
+      "description": "컨테이너 C-3. 옆면 번호 74, 적재 20t. 자물쇠가 아예 용접돼 있다."
+    },
+    "manifest": {
+      "names": [
+        "목록판",
+        "화물목록",
+        "manifest"
+      ],
+      "description": "화물 목록판.\n  C-1 봉인 3391 · C-2 봉인 ▓▓▓▓ · C-3 봉인 7420\n밑에 작게: 봉인 번호 규칙 = 컨테이너 번호 두 자리 + 적재 톤수 두 자리.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "manifest_seen"
+          }
+        ]
+      }
+    },
+    "forklift": {
+      "names": [
+        "지게차",
+        "forklift"
+      ],
+      "description": "키가 꽂혀 있지 않다. 시끄럽기만 할 것이다."
+    },
+    "bolt_cutter": {
+      "names": [
+        "볼트커터",
+        "절단기",
+        "boltcutter"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "손잡이가 긴 볼트커터. 쇠사슬 정도는 끊는다."
+    },
+    "lounge_door": {
+      "names": [
+        "휴게실문",
+        "loungedoor"
+      ],
+      "description": "문틈으로 TV 소리와 두 남자의 목소리. 지금 들어가면 끝이다. 밖으로 끌어낼 방법이 필요하다."
+    },
+    "laptop": {
+      "names": [
+        "노트북",
+        "laptop"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "laptop_lock"
+          },
+          "text": "열린 메일함. 제목 '감사관 건 – 처리'. 발신: 서장. \"국도 검문 세워 둠. 강변길은 신경 안 써도 됨.\" 답장: \"3시 이송.\""
+        },
+        {
+          "text": "잠긴 노트북. 로그인 화면에 '경찰 사번 6자리'."
+        }
+      ],
+      "lock": "laptop_lock",
+      "hintCode": "K3"
+    },
+    "safe": {
+      "names": [
+        "금고",
+        "safe"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "safe_lock"
+          },
+          "text": "열린 금고. 안은 비었다."
+        },
+        {
+          "text": "소형 금고. 6자리 다이얼."
+        }
+      ],
+      "lock": "safe_lock",
+      "hintCode": "K3"
+    },
+    "usb": {
+      "names": [
+        "USB",
+        "usb",
+        "증거"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "장부 원본 USB. 이것 때문에 여기 있다."
+    },
+    "truck_key": {
+      "names": [
+        "트럭키",
+        "차키",
+        "truckkey"
+      ],
+      "hidden": true,
+      "takeable": true,
+      "description": "트럭 키. 고리에 '38머 4012'."
+    },
+    "radio": {
+      "names": [
+        "무전기",
+        "radio"
+      ],
+      "description": "잡음 사이로 들린다. \"…3번 국도 검문 세웠으니 트럭 나오면 잡아. 서장님 지시다.\" 112 에 전화해도 오는 건 저쪽이다.",
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "radio_heard"
+          }
+        ]
+      }
+    },
+    "phone": {
+      "names": [
+        "휴대폰",
+        "폰",
+        "phone"
+      ],
+      "description": "당신 휴대폰. 배터리 3%. 연락처는 둘만 남았다: 112, 그리고 김 기자.",
+      "onExamine": {
+        "effects": [
+          {
+            "reveal": "call_112"
+          },
+          {
+            "reveal": "call_reporter"
+          },
+          {
+            "setFlag": "phone_seen"
+          }
+        ]
+      }
+    },
+    "call_112": {
+      "names": [
+        "112",
+        "경찰",
+        "신고"
+      ],
+      "hidden": true,
+      "description": "112 에 신고한다. (조작)",
+      "onInteract": {
+        "message": "\"납치… 항만 쪽 창고…\" 상황실이 위치를 확인한다. 20분 뒤 야적장에 들어온 건 순찰차가 아니라 검은 세단이다.",
+        "effects": [
+          {
+            "gameOver": "서장이 직접 왔다. \"감사관님, 고생 많으셨습니다.\" 다음 날 뉴스에 당신 이름은 없었다."
+          }
+        ]
+      }
+    },
+    "call_reporter": {
+      "names": [
+        "김기자",
+        "기자",
+        "reporter"
+      ],
+      "hidden": true,
+      "description": "김 기자에게 건다. (조작)",
+      "onInteract": [
+        {
+          "when": {
+            "flag": "press_called"
+          },
+          "message": "이미 통화했다. 배터리가 없다."
+        },
+        {
+          "message": "\"감사관님?! 살아 계셨…\" 짧게 상황을 말한다. \"국도는 안 돼요. 강변 비포장길로 나오세요. 다리 밑에서 기다릴게요. 녹음 켜 둡니다.\" 배터리가 꺼진다.",
+          "effects": [
+            {
+              "setFlag": "press_called"
+            }
+          ]
+        }
+      ]
+    },
+    "tv": {
+      "names": [
+        "TV",
+        "티비"
+      ],
+      "description": "심야 뉴스. '항만 재개발 감사 결과 발표 연기'. 당신이 없으니까."
+    },
+    "breaker": {
+      "names": [
+        "배전반",
+        "레버",
+        "breaker"
+      ],
+      "description": [
+        {
+          "when": {
+            "flag": "guards_away"
+          },
+          "text": "정문 사이렌 레버가 올라가 있다. 멀리서 사이렌이 계속 운다."
+        },
+        {
+          "text": "배전반. '정문 사이렌 / 비상 조명' 레버. 올리면 야적장 정문에서 사이렌이 울릴 것이다."
+        }
+      ],
+      "onInteract": [
+        {
+          "when": {
+            "flag": "guards_away"
+          },
+          "message": "이미 울리고 있다."
+        },
+        {
+          "message": "레버를 올린다. 야적장 쪽에서 사이렌이 찢어지게 운다. 위층에서 문이 벌컥 열리고 두 남자가 욕을 하며 정문 쪽으로 뛰어간다. 오래 가진 않을 것이다.",
+          "effects": [
+            {
+              "setFlag": "guards_away"
+            }
+          ]
+        }
+      ]
+    },
+    "boiler": {
+      "names": [
+        "보일러",
+        "boiler"
+      ],
+      "description": "식은 보일러. 소용없다."
+    },
+    "drain": {
+      "names": [
+        "하수구",
+        "철창",
+        "drain"
+      ],
+      "description": "철창이 콘크리트에 박혀 있다. 볼트커터로도 어림없다."
+    },
+    "truck": {
+      "names": [
+        "트럭",
+        "truck"
+      ],
+      "description": "흰 1톤 트럭 38머 4012. 문은 잠겨 있지 않다. 키만 있으면.",
+      "hintCode": "K5",
+      "onInteract": [
+        {
+          "when": {
+            "all": [
+              {
+                "hasItem": "truck_key"
+              },
+              {
+                "solved": "gate_lock"
+              },
+              {
+                "flag": "press_called"
+              }
+            ]
+          },
+          "message": "시동을 건다. 헤드라이트를 끄고 정문을 빠져나가, 국도 대신 강변 비포장길로 꺾는다.",
+          "effects": [
+            {
+              "moveTo": "riverside"
+            }
+          ]
+        },
+        {
+          "when": {
+            "all": [
+              {
+                "hasItem": "truck_key"
+              },
+              {
+                "solved": "gate_lock"
+              }
+            ]
+          },
+          "message": "시동을 걸고 정문을 빠져나간다. 3번 국도로 올라서자 200미터 앞에 경광등. 검문이다.",
+          "effects": [
+            {
+              "gameOver": "\"면허증 좀 보겠습니다.\" 경찰이 트럭 번호판을 보더니 무전을 든다. \"서장님, 찾았습니다.\""
+            }
+          ]
+        },
+        {
+          "when": {
+            "hasItem": "truck_key"
+          },
+          "message": "시동은 걸리는데 정문이 쇠사슬로 막혀 있다."
+        },
+        {
+          "message": "키가 없다."
+        }
+      ]
+    },
+    "gate": {
+      "names": [
+        "정문",
+        "쇠사슬",
+        "gate"
+      ],
+      "description": [
+        {
+          "when": {
+            "solved": "gate_lock"
+          },
+          "text": "쇠사슬이 끊긴 정문. 밀면 열린다."
+        },
+        {
+          "text": "철제 정문. 굵은 쇠사슬과 자물쇠. 볼트커터라면."
+        }
+      ],
+      "lock": "gate_lock"
+    },
+    "cctv": {
+      "names": [
+        "CCTV",
+        "카메라"
+      ],
+      "description": "천천히 도는 카메라. 어차피 보는 사람은 정문에 가 있다."
+    },
+    "sedan": {
+      "names": [
+        "세단",
+        "검은세단",
+        "sedan"
+      ],
+      "description": "검은 세단. 뒷유리에 경찰 주차증. 서장의 차다."
+    }
+  },
+  "locks": {
+    "desk_lock": {
+      "type": "code",
+      "answer": "4012",
+      "failMessage": "열리지 않는다.",
+      "onSolve": {
+        "message": "서랍이 열렸다. 십자드라이버와 접힌 메모.",
+        "effects": [
+          {
+            "reveal": "screwdriver"
+          },
+          {
+            "reveal": "memo"
+          }
+        ]
+      }
+    },
+    "container_lock": {
+      "type": "code",
+      "answer": "5618",
+      "failMessage": "봉인이 안 풀린다.",
+      "onSolve": {
+        "message": "봉인이 풀리고 문이 열린다. 공구 상자 위에 볼트커터.",
+        "effects": [
+          {
+            "reveal": "bolt_cutter"
+          }
+        ]
+      }
+    },
+    "laptop_lock": {
+      "type": "code",
+      "answer": "200473",
+      "failMessage": "로그인 실패. 3회 실패 시 잠금.",
+      "maxAttempts": 3,
+      "onMaxAttempts": {
+        "effects": [
+          {
+            "addPenalty": 300
+          }
+        ],
+        "message": "노트북이 잠겼다. 다시 풀리기까지 5분."
+      },
+      "onSolve": {
+        "message": "로그인됐다. 메일함이 열려 있다."
+      }
+    },
+    "safe_lock": {
+      "type": "code",
+      "answer": "910723",
+      "failMessage": "다이얼이 걸리지 않는다.",
+      "onSolve": {
+        "message": "금고가 열렸다. USB 와 트럭 키.",
+        "effects": [
+          {
+            "reveal": "usb"
+          },
+          {
+            "reveal": "truck_key"
+          }
+        ]
+      }
+    },
+    "gate_lock": {
+      "type": "key",
+      "keyItem": "bolt_cutter",
+      "onSolve": {
+        "message": "쇠사슬이 끊어져 바닥에 떨어진다."
+      }
+    }
+  },
+  "hints": [
+    {
+      "code": "K1",
+      "when": {
+        "notFlag": "fallen"
+      },
+      "text": "묶인 채로는 바닥에 손이 안 닿습니다. 의자를 조작해 넘어뜨리세요."
+    },
+    {
+      "code": "K1",
+      "when": {
+        "notFlag": "glass_seen"
+      },
+      "text": "쓰러진 채로 바닥을 조사하세요."
+    },
+    {
+      "code": "K1",
+      "when": {
+        "notFlag": "hands_free"
+      },
+      "text": "유리조각을 주워 밧줄에 사용하세요."
+    },
+    {
+      "code": "K1",
+      "when": {
+        "notFlag": "plate_seen"
+      },
+      "text": "창문 밖 트럭 번호판을 보세요. 서랍 포스트잇이 그걸 가리킵니다."
+    },
+    {
+      "code": "K1",
+      "when": {
+        "notSolved": "desk_lock"
+      },
+      "text": "번호판 숫자 네 자리를 서랍에 입력하세요."
+    },
+    {
+      "code": "K1",
+      "when": {
+        "notFlag": "badge_seen"
+      },
+      "text": "캐비닛의 명찰을 읽어 두세요. 나중에 필요합니다."
+    },
+    {
+      "code": "K1",
+      "when": {
+        "notFlag": "id_seen"
+      },
+      "text": "쓰레기통에 당신 지갑이 있습니다. 주민증을 확인하세요."
+    },
+    {
+      "code": "K1",
+      "when": {
+        "notFlag": "vent_open"
+      },
+      "text": "드라이버를 환풍구에 사용해 덮개를 떼고, 환풍구를 조작해 들어가세요."
+    },
+    {
+      "code": "K2",
+      "when": {
+        "notFlag": "manifest_seen"
+      },
+      "text": "창고 목록판을 읽으세요."
+    },
+    {
+      "code": "K2",
+      "when": {
+        "notSolved": "container_lock"
+      },
+      "text": "C-2 의 컨테이너 번호와 톤수를 이어 붙여 입력하세요."
+    },
+    {
+      "code": "K4",
+      "when": {
+        "notFlag": "guards_away"
+      },
+      "text": "휴게실에 납치범이 있습니다. 기계실 배전반으로 정문 사이렌을 울려 끌어내세요."
+    },
+    {
+      "code": "K3",
+      "when": {
+        "notSolved": "laptop_lock"
+      },
+      "text": "노트북은 명찰의 사번 6자리입니다. 3번 틀리면 5분 잠깁니다."
+    },
+    {
+      "code": "K3",
+      "when": {
+        "notSolved": "safe_lock"
+      },
+      "text": "금고는 당신 생년월일 6자리입니다."
+    },
+    {
+      "code": "K3",
+      "when": {
+        "notFlag": "press_called"
+      },
+      "text": "휴대폰으로 112 는 안 됩니다. 무전기와 메일을 보세요. 김 기자에게 거세요."
+    },
+    {
+      "code": "K5",
+      "when": {
+        "notSolved": "gate_lock"
+      },
+      "text": "볼트커터를 정문 쇠사슬에 사용하세요."
+    },
+    {
+      "code": "K5",
+      "text": "트럭키를 들고 트럭을 조작하세요."
+    }
+  ],
+  "endings": {
+    "success": "다리 밑에서 김 기자의 헤드라이트가 두 번 깜빡인다. 새벽 뉴스는 예정대로 나간다. 서장의 이름과 함께.",
+    "timeout": "03:00. 문이 열리고 두 남자가 들어온다. \"가자, 감사관님.\" 이송은 정시에 시작됐다."
+  }
+}

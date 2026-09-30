@@ -39,7 +39,7 @@ if (scenarios.length === 0) {
 }
 
 if (values.list) {
-  for (const s of scenarios) console.log(`${s.id}\t${s.title}\t${Math.round(s.timeLimitSec / 60)}분`);
+  for (const s of scenarios) console.log(`${s.id}\t${s.title}\t${Math.round(s.timeLimitSec / 60)}분\t난이도 ${s.difficulty || "-"}`);
   process.exit(0);
 }
 
@@ -82,7 +82,9 @@ if (!scenarioId) {
     scenarioId = scenarios[0].id;
   } else {
     const rl = readline.createInterface({ input: stdin, output: stdout });
-    scenarios.forEach((s, i) => console.log(`  ${i + 1}. ${s.title} (${Math.round(s.timeLimitSec / 60)}분)`));
+    const ORDER = { "하": 0, "중": 1, "상": 2, "최상": 3 };
+    scenarios.sort((a, b) => (ORDER[a.difficulty] ?? 9) - (ORDER[b.difficulty] ?? 9) || a.timeLimitSec - b.timeLimitSec);
+    scenarios.forEach((s, i) => console.log(`  ${String(i + 1).padStart(2)}. ${`[${s.difficulty || "-"}]`.padEnd(5)} ${s.title} (${Math.round(s.timeLimitSec / 60)}분)`));
     const ans = await rl.question("시나리오 번호를 고르세요: ");
     rl.close();
     const idx = Number.parseInt(ans, 10) - 1;
@@ -92,7 +94,7 @@ if (!scenarioId) {
 
 const scenario = await loadScenario(scenarioId);
 const game = snapshot ? Game.fromJSON(scenario, snapshot) : new Game(scenario);
-console.log(`\n▶ ${scenario.title}  (제한 시간 ${Math.round(scenario.timeLimitSec / 60)}분)\n`);
+console.log(`\n▶ ${scenario.title}  (제한 시간 ${Math.round(scenario.timeLimitSec / 60)}분 · 난이도 ${scenario.difficulty ?? "-"})\n`);
 const typing = stdout.isTTY && !values.fast && !process.env.ESCAPE_FAST;
 const statusBar = !values["no-status"] && !process.env.ESCAPE_NO_STATUS;
 await runLoop(game, scenario, { typing, statusBar });

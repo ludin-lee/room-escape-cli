@@ -102,6 +102,39 @@ const WALKTHROUGHS = {
     "조사 노인", "이동 식당칸", "이동 주방", "조사 서랍", "줍기 밸브핸들", "이동 식당칸", "이동 화물칸",
     "조작 두꺼비집", "사용 밸브핸들 유압밸브", "이동 기관실", "입력 0302 브레이크", "당기기 브레이크",
   ],
+  "abduction": [
+    "조사 밧줄", "조작 의자", "조사 바닥", "줍기 유리조각", "사용 유리조각 밧줄", "조사 창문",
+    "입력 4012 서랍", "줍기 드라이버", "줍기 메모", "조사 메모", "조사 캐비닛", "조사 명찰", "조사 쓰레기통", "조사 주민등록증",
+    "사용 드라이버 환풍구", "조작 환풍구",
+    "조사 목록판", "조사 컨테이너2", "입력 5618 컨테이너2", "줍기 볼트커터",
+    "이동 기계실", "조작 배전반", "이동 창고", "이동 휴게실",
+    "조사 무전기", "입력 200473 노트북", "조사 노트북", "입력 910723 금고", "줍기 USB", "줍기 트럭키",
+    "조사 휴대폰", "조작 김기자",
+    "이동 창고", "이동 야적장", "사용 볼트커터 정문", "조작 트럭",
+  ],
+  "derelict-ship": [
+    "조작 녹음기", "입력 362 격실문", "이동 복도", "이동 의무실", "조작 로그2", "조사 시트", "줍기 카드키",
+    "이동 복도", "이동 숙소", "조작 녹음기", "이동 복도", "조작 전력패널", "입력 4728 격벽A", "조작 전력패널",
+    "이동 브릿지", "조작 로그3", "입력 479 선장콘솔", "줍기 코어키", "이동 복도", "사용 카드키 격벽B", "이동 기관실",
+    "사용 코어키 오버라이드", "당기기 오버라이드", "입력 1842 에어락콘솔", "이동 구명정",
+  ],
+  "cursed-study": [
+    "조사 책상", "줍기 손전등", "사용 손전등 고지도", "사용 손전등 책장", "당기기 VERITAS", "사용 손전등 일기장", "조사 선반",
+    "줍기 돌", "줍기 해골", "줍기 금화", "사용 돌 저울", "사용 해골 저울", "사용 금화 저울", "조작 쇠문",
+    "입력 1473 석관", "줍기 구슬", "조사 구슬", "이동 위", "이동 서재", "입력 3741 유물상자", "줍기 부적",
+    "사용 부적 마법진",
+  ],
+  "museum-heist": [
+    "조사 배낭", "줍기 레이저포인터", "조작 격자", "조사 도면", "이동 복도", "조사 도록", "조사 초상화A",
+    "조사 초상화B", "조사 초상화C", "이동 경비실", "조사 순찰일지", "입력 417 라커", "줍기 경비복", "이동 복도",
+    "입력 742 VIP문", "이동 VIP전시관", "돌리기 거울A", "돌리기 거울C", "사용 레이저포인터 센서", "줍기 명화", "조합 경비복 명화",
+    "이동 복도", "이동 로비", "이동 정문",
+  ],
+  "teahouse": [
+    "조사 할머니", "조작 턴테이블", "조사 다이어리", "조사 아이", "줍기 사진반쪽B", "조작 찻잔", "입력 1351 서랍",
+    "줍기 사진반쪽A", "조작 오르골", "조사 편지", "조사 신문", "조작 찻잔", "입력 올림픽 나무상자", "조합 사진반쪽A 사진반쪽B",
+    "사용 사진 할머니",
+  ],
 };
 
 test("모든 시나리오에 walkthrough 가 있다", async () => {
@@ -310,4 +343,58 @@ test("loop-train: 루프는 아이템·장치를 초기화하고 지식은 남�
   game.run("당기기 비상제동");
   assert.equal(game.status, "lost");
   assert.equal(game.state.lostBy, "trap");
+});
+
+
+test("abduction: 묶인 동안은 좁은 범위, 112 와 검문은 게임 오버", async () => {
+  const scenario = await loadScenario("abduction");
+  const game = new Game(scenario, { now: fakeClock() });
+  assert.equal(game.run("조사 책상")[0].type, "error"); // 묶인 채로는 안 보임
+  assert.equal(game.run("줍기 유리조각")[0].type, "error"); // 넘어지기 전
+  game.run("조사 바닥");
+  assert.ok(!game.visibleObjects().some((o) => o.id === "glass"));
+  for (const c of ["조작 의자", "조사 바닥", "줍기 유리조각", "사용 유리조각 밧줄"]) game.run(c);
+  assert.ok(game.state.flags.includes("hands_free"));
+  assert.ok(game.visibleObjects().some((o) => o.id === "desk"));
+
+  const toLounge = ["입력 4012 서랍", "줍기 드라이버", "사용 드라이버 환풍구", "조작 환풍구"];
+  for (const c of toLounge) game.run(c);
+  assert.equal(game.state.room, "hall");
+  game.run("이동 휴게실"); // 사이렌 전
+  assert.equal(game.state.lostBy, "trap");
+
+  const g2 = new Game(scenario, { now: fakeClock() });
+  for (const c of ["조작 의자", "조사 바닥", "줍기 유리조각", "사용 유리조각 밧줄", ...toLounge, "이동 기계실", "조작 배전반", "이동 창고", "이동 휴게실", "조사 휴대폰"]) g2.run(c);
+  assert.equal(g2.status, "playing");
+  g2.run("조작 112");
+  assert.equal(g2.state.lostBy, "trap");
+});
+
+test("네 에피소드의 함정: AI 코어 입력, 거울B, 비상구, 위장 없이 정문", async () => {
+  let s = await loadScenario("derelict-ship");
+  let g = new Game(s, { now: fakeClock() });
+  for (const c of ["조작 녹음기", "입력 362 격실문", "이동 복도", "조작 전력패널", "이동 의무실"]) g.run(c);
+  assert.equal(g.state.penaltyMs, 45_000); // 문 제어 상태로 이동 → 산소 패널티
+  for (const c of ["이동 복도", "입력 4728 격벽A", "이동 브릿지"]) g.run(c);
+  g.run("입력 0000 코어단말");
+  assert.equal(g.state.lostBy, "trap");
+
+  s = await loadScenario("museum-heist");
+  g = new Game(s, { now: fakeClock() });
+  for (const c of ["조작 격자", "이동 복도", "입력 742 VIP문", "이동 VIP전시관"]) g.run(c);
+  assert.equal(g.run("사용 레이저포인터 센서")[0].type, "error"); // 가방에 없음
+  g.run("돌리기 거울B");
+  assert.equal(g.state.lostBy, "trap");
+  g = new Game(s, { now: fakeClock() });
+  for (const c of ["조작 격자", "이동 복도", "이동 로비", "이동 정문"]) g.run(c);
+  assert.equal(g.state.lostBy, "trap"); // 위장 없이 정문
+  g = new Game(s, { now: fakeClock() });
+  for (const c of ["조작 격자", "이동 복도", "이동 로비", "이동 비상구"]) g.run(c);
+  assert.equal(g.state.lostBy, "trap");
+
+  s = await loadScenario("cursed-study");
+  g = new Game(s, { now: fakeClock() });
+  for (const c of ["조사 책상", "줍기 손전등", "사용 손전등 책장", "당기기 VERITAS", "조사 선반", "줍기 해골"]) g.run(c);
+  assert.equal(g.run("사용 해골 저울")[0].type, "error"); // 순서 위반은 거부
+  assert.ok(g.state.inventory.includes("skull"));
 });

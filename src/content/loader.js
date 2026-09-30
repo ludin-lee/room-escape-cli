@@ -13,7 +13,7 @@ export async function listScenarios() {
   for (const id of ids) {
     try {
       const s = await loadScenario(id);
-      result.push({ id, title: s.title, timeLimitSec: s.timeLimitSec });
+      result.push({ id, title: s.title, timeLimitSec: s.timeLimitSec, difficulty: s.difficulty ?? "" });
     } catch { /* 깨진 시나리오는 목록에서 제외 */ }
   }
   return result;

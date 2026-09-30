@@ -2,53 +2,145 @@
   "id": "magic-theater",
   "title": "마술사의 극장",
   "timeLimitSec": 1800,
+  "difficulty": "중",
   "hintPenaltySec": 120,
   "startRoom": "dressing",
   "intro": "위대한 마르코의 고별 공연. 관객 참여 마술에 뽑혀 상자에 들어갔고, 눈을 뜨니 텅 빈 분장실이다.\n극장은 조용하고, 공연은 끝난 지 오래인 것 같다. 30분 뒤면 극장 문이 모두 잠긴다.\n마술사가 남긴 장치들을 풀고 거리로 나가야 한다.",
-
   "rooms": {
     "dressing": {
       "name": "분장실",
       "description": "전구가 둘러진 커다란 거울과 화장대. 벽에 공연 포스터가 붙어 있고, 옷걸이에 검은 실크해트가 걸려 있다.",
-      "objects": ["poster", "mirror", "dresser", "props_key", "hat"],
+      "objects": [
+        "poster",
+        "mirror",
+        "dresser",
+        "props_key",
+        "hat"
+      ],
       "exits": [
-        { "names": ["무대뒤", "backstage", "뒤"], "to": "backstage" }
+        {
+          "names": [
+            "무대뒤",
+            "backstage",
+            "뒤"
+          ],
+          "to": "backstage"
+        }
       ]
     },
     "backstage": {
       "name": "무대 뒤",
       "description": "어두운 무대 뒤편. 밧줄과 도르래가 천장에서 늘어져 있다. 한쪽에 '소품실' 팻말이 붙은 문이 있고, 커튼 틈으로 무대가 보인다.",
-      "objects": ["rope", "props_door"],
+      "objects": [
+        "rope",
+        "props_door"
+      ],
       "exits": [
-        { "names": ["분장실", "dressing"], "to": "dressing" },
-        { "names": ["소품실", "props"], "to": "props", "lockedBy": "props_lock", "lockedMessage": "소품실 문은 잠겨 있다. 열쇠 구멍이 있다." },
-        { "names": ["무대", "stage"], "to": "stage" }
+        {
+          "names": [
+            "분장실",
+            "dressing"
+          ],
+          "to": "dressing"
+        },
+        {
+          "names": [
+            "소품실",
+            "props"
+          ],
+          "to": "props",
+          "lockedBy": "props_lock",
+          "lockedMessage": "소품실 문은 잠겨 있다. 열쇠 구멍이 있다."
+        },
+        {
+          "names": [
+            "무대",
+            "stage"
+          ],
+          "to": "stage"
+        }
       ]
     },
     "props": {
       "name": "소품실",
       "description": "먼지 쌓인 선반에 마술 도구가 가득하다. 가운데 탁자에 큼직한 마술상자가 있고, 바닥에 카드가 흩어져 있다. 벽에 빈 새장이 걸려 있다.",
-      "objects": ["magic_box", "cards", "rule_note", "birdcage", "wind_key"],
+      "objects": [
+        "magic_box",
+        "cards",
+        "rule_note",
+        "birdcage",
+        "wind_key"
+      ],
       "exits": [
-        { "names": ["무대뒤", "backstage", "뒤"], "to": "backstage" }
+        {
+          "names": [
+            "무대뒤",
+            "backstage",
+            "뒤"
+          ],
+          "to": "backstage"
+        }
       ]
     },
     "stage": {
       "name": "무대",
       "description": "붉은 커튼이 반쯤 열린 무대. 가운데 사람 크기의 자동인형이 서 있다. 객석 너머 로비로 나가는 문이 보인다.",
-      "objects": ["automaton", "ticket", "spotlight", "lobby_door"],
+      "objects": [
+        "automaton",
+        "ticket",
+        "spotlight",
+        "lobby_door"
+      ],
       "exits": [
-        { "names": ["무대뒤", "backstage", "뒤"], "to": "backstage" },
-        { "names": ["로비", "lobby", "객석"], "to": "lobby", "lockedBy": "lobby_lock", "lockedMessage": "로비 문은 잠겨 있다. 옆에 4자리 키패드가 있다." }
+        {
+          "names": [
+            "무대뒤",
+            "backstage",
+            "뒤"
+          ],
+          "to": "backstage"
+        },
+        {
+          "names": [
+            "로비",
+            "lobby",
+            "객석"
+          ],
+          "to": "lobby",
+          "lockedBy": "lobby_lock",
+          "lockedMessage": "로비 문은 잠겨 있다. 옆에 4자리 키패드가 있다."
+        }
       ]
     },
     "lobby": {
       "name": "로비",
       "description": "샹들리에가 꺼진 로비. 매표소 창구는 셔터가 내려져 있고, 정문에는 커다란 자물쇠가 채워져 있다.",
-      "objects": ["box_office", "front_key", "chandelier", "front_door"],
+      "objects": [
+        "box_office",
+        "front_key",
+        "chandelier",
+        "front_door"
+      ],
       "exits": [
-        { "names": ["무대", "stage"], "to": "stage" },
-        { "names": ["거리", "street", "밖", "outside", "정문"], "to": "street", "lockedBy": "front_lock", "lockedMessage": "정문은 자물쇠로 잠겨 있다." }
+        {
+          "names": [
+            "무대",
+            "stage"
+          ],
+          "to": "stage"
+        },
+        {
+          "names": [
+            "거리",
+            "street",
+            "밖",
+            "outside",
+            "정문"
+          ],
+          "to": "street",
+          "lockedBy": "front_lock",
+          "lockedMessage": "정문은 자물쇠로 잠겨 있다."
+        }
       ]
     },
     "street": {
@@ -59,133 +151,270 @@
       "isExit": true
     }
   },
-
   "objects": {
     "poster": {
-      "names": ["포스터", "poster"],
+      "names": [
+        "포스터",
+        "poster"
+      ],
       "description": "\"위대한 마르코 · 고별 공연\n1968년 4월 8일 · 매일 저녁 8시\"\n마르코가 손가락으로 관객을 가리키고 있다.",
-      "onExamine": { "effects": [{ "setFlag": "poster_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "poster_seen"
+          }
+        ]
+      }
     },
     "mirror": {
-      "names": ["거울", "mirror"],
+      "names": [
+        "거울",
+        "mirror"
+      ],
       "description": "전구가 둘러진 거울. 거울 속에 맞은편 벽의 글씨가 비친다: 3685\n돌아보니 벽의 글씨는 흐릿하게 지워져 있어 거울로만 읽을 수 있다. 거울 아래에 작게 새겨진 말.\n\"로비 문은 거울 속 숫자를 바로 읽어라.\"",
-      "onExamine": { "effects": [{ "setFlag": "mirror_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "mirror_seen"
+          }
+        ]
+      }
     },
     "dresser": {
-      "names": ["화장대", "dresser", "서랍"],
+      "names": [
+        "화장대",
+        "dresser",
+        "서랍"
+      ],
       "description": "화장대 서랍에 3자리 자물쇠가 달려 있다. 서랍 위에 메모.\n\"마지막 무대의 달, 날, 시.\"",
       "lock": "dresser_lock"
     },
     "props_key": {
-      "names": ["소품실열쇠", "propskey"],
+      "names": [
+        "소품실열쇠",
+        "propskey"
+      ],
       "hidden": true,
       "takeable": true,
       "description": "'소품실' 꼬리표가 달린 작은 열쇠."
     },
     "hat": {
-      "names": ["실크해트", "모자", "hat"],
+      "names": [
+        "실크해트",
+        "모자",
+        "hat"
+      ],
       "description": "마르코의 검은 실크해트. 안감에 'M' 자수가 있다.",
-      "onInteract": { "message": "모자를 뒤집자 색종이 조각이 우수수 쏟아진다. 토끼는 없다. 마르코다운 농담이다." }
+      "onInteract": {
+        "message": "모자를 뒤집자 색종이 조각이 우수수 쏟아진다. 토끼는 없다. 마르코다운 농담이다."
+      }
     },
-
     "rope": {
-      "names": ["밧줄", "rope", "도르래"],
+      "names": [
+        "밧줄",
+        "rope",
+        "도르래"
+      ],
       "description": "무대 장치용 밧줄. 당기면 커튼이 움직일 것 같다.",
       "onInteract": [
-        { "when": { "flag": "curtain_open" }, "message": "커튼은 이미 활짝 열려 있다." },
-        { "message": "밧줄을 힘껏 당기자 도르래가 삐걱이며 무대 커튼이 활짝 열린다. 객석 쪽이 훤히 보인다.", "effects": [{ "setFlag": "curtain_open" }] }
+        {
+          "when": {
+            "flag": "curtain_open"
+          },
+          "message": "커튼은 이미 활짝 열려 있다."
+        },
+        {
+          "message": "밧줄을 힘껏 당기자 도르래가 삐걱이며 무대 커튼이 활짝 열린다. 객석 쪽이 훤히 보인다.",
+          "effects": [
+            {
+              "setFlag": "curtain_open"
+            }
+          ]
+        }
       ]
     },
     "props_door": {
-      "names": ["소품실문", "propsdoor"],
+      "names": [
+        "소품실문",
+        "propsdoor"
+      ],
       "description": "'소품실 – 관계자 외 출입 금지'. 열쇠 구멍이 있다.",
       "lock": "props_lock"
     },
-
     "magic_box": {
-      "names": ["마술상자", "상자", "box"],
+      "names": [
+        "마술상자",
+        "상자",
+        "box"
+      ],
       "description": "사람이 들어갈 만큼 큰 마술상자. 뚜껑에 4자리 자물쇠. 옆면에 카드 네 장이 그려져 있고 '순서대로' 라고 쓰여 있다.",
       "lock": "box_lock"
     },
     "cards": {
-      "names": ["카드", "cards"],
+      "names": [
+        "카드",
+        "cards"
+      ],
       "description": "바닥에 흩어진 카드 네 장.\n  ♠9   ♥2   ♣6   ♦4",
-      "onExamine": { "effects": [{ "setFlag": "cards_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "cards_seen"
+          }
+        ]
+      }
     },
     "rule_note": {
-      "names": ["규칙", "rulenote", "쪽지", "note"],
+      "names": [
+        "규칙",
+        "rulenote",
+        "쪽지",
+        "note"
+      ],
       "description": "마르코의 필체.\n\"검은 카드가 빨간 카드보다 앞에 선다. 같은 색끼리는 큰 수가 먼저.\"",
-      "onExamine": { "effects": [{ "setFlag": "rule_seen" }] }
+      "onExamine": {
+        "effects": [
+          {
+            "setFlag": "rule_seen"
+          }
+        ]
+      }
     },
     "birdcage": {
-      "names": ["새장", "birdcage"],
+      "names": [
+        "새장",
+        "birdcage"
+      ],
       "description": "빈 새장. 비둘기는 오래전에 날아간 모양이다."
     },
     "wind_key": {
-      "names": ["태엽열쇠", "windkey", "태엽"],
+      "names": [
+        "태엽열쇠",
+        "windkey",
+        "태엽"
+      ],
       "hidden": true,
       "takeable": true,
       "description": "나비 모양 손잡이가 달린 태엽 열쇠. 무언가를 감아 움직이게 하는 물건이다.",
       "onUse": {
         "target": "automaton",
         "message": "등의 구멍에 태엽열쇠를 꽂고 감는다. 자동인형이 덜컥거리며 고개를 들더니, 소매에서 티켓 한 장을 꺼내 내민다.",
-        "effects": [{ "reveal": "ticket" }, { "setFlag": "automaton_wound" }]
+        "effects": [
+          {
+            "reveal": "ticket"
+          },
+          {
+            "setFlag": "automaton_wound"
+          }
+        ]
       }
     },
-
     "automaton": {
-      "names": ["자동인형", "automaton", "인형"],
+      "names": [
+        "자동인형",
+        "automaton",
+        "인형"
+      ],
       "description": [
-        { "when": { "flag": "automaton_wound" }, "text": "턱시도를 입은 나무 자동인형. 태엽이 다 풀려 다시 멈췄다. 빈 소매를 내밀고 있다." },
-        { "text": "턱시도를 입은 나무 자동인형. 등에 태엽 구멍이 있다. 지금은 꿈쩍도 하지 않는다." }
+        {
+          "when": {
+            "flag": "automaton_wound"
+          },
+          "text": "턱시도를 입은 나무 자동인형. 태엽이 다 풀려 다시 멈췄다. 빈 소매를 내밀고 있다."
+        },
+        {
+          "text": "턱시도를 입은 나무 자동인형. 등에 태엽 구멍이 있다. 지금은 꿈쩍도 하지 않는다."
+        }
       ],
       "onInteract": [
-        { "when": { "flag": "automaton_wound" }, "message": "태엽이 풀려 더는 움직이지 않는다." },
-        { "message": "팔을 잡아 흔들어 봤지만 덜그럭거릴 뿐이다. 등의 구멍에 뭔가를 꽂아 감아야 한다." }
+        {
+          "when": {
+            "flag": "automaton_wound"
+          },
+          "message": "태엽이 풀려 더는 움직이지 않는다."
+        },
+        {
+          "message": "팔을 잡아 흔들어 봤지만 덜그럭거릴 뿐이다. 등의 구멍에 뭔가를 꽂아 감아야 한다."
+        }
       ]
     },
     "ticket": {
-      "names": ["티켓", "ticket", "표"],
+      "names": [
+        "티켓",
+        "ticket",
+        "표"
+      ],
       "hidden": true,
       "takeable": true,
       "description": "고별 공연 티켓. 'R열 12번'. 뒷면에 '매표소에서 교환'.",
       "onUse": {
         "target": "box_office",
         "message": "셔터 아래 좁은 틈으로 티켓을 밀어 넣는다. 안에서 딸깍 소리가 나더니, 창구 밑 작은 서랍이 튀어나온다. 열쇠가 들어 있다.",
-        "effects": [{ "reveal": "front_key" }, { "removeItem": "ticket" }, { "setFlag": "ticket_used" }]
+        "effects": [
+          {
+            "reveal": "front_key"
+          },
+          {
+            "removeItem": "ticket"
+          },
+          {
+            "setFlag": "ticket_used"
+          }
+        ]
       }
     },
     "spotlight": {
-      "names": ["조명", "spotlight", "스포트라이트"],
+      "names": [
+        "조명",
+        "spotlight",
+        "스포트라이트"
+      ],
       "description": "천장의 스포트라이트. 전원이 나가 있다."
     },
     "lobby_door": {
-      "names": ["로비문", "lobbydoor", "키패드", "keypad"],
+      "names": [
+        "로비문",
+        "lobbydoor",
+        "키패드",
+        "keypad"
+      ],
       "description": "객석 뒤편의 로비 문. 4자리 키패드가 달려 있다.",
       "lock": "lobby_lock"
     },
-
     "box_office": {
-      "names": ["매표소", "boxoffice", "창구"],
+      "names": [
+        "매표소",
+        "boxoffice",
+        "창구"
+      ],
       "description": "셔터가 내려진 매표소. 셔터 아래 티켓 한 장이 들어갈 틈이 있다. '티켓은 여기에' 라고 적혀 있다."
     },
     "front_key": {
-      "names": ["정문열쇠", "frontkey"],
+      "names": [
+        "정문열쇠",
+        "frontkey"
+      ],
       "hidden": true,
       "takeable": true,
       "description": "묵직한 정문 자물쇠 열쇠."
     },
     "chandelier": {
-      "names": ["샹들리에", "chandelier"],
+      "names": [
+        "샹들리에",
+        "chandelier"
+      ],
       "description": "먼지 쌓인 크리스털 샹들리에. 높아서 손이 닿지 않는다."
     },
     "front_door": {
-      "names": ["정문문", "frontdoor", "자물쇠"],
+      "names": [
+        "정문문",
+        "frontdoor",
+        "자물쇠"
+      ],
       "description": "거리로 나가는 정문. 커다란 자물쇠가 채워져 있다.",
       "lock": "front_lock"
     }
   },
-
   "locks": {
     "dresser_lock": {
       "type": "code",
@@ -193,14 +422,20 @@
       "failMessage": "서랍은 열리지 않는다.",
       "onSolve": {
         "message": "서랍이 스르르 열렸다. 분장 도구 사이에 작은 열쇠가 있다.",
-        "effects": [{ "reveal": "props_key" }]
+        "effects": [
+          {
+            "reveal": "props_key"
+          }
+        ]
       }
     },
     "props_lock": {
       "type": "key",
       "keyItem": "props_key",
       "consume": true,
-      "onSolve": { "message": "소품실 문이 삐걱 열렸다." }
+      "onSolve": {
+        "message": "소품실 문이 삐걱 열렸다."
+      }
     },
     "box_lock": {
       "type": "code",
@@ -208,38 +443,105 @@
       "failMessage": "자물쇠는 꿈쩍도 하지 않는다.",
       "onSolve": {
         "message": "뚜껑이 열렸다. 거울로 된 안쪽 바닥에 태엽 열쇠 하나가 놓여 있다.",
-        "effects": [{ "reveal": "wind_key" }]
+        "effects": [
+          {
+            "reveal": "wind_key"
+          }
+        ]
       }
     },
     "lobby_lock": {
       "type": "code",
       "answer": "5863",
       "failMessage": "키패드가 붉게 깜빡이더니 30초 동안 먹통이 된다.",
-      "onFail": { "effects": [{ "addPenalty": 30 }] },
-      "onSolve": { "message": "삑. 로비 문의 잠금이 풀렸다." }
+      "onFail": {
+        "effects": [
+          {
+            "addPenalty": 30
+          }
+        ]
+      },
+      "onSolve": {
+        "message": "삑. 로비 문의 잠금이 풀렸다."
+      }
     },
     "front_lock": {
       "type": "key",
       "keyItem": "front_key",
       "consume": true,
-      "onSolve": { "message": "자물쇠가 툭 떨어진다. 정문이 열렸다." }
+      "onSolve": {
+        "message": "자물쇠가 툭 떨어진다. 정문이 열렸다."
+      }
     }
   },
-
   "hints": [
-    { "when": { "notFlag": "poster_seen" }, "text": "분장실 포스터를 조사하세요." },
-    { "when": { "notSolved": "dresser_lock" }, "text": "화장대 메모대로 포스터의 달, 날, 시를 한 자리씩 이어 붙이세요." },
-    { "when": { "notSolved": "props_lock" }, "text": "서랍 속 열쇠를 무대 뒤 소품실문에 사용하세요." },
-    { "when": { "notFlag": "cards_seen" }, "text": "소품실 바닥의 카드를 조사하세요." },
-    { "when": { "notFlag": "rule_seen" }, "text": "소품실의 규칙 쪽지를 읽어 보세요." },
-    { "when": { "notSolved": "box_lock" }, "text": "검은 카드(♠♣)를 큰 수부터, 그다음 빨간 카드(♥♦)를 큰 수부터 늘어놓으세요." },
-    { "when": { "notFlag": "automaton_wound" }, "text": "태엽열쇠를 무대의 자동인형에 사용하세요." },
-    { "when": { "notFlag": "mirror_seen" }, "text": "분장실 거울을 조사하세요." },
-    { "when": { "notSolved": "lobby_lock" }, "text": "거울에 비친 숫자는 좌우가 뒤집혀 있습니다. 순서를 거꾸로 읽으세요." },
-    { "when": { "notFlag": "ticket_used" }, "text": "자동인형이 준 티켓을 로비 매표소에 사용하세요." },
-    { "when": { "notSolved": "front_lock" }, "text": "매표소에서 나온 열쇠를 정문에 사용하세요." }
+    {
+      "when": {
+        "notFlag": "poster_seen"
+      },
+      "text": "분장실 포스터를 조사하세요."
+    },
+    {
+      "when": {
+        "notSolved": "dresser_lock"
+      },
+      "text": "화장대 메모대로 포스터의 달, 날, 시를 한 자리씩 이어 붙이세요."
+    },
+    {
+      "when": {
+        "notSolved": "props_lock"
+      },
+      "text": "서랍 속 열쇠를 무대 뒤 소품실문에 사용하세요."
+    },
+    {
+      "when": {
+        "notFlag": "cards_seen"
+      },
+      "text": "소품실 바닥의 카드를 조사하세요."
+    },
+    {
+      "when": {
+        "notFlag": "rule_seen"
+      },
+      "text": "소품실의 규칙 쪽지를 읽어 보세요."
+    },
+    {
+      "when": {
+        "notSolved": "box_lock"
+      },
+      "text": "검은 카드(♠♣)를 큰 수부터, 그다음 빨간 카드(♥♦)를 큰 수부터 늘어놓으세요."
+    },
+    {
+      "when": {
+        "notFlag": "automaton_wound"
+      },
+      "text": "태엽열쇠를 무대의 자동인형에 사용하세요."
+    },
+    {
+      "when": {
+        "notFlag": "mirror_seen"
+      },
+      "text": "분장실 거울을 조사하세요."
+    },
+    {
+      "when": {
+        "notSolved": "lobby_lock"
+      },
+      "text": "거울에 비친 숫자는 좌우가 뒤집혀 있습니다. 순서를 거꾸로 읽으세요."
+    },
+    {
+      "when": {
+        "notFlag": "ticket_used"
+      },
+      "text": "자동인형이 준 티켓을 로비 매표소에 사용하세요."
+    },
+    {
+      "when": {
+        "notSolved": "front_lock"
+      },
+      "text": "매표소에서 나온 열쇠를 정문에 사용하세요."
+    }
   ],
-
   "endings": {
     "success": "정문을 밀고 밤거리로 나선다. 뒤에서 박수 소리가 들린 것 같아 돌아봤지만, 극장은 캄캄하다. 당신은 마르코의 마지막 마술을 풀었다.",
     "timeout": "극장 어딘가에서 자물쇠가 차례로 잠기는 소리가 들린다. 시간이 다 되었다. 커튼이 내려온다."
