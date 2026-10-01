@@ -73,7 +73,7 @@
           ],
           "to": "bridge",
           "lockedBy": "bulkhead_a_lock",
-          "lockedMessage": "격벽 A 는 닫혀 있다. 키패드 4자리. 문 제어에 전력이 필요하다."
+          "lockedMessage": "격벽 A 는 닫혀 있다. 키패드 4자리. 문 제어에 전력이 필요하다. 옆에 '박 녹음기 2번 트랙' 낙서."
         },
         {
           "names": [
@@ -233,7 +233,23 @@
         "log1",
         "녹음"
       ],
-      "description": "승무원 박의 녹음기. 재생 버튼.",
+      "description": [
+        {
+          "when": {
+            "flag": "log1b_heard"
+          },
+          "text": "승무원 박의 녹음기. 두 트랙 모두 들었다."
+        },
+        {
+          "when": {
+            "flag": "log1_heard"
+          },
+          "text": "승무원 박의 녹음기. 표시창에 '1/2'. 트랙이 하나 더 남아 있다. 재생 버튼."
+        },
+        {
+          "text": "승무원 박의 녹음기. 표시창에 '1/2'. 재생 버튼."
+        }
+      ],
       "onInteract": [
         {
           "when": {
@@ -321,7 +337,7 @@
         "bulkheadA",
         "브릿지문"
       ],
-      "description": "격벽 A. 4자리 키패드. 전력이 문 제어에 있어야 켜진다. 옆에 '캡틴 로그 참조' 스티커.",
+      "description": "격벽 A. 4자리 키패드. 전력이 문 제어에 있어야 켜진다. 옆에 매직으로 '코드 바뀜 – 박 녹음기 2번 트랙' 이라고 갈겨 썼다.",
       "lock": "bulkhead_a_lock",
       "hintCode": "S2"
     },
